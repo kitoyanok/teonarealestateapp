@@ -2,7 +2,7 @@
 
 ## Current Version
 
-- Git version: `v0.1.0`
+- Git version: `v0.1.1`
 - Branch: `main`
 
 ## Current Stack State
@@ -37,7 +37,24 @@ These do not block deployment, PostgreSQL, or hosting, but if the goal is a stri
 
 ## Immediate Next Goal
 
-Prepare permanent PostgreSQL data, production deployment to Timeweb, and domain binding from REG.RU.
+Finalize persistent PostgreSQL flow through Docker Compose, then prepare production deployment to Timeweb and domain binding from REG.RU.
+
+## Current PostgreSQL Status
+
+- PostgreSQL runs in Docker Compose
+- API uses `pg` and `DATABASE_URL`
+- search results are written to:
+  - `properties`
+  - `client_found_properties`
+  - `search_runs`
+- shortlist is written to:
+  - `shortlist_items`
+- data persistence is provided by Docker named volume:
+  - `estateflow-postgres`
+- compose healthchecks now gate service startup order for:
+  - `postgres`
+  - `search-service`
+  - `api`
 
 ## What Will Be Needed From User
 

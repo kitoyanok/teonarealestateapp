@@ -70,7 +70,7 @@ test / test
 
 ```bash
 cp .env.example .env
-docker compose up --build
+npm run docker:up
 ```
 
 После запуска:
@@ -79,6 +79,49 @@ docker compose up --build
 - API внутри Docker: `http://api:5003`
 - search-service внутри Docker: `http://search-service:8002`
 - PostgreSQL внутри Docker: `postgres://estateflow:estateflow_password@postgres:5432/estateflow`
+
+### Что именно сохраняется в PostgreSQL
+
+- пользователи
+- клиенты
+- параметры поиска клиента
+- найденные объекты
+- результаты поиска по клиенту
+- shortlist
+- тексты подборок
+- история запусков поиска
+
+### Почему данные не пропадают после перезапуска
+
+В `docker-compose.yml` PostgreSQL использует named volume:
+
+```yaml
+volumes:
+  - estateflow-postgres:/var/lib/postgresql/data
+```
+
+Это значит:
+
+- `docker compose down` не удаляет данные
+- `docker compose up` поднимает контейнер снова с тем же содержимым БД
+
+Если нужно удалить БД полностью и начать заново:
+
+```bash
+npm run docker:reset-db
+```
+
+Если нужно просто остановить контейнеры без удаления данных:
+
+```bash
+npm run docker:down
+```
+
+Логи:
+
+```bash
+npm run docker:logs
+```
 
 ## Переменные окружения
 

@@ -23,6 +23,11 @@ services:
       PYTHON_SEARCH_PORT: 8002
     ports:
       - "${PYTHON_SEARCH_PORT:-8002}:8002"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health').read()"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   api:
     build:
@@ -32,7 +37,7 @@ services:
       postgres:
         condition: service_healthy
       search-service:
-        condition: service_started
+        condition: service_healthy
     environment:
       DATABASE_URL: postgres://estateflow:estateflow_password@postgres:5432/estateflow
       JWT_SECRET: change-me-in-production
@@ -41,6 +46,11 @@ services:
       NODE_ENV: production
     ports:
       - "${API_PORT:-5003}:5003"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5003/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   web:
     build:
@@ -48,7 +58,7 @@ services:
       dockerfile: apps/web/Dockerfile
     depends_on:
       api:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "${WEB_PORT:-5002}:80"
 
