@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: estateflow
+      POSTGRES_PASSWORD: estateflow_password
+      POSTGRES_DB: estateflow
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - estateflow-postgres:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U estateflow -d estateflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  search-service:
+    build:
+      context: ./apps/search-service
+    environment:
+      PYTHON_SEARCH_PORT: 8002
+    ports:
+      - "${PYTHON_SEARCH_PORT:-8002}:8002"
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      search-service:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgres://estateflow:estateflow_password@postgres:5432/estateflow
+      JWT_SECRET: change-me-in-production
+      API_PORT: 5003
+      SEARCH_SERVICE_URL: http://search-service:8002
+      NODE_ENV: production
+    ports:
+      - "${API_PORT:-5003}:5003"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    depends_on:
+      api:
+        condition: service_started
+    ports:
+      - "${WEB_PORT:-5002}:80"
+
+volumes:
+  estateflow-postgres:
