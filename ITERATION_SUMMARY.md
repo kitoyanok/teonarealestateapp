@@ -2,7 +2,7 @@
 
 ## Current Version
 
-- Git version: `v0.1.1`
+- Git version: `v0.1.2`
 - Branch: `main`
 
 ## Current Stack State
@@ -55,6 +55,16 @@ Finalize persistent PostgreSQL flow through Docker Compose, then prepare product
   - `postgres`
   - `search-service`
   - `api`
+
+## Production-Only Usage
+
+- Added root quick-start file: `PROD_COMMANDS.md`
+- Added production aliases:
+  - `npm run prod:up`
+  - `npm run prod:down`
+  - `npm run prod:logs`
+  - `npm run prod:reset-db`
+- For diploma usage, `dev` commands can now be ignored
 
 ## What Will Be Needed From User
 

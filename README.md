@@ -26,6 +26,21 @@ EstateFlow - CRM для риелтора с live-поиском недвижим
 - модальное окно просмотра объекта
 - профиль, помощь, аналитика, настройки
 
+## Быстрый сценарий для диплома
+
+Для вашей обычной работы можно использовать только Docker Compose и не трогать `dev`-режим.
+
+Смотрите:
+
+- [PROD_COMMANDS.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/PROD_COMMANDS.md)
+
+Минимально нужно:
+
+```bash
+cp .env.example .env
+npm run prod:up
+```
+
 ## Локальный запуск
 
 1. Установить зависимости:
@@ -70,7 +85,7 @@ test / test
 
 ```bash
 cp .env.example .env
-npm run docker:up
+npm run prod:up
 ```
 
 После запуска:
@@ -108,19 +123,19 @@ volumes:
 Если нужно удалить БД полностью и начать заново:
 
 ```bash
-npm run docker:reset-db
+npm run prod:reset-db
 ```
 
 Если нужно просто остановить контейнеры без удаления данных:
 
 ```bash
-npm run docker:down
+npm run prod:down
 ```
 
 Логи:
 
 ```bash
-npm run docker:logs
+npm run prod:logs
 ```
 
 ## Переменные окружения

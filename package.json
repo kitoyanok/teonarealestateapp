@@ -8,6 +8,10 @@
     "apps/api"
   ],
   "scripts": {
+    "prod:up": "docker compose up --build -d",
+    "prod:down": "docker compose down",
+    "prod:logs": "docker compose logs -f",
+    "prod:reset-db": "docker compose down -v",
     "dev": "node scripts/dev.mjs",
     "dev:split": "concurrently -n web,api,search -c magenta,green,blue \"env VITE_API_PROXY_TARGET=http://localhost:${API_PORT:-5003} npm run dev --workspace @estateflow/web\" \"env API_PORT=${API_PORT:-5003} npm run dev --workspace @estateflow/api\" \"npm run dev:search\"",
     "dev:search": "cd apps/search-service && ([ -x .venv/bin/python ] || python3 -m venv .venv) && .venv/bin/python -m pip install -r requirements.txt && .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port ${PYTHON_SEARCH_PORT:-8002} --reload",
@@ -15,10 +19,10 @@
     "start": "npm run start --workspace @estateflow/api",
     "start:prod": "npm run build && env NODE_ENV=production API_PORT=${API_PORT:-5003} npm run start --workspace @estateflow/api",
     "typecheck": "npm run typecheck --workspace @estateflow/web && npm run typecheck --workspace @estateflow/api",
-    "docker:up": "docker compose up --build -d",
-    "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f",
-    "docker:reset-db": "docker compose down -v"
+    "docker:up": "npm run prod:up",
+    "docker:down": "npm run prod:down",
+    "docker:logs": "npm run prod:logs",
+    "docker:reset-db": "npm run prod:reset-db"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
