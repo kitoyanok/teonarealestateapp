@@ -2,18 +2,32 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Copy, ExternalLink, Loader2, Phone, RefreshCw, Send, Trash2, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import type { ActivityPoint, Client, FoundProperty, Property, ShortlistItem } from "../entities/types";
+import type { Client, FoundProperty, Property, ShortlistItem } from "../entities/types";
 import { api } from "../shared/api";
-import { formatCompactMoney, formatMoney, profileSummary, propertyMeta, propertyTitle } from "../shared/format";
+import {
+  formatCompactMoney,
+  formatMoney,
+  hasRealPropertyImage,
+  profileSummary,
+  propertyDescription,
+  propertyMeta,
+  propertySourceLabel,
+  propertyTitle
+} from "../shared/format";
 import { EmptyState } from "../widgets/EmptyState";
 import { StatusBadge } from "../widgets/StatusBadge";
 
 function PropertyMedia({ property }: { property: Property }) {
-  const image = property.images?.[0];
+  const image = hasRealPropertyImage(property) ? property.images?.[0] : undefined;
   if (image) {
     return <img src={image} alt={propertyTitle(property)} loading="lazy" />;
   }
-  return <div className="property-image-empty">Фото не найдено</div>;
+  return (
+    <div className="property-image-empty property-image-empty--detailed">
+      <strong>Фото не найдено</strong>
+      <span>Откройте источник, чтобы посмотреть изображения на сайте застройщика.</span>
+    </div>
+  );
 }
 
 function PropertyCard({
@@ -28,31 +42,19 @@ function PropertyCard({
   onAdd: (propertyId: string) => void;
 }) {
   const property = item.property;
-  const filledSegments = Math.max(1, Math.ceil((item.matchScore ?? 0) / 20));
   return (
     <article className="property-card">
-      <div className="property-card__media">
-        <PropertyMedia property={property} />
-      </div>
       <div className="property-card__body">
         <h3>{propertyTitle(property)}</h3>
-        <div className="property-card__meta">
-          <span>{propertyMeta(property)}</span>
-          <span>{property.developerName || property.sourceName || "Источник не указан"}</span>
-        </div>
+        <p className="property-card__source">{propertySourceLabel(property)}</p>
         <strong className="price">{formatMoney(property.price)}</strong>
-        <div className="match-row">
-          <span>Совпадение: {item.matchScore ?? 0}%</span>
-          <div>
-            {Array.from({ length: 5 }, (_, index) => (
-              <i key={index} className={index < filledSegments ? "is-filled" : undefined} />
-            ))}
-          </div>
+        <div className="property-card__meta">
+          <span>{propertyMeta(property) || "Параметры уточняются"}</span>
         </div>
         <div className="card-actions">
           <button className="button button--row button--light" type="button" onClick={() => onOpen(property)}>Подробнее</button>
           <button
-            className={`button button--row ${inShortlist ? "button--success" : "button--primary"}`}
+            className={`button button--row property-card__cta ${inShortlist ? "button--success" : "button--primary"}`}
             disabled={inShortlist}
             type="button"
             onClick={() => onAdd(property.id)}
@@ -86,8 +88,8 @@ function PropertyDrawer({
         <div className="drawer-header">
           <div>
             <h2>{propertyTitle(property)}</h2>
-            <p>{propertyMeta(property)}</p>
-          </div>
+          <p>{propertyMeta(property) || propertySourceLabel(property)}</p>
+        </div>
           <button className="icon-button" type="button" onClick={onClose} aria-label="Закрыть">
             <X size={18} />
           </button>
@@ -127,17 +129,19 @@ function PropertyDrawer({
           ) : null)}
         </div>
 
-        <section className="drawer-section">
-          <h3>Совпадение с запросом</h3>
-          <div className="reason-list">
-            {(match?.matchReasons ?? []).map((reason) => <span className="reason reason--ok" key={reason}>{reason}</span>)}
-            {(match?.mismatchReasons ?? []).map((reason) => <span className="reason reason--warn" key={reason}>{reason}</span>)}
-          </div>
-        </section>
+        {(match?.matchReasons?.length || match?.mismatchReasons?.length) ? (
+          <section className="drawer-section">
+            <h3>Подходит по параметрам</h3>
+            <div className="reason-list">
+              {(match?.matchReasons ?? []).map((reason) => <span className="reason reason--ok" key={reason}>{reason}</span>)}
+              {(match?.mismatchReasons ?? []).map((reason) => <span className="reason reason--warn" key={reason}>{reason}</span>)}
+            </div>
+          </section>
+        ) : null}
 
         <section className="drawer-section">
           <h3>Описание</h3>
-          <p>{property.description || "Описание не найдено на публичной странице источника."}</p>
+          <p>{propertyDescription(property)}</p>
         </section>
 
         <div className="drawer-actions">
@@ -225,10 +229,6 @@ export function ClientPage() {
     queryFn: () => api.get<Client>(`/api/clients/${id}`),
     enabled: Boolean(id)
   });
-  const activity = useQuery({
-    queryKey: ["dashboard", "activity"],
-    queryFn: () => api.get<ActivityPoint[]>("/api/dashboard/activity")
-  });
 
   const invalidate = async () => {
     await Promise.all([
@@ -295,30 +295,34 @@ export function ClientPage() {
       </header>
 
       <section className="dashboard-grid dashboard-grid--client">
-        <article className="panel panel--wide">
-          <div className="panel__header">
-            <div>
-              <h2>Активность за 7 дней</h2>
-              <p>С кем продолжить работу</p>
-            </div>
+        <article className="panel panel--wide panel--client-meta">
+          <div className="client-card__title">
+            <h2>Параметры клиента</h2>
+            <StatusBadge status={client.status} />
           </div>
-          {activity.data?.some((point) => point.found > 0) ? (
-            <div className="activity-placeholder">
-              <div className="activity-strip">
-                {activity.data.map((point) => (
-                  <span key={point.key} style={{ height: `${24 + point.found * 8}px` }} />
-                ))}
-              </div>
-              <div className="activity-labels">
-                {activity.data.map((point) => <small key={point.key}>{point.label}</small>)}
-              </div>
-            </div>
-          ) : (
-            <div className="empty-inline empty-inline--chart">
-              <h3>Пока нет истории поиска</h3>
-              <p>Когда вы обновите поиск и добавите объекты в подборку, здесь появится динамика работы.</p>
-            </div>
-          )}
+          <div className="client-info-grid">
+            <span>Телефон <strong>{client.phone || "Не указан"}</strong></span>
+            <span>Тип <strong>{client.propertyType === "house" ? "Дом" : "Квартира"}</strong></span>
+            <span>Бюджет <strong>{formatMoney(client.searchProfile?.budgetMin)} — {formatMoney(client.searchProfile?.budgetMax)}</strong></span>
+            {client.propertyType === "apartment" ? (
+              <>
+                <span>Комнаты <strong>{client.searchProfile?.roomsMin ?? "Студия"}-{client.searchProfile?.roomsMax ?? "4+"}</strong></span>
+                <span>Площадь <strong>от {client.searchProfile?.areaMin ?? "не указано"} м²</strong></span>
+                <span>Локация <strong>{client.searchProfile?.districts?.join(", ") || "Любая"}</strong></span>
+              </>
+            ) : (
+              <>
+                <span>Дом <strong>от {client.searchProfile?.houseAreaMin ?? "не указано"} м²</strong></span>
+                <span>Участок <strong>от {client.searchProfile?.landAreaMin ?? "не указано"} сот.</strong></span>
+                <span>Локация <strong>{client.searchProfile?.settlementNames?.join(", ") || client.searchProfile?.districts?.join(", ") || "Любая"}</strong></span>
+              </>
+            )}
+          </div>
+          <div className="client-summary-card client-summary-card--inline">
+            <div><span>В подборке</span><strong>{shortlist.length} объекта</strong></div>
+            <div><span>Найдено</span><strong>{found.length} объекта</strong></div>
+          </div>
+          {client.comment ? <p className="client-comment">{client.comment}</p> : null}
         </article>
 
         <aside className="panel panel--shortlist" id="share-shortlist">
@@ -360,32 +364,6 @@ export function ClientPage() {
             <div><span>Статус</span><StatusBadge status={client.status} /></div>
           </div>
         </aside>
-      </section>
-
-      <section className="panel panel--client-meta">
-        <div className="client-card__title">
-          <h2>Параметры клиента</h2>
-          <StatusBadge status={client.status} />
-        </div>
-        <div className="client-info-grid">
-          <span>Телефон <strong>{client.phone || "Не указан"}</strong></span>
-          <span>Тип <strong>{client.propertyType === "house" ? "Дом" : "Квартира"}</strong></span>
-          <span>Бюджет <strong>{formatMoney(client.searchProfile?.budgetMin)} — {formatMoney(client.searchProfile?.budgetMax)}</strong></span>
-          {client.propertyType === "apartment" ? (
-            <>
-              <span>Комнатность <strong>{client.searchProfile?.roomsMin ?? "Студия"}-{client.searchProfile?.roomsMax ?? "4+"}</strong></span>
-              <span>Площадь <strong>от {client.searchProfile?.areaMin ?? "не указано"} м²</strong></span>
-              <span>Район <strong>{client.searchProfile?.districts?.join(", ") || "не указан"}</strong></span>
-            </>
-          ) : (
-            <>
-              <span>Дом <strong>от {client.searchProfile?.houseAreaMin ?? "не указано"} м²</strong></span>
-              <span>Участок <strong>от {client.searchProfile?.landAreaMin ?? "не указано"} сот.</strong></span>
-              <span>Локация <strong>{client.searchProfile?.settlementNames?.join(", ") || "не указана"}</strong></span>
-            </>
-          )}
-        </div>
-        {client.comment ? <p className="client-comment">{client.comment}</p> : null}
       </section>
 
       <section className="panel found-properties-section">

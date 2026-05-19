@@ -15,9 +15,24 @@ BAD_IMAGE_MARKERS = ("logo", "favicon", "icon", "sprite", "placeholder", "avatar
 BAD_TITLE_MARKERS = (
     "кабинет", "избранное", "отзывы", "отзывов", "наверх", "главная", "меню",
     "ипотека", "акции", "ремонт в подарок", "скидка", "все квартиры", "все дома",
-    "подобрать", "фильтр"
+    "подобрать", "фильтр", "все новостройки", "старт продаж", "скоро в продаже",
+    "комфорт", "бизнес", "недорогие", "каталог"
 )
-BAD_DESCRIPTION_MARKERS = ("главная", "меню", "по алфавиту", "на карте", "скоро в продаже", "избранное", "отзывы")
+BAD_DESCRIPTION_MARKERS = (
+    "главная", "меню", "по алфавиту", "на карте", "скоро в продаже", "избранное", "отзывы",
+    "кабинет", "скидка", "ремонт в подарок", "старт продаж", "каталог", "фильтр", "подобрать"
+)
+BAD_IMAGE_MARKERS = BAD_IMAGE_MARKERS + ("telegram", "vk", "whatsapp")
+
+DISTRICT_MARKERS = (
+    "прикубанский",
+    "карасунский",
+    "западный",
+    "центральный",
+    "фестивальный",
+    "юбилейный",
+    "гидростроителей"
+)
 
 
 @dataclass(frozen=True)
@@ -71,7 +86,7 @@ class BaseAdapter:
             return False
 
     def _parse_html(self, url: str, html: str, request: SearchRequest) -> list[PropertyItem]:
-        soup = BeautifulSoup(html, "html.parser")
+        soup = BeautifulSoup(html, "lxml")
         items = self._parse_json_ld(url, soup, request)
         items.extend(self._parse_visible_cards(url, soup, request))
 
@@ -117,19 +132,47 @@ class BaseAdapter:
             return None
 
         raw_title = clean_text(str(node.get("name") or node.get("headline") or ""))
-        description = self._normalize_description(clean_text(str(node.get("description") or "")) or None, request, self.config.name)
         offers = node.get("offers") if isinstance(node.get("offers"), dict) else {}
         raw_price = node.get("price") or offers.get("price") or offers.get("lowPrice")
-        price = float(raw_price) if str(raw_price).replace(".", "", 1).isdigit() else parse_price(f"{raw_title} {description}")
+        price = float(raw_price) if str(raw_price).replace(".", "", 1).isdigit() else parse_price(raw_title)
         item_url = str(node.get("url") or offers.get("url") or url)
         image = node.get("image")
         raw_images = [image] if isinstance(image, str) else image if isinstance(image, list) else []
-
-        text = f"{raw_title} {description or ''}"
+        brand = node.get("brand")
+        developer_name = clean_text(brand.get("name")) if isinstance(brand, dict) else clean_text(str(brand or "")) or None
+        text = clean_text(f"{raw_title} {node.get('description') or ''}")
         area = parse_area(text)
         rooms = parse_rooms(text)
-        title = self._normalize_title(raw_title, request.propertyType, self.config.name, area=area, rooms=rooms)
+        land_area = self._parse_land_area(text)
+        complex_name = self._extract_complex_name(text, request.propertyType)
+        district = self._extract_district(text)
+        address = self._extract_address(text)
+        settlement_name = self._extract_settlement_name(text, request.propertyType)
+        title = self._normalize_title(
+            raw_title,
+            request.propertyType,
+            self.config.name,
+            area=area,
+            rooms=rooms,
+            complex_name=complex_name,
+            district=district,
+            address=address,
+            settlement_name=settlement_name,
+            land_area=land_area
+        )
         images = [normalized for item in raw_images[:6] if (normalized := self._normalize_image_url(url, str(item)))]
+        description = self._normalize_description(
+            request,
+            self.config.name,
+            title=title,
+            price=price,
+            area=area,
+            rooms=rooms,
+            district=district,
+            address=address,
+            settlement_name=settlement_name,
+            land_area=land_area
+        )
 
         return PropertyItem(
             externalId=self._external_id(item_url),
@@ -137,11 +180,18 @@ class BaseAdapter:
             sourceUrl=urljoin(url, item_url),
             propertyType=request.propertyType,
             title=title,
+            complexName=complex_name,
+            developerName=developer_name,
             description=description,
+            district=district,
+            address=address,
+            settlementName=settlement_name,
             price=price,
+            pricePerMeter=round(price / area, 2) if price and area else None,
             area=area,
             rooms=rooms,
             houseArea=area if request.propertyType == "house" else None,
+            landArea=land_area if request.propertyType == "house" else None,
             completionYear=extract_year(text),
             images=images,
             rawData={"sourceType": "json-ld", "adapter": self.config.adapter_key}
@@ -178,8 +228,35 @@ class BaseAdapter:
             if not price:
                 continue
 
-            title = self._normalize_title(raw_title, request.propertyType, self.config.name, area=area, rooms=rooms)
-            description = self._normalize_description(text, request, self.config.name)
+            land_area = self._parse_land_area(text)
+            complex_name = self._extract_complex_name(text, request.propertyType)
+            district = self._extract_district(text)
+            address = self._extract_address(text)
+            settlement_name = self._extract_settlement_name(text, request.propertyType)
+            title = self._normalize_title(
+                raw_title,
+                request.propertyType,
+                self.config.name,
+                area=area,
+                rooms=rooms,
+                complex_name=complex_name,
+                district=district,
+                address=address,
+                settlement_name=settlement_name,
+                land_area=land_area
+            )
+            description = self._normalize_description(
+                request,
+                self.config.name,
+                title=title,
+                price=price,
+                area=area,
+                rooms=rooms,
+                district=district,
+                address=address,
+                settlement_name=settlement_name,
+                land_area=land_area
+            )
             normalized_image = self._normalize_image_url(url, image_url) if image_url else None
 
             items.append(
@@ -189,12 +266,17 @@ class BaseAdapter:
                     sourceUrl=item_url,
                     propertyType=request.propertyType,
                     title=title[:280],
+                    complexName=complex_name,
                     description=description,
                     price=price,
                     pricePerMeter=round(price / area, 2) if price and area else None,
+                    district=district,
+                    address=address,
+                    settlementName=settlement_name,
                     area=area if request.propertyType == "apartment" else None,
                     rooms=rooms if request.propertyType == "apartment" else None,
                     houseArea=area if request.propertyType == "house" else None,
+                    landArea=land_area if request.propertyType == "house" else None,
                     completionYear=extract_year(text),
                     images=[normalized_image] if normalized_image else [],
                     rawData={"sourceType": "visible-card", "adapter": self.config.adapter_key}
@@ -222,43 +304,142 @@ class BaseAdapter:
         source_name: str,
         *,
         area: float | None = None,
-        rooms: int | None = None
+        rooms: int | None = None,
+        complex_name: str | None = None,
+        district: str | None = None,
+        address: str | None = None,
+        settlement_name: str | None = None,
+        land_area: float | None = None
     ) -> str:
         title = clean_text(value)[:180]
         if not title or any(marker in title.lower() for marker in BAD_TITLE_MARKERS):
             title = ""
 
         if property_type == "apartment":
+            rooms_label = "Студия" if rooms == 0 else f"{rooms}-к квартира" if rooms is not None else "Квартира"
+            area_label = f", {area} м²" if area else ""
+            location = (
+                self._prefixed_project_name(complex_name, "в ЖК")
+                or (f"на {address}" if address else None)
+                or (f"в районе {district}" if district else None)
+            )
+            if location:
+                return f"{rooms_label}{area_label} {location}".strip()
             if title:
                 return title
-            if rooms is not None and area:
-                rooms_label = "Студия" if rooms == 0 else f"{rooms}-комн. квартира"
-                return f"{rooms_label}, {area} м²"
+            if area:
+                return f"Квартира {area} м²"
             return f"Квартира от {source_name}"
 
+        house_area = f"Дом {area} м²" if area else "Дом"
+        land_label = f", участок {land_area} сот." if land_area else ""
+        location = (
+            self._prefixed_project_name(settlement_name, "в КП")
+            or (f"в {address}" if address else None)
+            or (f"в районе {district}" if district else None)
+        )
+        if location:
+            return f"{house_area}{land_label} {location}".strip()
         if title:
             return title
         if area:
             return f"Дом {area} м²"
         return f"Дом от {source_name}"
 
-    def _normalize_description(self, text: str | None, request: SearchRequest, source_name: str) -> str | None:
-        cleaned = clean_text(text or "")
-        if not cleaned:
-            return f"{'Квартира' if request.propertyType == 'apartment' else 'Дом'} от источника {source_name}."
+    def _normalize_description(
+        self,
+        request: SearchRequest,
+        source_name: str,
+        *,
+        title: str,
+        price: float | None,
+        area: float | None,
+        rooms: int | None,
+        district: str | None,
+        address: str | None,
+        settlement_name: str | None,
+        land_area: float | None
+    ) -> str:
+        location = district or address or settlement_name
+        price_text = self._format_price(price)
 
-        parts = [part.strip() for part in re.split(r"[.!?]", cleaned) if part.strip()]
-        deduped: list[str] = []
-        seen: set[str] = set()
-        for part in parts:
-            lowered = part.lower()
-            if lowered in seen or any(marker in lowered for marker in BAD_DESCRIPTION_MARKERS):
-                continue
-            seen.add(lowered)
-            deduped.append(part)
+        if request.propertyType == "house":
+            parts = [f"{title}."]
+            if land_area:
+                parts.append(f"Участок {land_area} соток.")
+            if price_text:
+                parts.append(f"Цена {price_text}.")
+            parts.append(f"Источник: {source_name}.")
+            return " ".join(parts)
 
-        normalized = ". ".join(deduped)[:700]
-        return normalized or f"{'Квартира' if request.propertyType == 'apartment' else 'Дом'} от источника {source_name}."
+        parts = [f"{title}."]
+        if location:
+            parts.append(f"Локация: {location}.")
+        if area:
+            parts.append(f"Площадь {area} м².")
+        if rooms is not None:
+            parts.append(f"{'Студия' if rooms == 0 else f'{rooms} комн.'}.")
+        if price_text:
+            parts.append(f"Цена {price_text}.")
+        parts.append(f"Источник: {source_name}.")
+        return " ".join(parts)
+
+    def _extract_complex_name(self, text: str, property_type: str) -> str | None:
+        patterns = [
+            r"(?:жк|жилой комплекс)\s*[«\"]?([^»\"\n,.]{2,80})",
+            r"(?:кп|коттеджный поселок|коттеджный пос[её]лок)\s*[«\"]?([^»\"\n,.]{2,80})",
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                name = clean_text(match.group(1))
+                if name and not any(marker in name.lower() for marker in BAD_TITLE_MARKERS):
+                    return name
+        if property_type == "apartment":
+            quoted = re.search(r"жк\s*[«\"]([^»\"]+)[»\"]", text, re.IGNORECASE)
+            if quoted:
+                return clean_text(quoted.group(1))
+        return None
+
+    def _extract_district(self, text: str) -> str | None:
+        lowered = text.lower()
+        for marker in DISTRICT_MARKERS:
+            if marker in lowered:
+                return marker.capitalize()
+        return None
+
+    def _extract_address(self, text: str) -> str | None:
+        match = re.search(r"(ул\.?\s+[А-ЯA-ZЁ][^,;.]{2,60})", text, re.IGNORECASE)
+        if match:
+            return clean_text(match.group(1))
+        return None
+
+    def _extract_settlement_name(self, text: str, property_type: str) -> str | None:
+        if property_type != "house":
+            return None
+        match = re.search(r"(?:кп|коттеджный поселок|коттеджный пос[её]лок)\s*[«\"]?([^»\"\n,.]{2,80})", text, re.IGNORECASE)
+        if match:
+            return clean_text(match.group(1))
+        if "немецк" in text.lower():
+            return "Немецкая деревня"
+        return None
+
+    def _parse_land_area(self, text: str) -> float | None:
+        match = re.search(r"(\d+(?:[.,]\d+)?)\s*сот", text.lower())
+        if not match:
+            return None
+        return float(match.group(1).replace(",", "."))
+
+    def _prefixed_project_name(self, value: str | None, prefix: str) -> str | None:
+        if not value:
+            return None
+        cleaned = value.strip().strip("\"«»")
+        return f"{prefix} «{cleaned}»"
+
+    def _format_price(self, value: float | None) -> str | None:
+        if value is None:
+            return None
+        return f"{int(value):,} ₽".replace(",", " ")
 
     def _external_id(self, value: str) -> str:
         digest = hashlib.sha1(value.encode("utf-8")).hexdigest()[:16]

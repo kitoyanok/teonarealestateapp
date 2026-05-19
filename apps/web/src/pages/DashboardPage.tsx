@@ -1,27 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRight, BriefcaseBusiness, ChartColumnBig, ClipboardList, House, TrendingDown, TrendingUp } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, ChartColumnBig, ClipboardList, House } from "lucide-react";
 import { Link } from "react-router-dom";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { ActivityPoint, Client, DashboardSummary } from "../entities/types";
 import { api } from "../shared/api";
 import { profileSummary } from "../shared/format";
 import { StatusBadge } from "../widgets/StatusBadge";
 
 const kpiConfig = [
-  { key: "clientsInWork", title: "Клиенты в работе", icon: BriefcaseBusiness, trend: "+8.4%", positive: true },
-  { key: "foundObjects", title: "Найдено объектов", icon: House, trend: "-3.7%", positive: false },
-  { key: "shortlistItems", title: "В подборках", icon: ClipboardList, trend: "+8.4%", positive: true },
-  { key: "readyToSend", title: "Готово к отправке", icon: ChartColumnBig, trend: "+8.4%", positive: true }
+  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness },
+  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House },
+  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList },
+  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig }
 ] as const;
 
-const demoBars = [
-  [8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 4, 4],
-  [2, 3, 2, 5, 4, 3, 4, 7, 6, 6, 3, 4],
-  [4, 3, 6, 5, 4, 7, 6, 8, 5, 4, 8, 7],
-  [7, 7, 7, 7, 7, 7, 7, 7, 7, 4, 4, 4]
-];
-
-function MiniBars({ values, accentIndex }: { values: number[]; accentIndex?: number }) {
+function MiniBars({ values, accentIndex }: { values: number[]; accentIndex: number }) {
   return (
     <div className="mini-bars" aria-hidden="true">
       {values.map((value, index) => (
@@ -33,6 +25,12 @@ function MiniBars({ values, accentIndex }: { values: number[]; accentIndex?: num
       ))}
     </div>
   );
+}
+
+function activityBars(points: ActivityPoint[]) {
+  const values = points.map((point) => point.found);
+  const max = Math.max(...values, 1);
+  return values.map((value) => Math.max(2, Math.round((value / max) * 8)));
 }
 
 export function DashboardPage() {
@@ -58,20 +56,19 @@ export function DashboardPage() {
       <section className="kpi-grid">
         {kpiConfig.map((item, index) => {
           const Icon = item.icon;
-          const TrendIcon = item.positive ? TrendingUp : TrendingDown;
+          const bars = activity.data?.length ? activityBars(activity.data) : Array.from({ length: 8 }, () => 4);
           return (
             <article className="kpi-card" key={item.key}>
               <div className="kpi-card__head">
                 <strong>{summary.data?.[item.key] ?? 0}</strong>
-                <span className={`trend ${item.positive ? "is-up" : "is-down"}`}>
-                  <TrendIcon size={12} />
-                  {item.trend}
-                </span>
               </div>
-              <MiniBars values={demoBars[index]} accentIndex={index === 2 ? 11 : undefined} />
+              <MiniBars values={bars} accentIndex={bars.length - 1} />
               <div className="kpi-card__label">
                 <Icon size={15} />
-                <span>{item.title}</span>
+                <div>
+                  <span>{item.title}</span>
+                  <small>{item.subtitle}</small>
+                </div>
               </div>
             </article>
           );
@@ -83,28 +80,23 @@ export function DashboardPage() {
           <div className="panel__header">
             <div>
               <h2>Активность за 7 дней</h2>
-              <p>С кем продолжить работу</p>
+              <p>Найденные объекты по дням</p>
             </div>
           </div>
           {activity.data?.some((point) => point.found > 0) ? (
-            <div className="chart-frame chart-frame--soft">
-              <ResponsiveContainer width="100%" height={260}>
-                <LineChart data={activity.data}>
-                  <CartesianGrid stroke="#F0F0F0" vertical={false} />
-                  <XAxis dataKey="label" stroke="#B2B2B2" tickLine={false} axisLine={false} />
-                  <YAxis stroke="#B2B2B2" tickLine={false} axisLine={false} width={28} />
-                  <Tooltip
-                    contentStyle={{
-                      background: "#FFFFFF",
-                      border: "1px solid #E7E7E7",
-                      borderRadius: 12,
-                      boxShadow: "0 12px 40px rgba(0, 0, 0, 0.08)"
-                    }}
-                  />
-                  <Line type="monotone" dataKey="found" stroke="#FD6000" strokeWidth={3} dot={false} />
-                  <Line type="monotone" dataKey="shortlisted" stroke="#FFC49F" strokeWidth={2} dot={false} />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="activity-bars-card">
+              <div className="activity-bars">
+                {activity.data.map((point, index) => {
+                  const max = Math.max(...activity.data.map((item) => item.found), 1);
+                  const height = 36 + Math.round((point.found / max) * 160);
+                  return (
+                    <div className="activity-bars__item" key={point.key}>
+                      <span className={index === activity.data.length - 1 ? "is-accent" : undefined} style={{ height }} />
+                      <small>{point.label}</small>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <div className="empty-inline empty-inline--chart">
