@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, BriefcaseBusiness, ChartColumnBig, ClipboardList, House } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { ActivityPoint, Client, DashboardSummary } from "../entities/types";
 import { api } from "../shared/api";
 import { profileSummary } from "../shared/format";
@@ -31,6 +32,18 @@ function activityBars(points: ActivityPoint[]) {
   const values = points.map((point) => point.found);
   const max = Math.max(...values, 1);
   return values.map((value) => Math.max(2, Math.round((value / max) * 8)));
+}
+
+function DashboardTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value?: number }>; label?: string }) {
+  if (!active || !payload?.length) {
+    return null;
+  }
+  return (
+    <div className="chart-tooltip">
+      <strong>{label}</strong>
+      <span>Найдено объектов: {payload[0]?.value ?? 0}</span>
+    </div>
+  );
 }
 
 export function DashboardPage() {
@@ -84,19 +97,16 @@ export function DashboardPage() {
             </div>
           </div>
           {activity.data?.some((point) => point.found > 0) ? (
-            <div className="activity-bars-card">
-              <div className="activity-bars">
-                {activity.data.map((point, index) => {
-                  const max = Math.max(...activity.data.map((item) => item.found), 1);
-                  const height = 36 + Math.round((point.found / max) * 160);
-                  return (
-                    <div className="activity-bars__item" key={point.key}>
-                      <span className={index === activity.data.length - 1 ? "is-accent" : undefined} style={{ height }} />
-                      <small>{point.label}</small>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="chart-frame chart-frame--dashboard">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={activity.data} margin={{ top: 8, right: 10, left: -8, bottom: 0 }}>
+                  <CartesianGrid stroke="#F0F0F0" vertical={false} />
+                  <XAxis dataKey="label" stroke="#8F8F8F" tickLine={false} axisLine={false} />
+                  <YAxis stroke="#8F8F8F" tickLine={false} axisLine={false} allowDecimals={false} />
+                  <Tooltip content={<DashboardTooltip />} cursor={{ fill: "rgba(253,96,0,0.06)" }} />
+                  <Bar dataKey="found" radius={[12, 12, 0, 0]} fill="#FD6000" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           ) : (
             <div className="empty-inline empty-inline--chart">

@@ -42,6 +42,7 @@ function PropertyCard({
   onAdd: (propertyId: string) => void;
 }) {
   const property = item.property;
+  const filledSegments = Math.max(1, Math.min(5, Math.ceil((item.matchScore ?? 0) / 20)));
   return (
     <article className="property-card">
       <div className="property-card__body">
@@ -51,13 +52,20 @@ function PropertyCard({
         <div className="property-card__meta">
           <span>{propertyMeta(property) || "Параметры уточняются"}</span>
         </div>
+        <div className="match-row">
+          <span>Совпадение: {item.matchScore ?? 0}%</span>
+          <div>
+            {Array.from({ length: 5 }, (_, index) => (
+              <i key={index} className={index < filledSegments ? "is-filled" : undefined} />
+            ))}
+          </div>
+        </div>
         <div className="card-actions">
           <button className="button button--row button--light" type="button" onClick={() => onOpen(property)}>Подробнее</button>
           <button
             className={`button button--row property-card__cta ${inShortlist ? "button--success" : "button--primary"}`}
-            disabled={inShortlist}
             type="button"
-            onClick={() => onAdd(property.id)}
+            onClick={() => !inShortlist && onAdd(property.id)}
           >
             {inShortlist ? "В подборке" : "В подборку"}
           </button>

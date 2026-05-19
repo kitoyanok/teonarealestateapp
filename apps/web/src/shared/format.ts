@@ -12,7 +12,10 @@ const BAD_PROPERTY_TITLES = [
   "комфорт",
   "бизнес",
   "главная",
-  "каталог"
+  "каталог",
+  "выгода",
+  "подарки",
+  "вип"
 ];
 
 export const formatMoney = (value?: number | null) => {
@@ -104,15 +107,58 @@ function propertyLocation(property: Property) {
     || null;
 }
 
+function extractProjectFromTitle(value?: string | null, type: Property["propertyType"] = "apartment") {
+  if (!value) {
+    return null;
+  }
+  const patterns = type === "house"
+    ? [/(?:кп|коттеджный поселок|коттеджный пос[её]лок)\s*[«"]([^»"]+)[»"]/i]
+    : [/(?:жк|жилой комплекс)\s*[«"]([^»"]+)[»"]/i];
+  for (const pattern of patterns) {
+    const match = value.match(pattern);
+    if (match?.[1]) {
+      return match[1].trim();
+    }
+  }
+  return null;
+}
+
+function extractDistrictFromTitle(value?: string | null) {
+  if (!value) {
+    return null;
+  }
+  const districts = ["Прикубанский", "Центральный", "Карасунский", "Западный", "Фестивальный", "Юбилейный"];
+  return districts.find((district) => value.toLowerCase().includes(district.toLowerCase())) ?? null;
+}
+
+function extractAddressFromTitle(value?: string | null) {
+  if (!value) {
+    return null;
+  }
+  const match = value.match(/(ул\.?\s+[А-ЯA-ZЁ][^,;]+)/i);
+  return match?.[1]?.trim() ?? null;
+}
+
 export function propertyTitle(property: Property) {
+  const complexName = property.complexName || extractProjectFromTitle(property.title, property.propertyType);
+  const settlementName = property.settlementName || extractProjectFromTitle(property.title, "house");
+  const district = property.district || extractDistrictFromTitle(property.title);
+  const address = property.address || extractAddressFromTitle(property.title);
+
   if (!isBadTitle(property.title)) {
-    return property.title!.trim();
+    if (!complexName && !district && !address && !settlementName) {
+      return property.title!.trim();
+    }
   }
 
   if (property.propertyType === "house") {
     const houseArea = property.houseArea ? `Дом ${property.houseArea} м²` : "Дом";
     const land = property.landArea ? `, участок ${property.landArea} сот.` : "";
-    const location = propertyLocation(property);
+    const location = wrapProjectName("в КП", settlementName)
+      || address
+      || (district ? `в районе ${district}` : null)
+      || property.sourceName
+      || null;
     return `${houseArea}${land}${location ? ` ${location}` : ""}`.trim();
   }
 
@@ -122,7 +168,10 @@ export function propertyTitle(property: Property) {
       ? `${property.rooms}-к квартира`
       : "Квартира";
   const area = property.area ? `, ${property.area} м²` : "";
-  const location = propertyLocation(property);
+  const location = wrapProjectName("в ЖК", complexName)
+    || (shortAddress(address) ? `на ${shortAddress(address)}` : null)
+    || (district ? `в районе ${district}` : null)
+    || null;
   return `${roomsLabel}${area}${location ? ` ${location}` : ""}`.trim();
 }
 
