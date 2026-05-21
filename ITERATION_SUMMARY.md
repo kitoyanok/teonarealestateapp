@@ -2,10 +2,73 @@
 
 ## Current Version
 
-- Git version: `v0.1.4`
+- Pending git version for this iteration: `v0.1.7`
 - Branch: `main`
 
-## Current Stack State
+## What Was Done In This Iteration
+
+- полностью переделана пояснительная записка под тему проекта `Тэона` по структуре образца [67_Погосян_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Погосян_ПЗ.docx)
+- создан новый итоговый Word-файл:
+  - [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx)
+- добавлен новый генератор ПЗ:
+  - [scripts/build_zubach_pz.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/scripts/build_zubach_pz.py)
+- сгенерированы визуальные артефакты для отчета:
+  - диаграмма вариантов использования
+  - блок-схема сценария подбора
+  - архитектурная схема
+  - схема БД PostgreSQL
+  - wireframes основных окон
+- все артефакты лежат в:
+  - [docs/assets/zubach_pz](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/docs/assets/zubach_pz)
+
+## What Is In The New PZ
+
+Документ [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx) теперь содержит:
+
+- титульный лист
+- содержание
+- введение
+- раздел `1 Назначение и цели разработки`
+- раздел `2 Разработка технического проекта`
+  - спецификация ПО
+  - таблицы прецедентов
+  - сценарии успешного выполнения
+  - сценарии исключений
+  - блок-схема
+  - схема архитектуры
+  - схема БД
+  - wireframes интерфейса
+- раздел `3 Рабочий проект`
+  - обоснование выбора стека
+  - физическая модель данных
+  - программная реализация модулей
+  - тестирование
+  - эксплуатационная документация
+- заключение
+- список источников
+- приложения А-Ж
+
+## Formatting Rules Applied
+
+По замечанию преподавателя оформление шагов приведено к одному виду:
+
+- в сценариях используется формат `Действие №1. ...`
+- в тест-кейсах шаги тоже записаны как `Действие №1. ...`
+- обычная нумерация вида `1. ...` для шагов не используется
+- в конце действий ставится точка, а не `;`
+
+## Diagrams And Wireframes Added
+
+- `01_use_case.png` — диаграмма вариантов использования
+- `02_activity.png` — блок-схема подбора объектов
+- `03_architecture.png` — архитектурная схема системы
+- `04_er_schema.png` — схема БД PostgreSQL
+- `05_wireframe_login.png` — окно авторизации
+- `06_wireframe_dashboard.png` — главная страница
+- `07_wireframe_clients.png` — список клиентов
+- `08_wireframe_client_card.png` — карточка клиента
+
+## Project State
 
 - Frontend: React + Vite
 - Backend API: Node.js + Express
@@ -13,159 +76,39 @@
 - Database: PostgreSQL via `pg`
 - Deploy: Docker Compose + Nginx
 
-## Already Simplified
+## Persistent PostgreSQL State
 
-- Prisma removed from runtime and source flow
-- `memoryStore` removed from source flow
-- PostgreSQL schema moved to `database/init.sql`
-- API works through SQL repository layer and `pg`
-- Dockerfiles and `docker-compose.yml` added
-- Nginx config added for production frontend serving
-
-## Still Not Fully Simplified
-
-The project is not yet reduced to the absolute minimum requested in every area.
-
-Still present on the frontend:
-
-- TypeScript
-- `@tanstack/react-query`
-- `react-hook-form`
-- `zod`
-
-These do not block deployment, PostgreSQL, or hosting, but if the goal is a stricter diploma stack, they should be removed in a separate cleanup iteration.
-
-## Immediate Next Goal
-
-Finalize persistent PostgreSQL flow through Docker Compose, then prepare production deployment to Timeweb and domain binding from REG.RU.
-
-## Current PostgreSQL Status
-
-- PostgreSQL runs in Docker Compose
-- API uses `pg` and `DATABASE_URL`
-- search results are written to:
+- PostgreSQL работает через Docker Compose
+- API подключается через `pg`
+- результаты поиска сохраняются в:
   - `properties`
   - `client_found_properties`
   - `search_runs`
-- shortlist is written to:
+- подборки сохраняются в:
   - `shortlist_items`
-- data persistence is provided by Docker named volume:
-  - `estateflow-postgres`
-- compose healthchecks now gate service startup order for:
-  - `postgres`
-  - `search-service`
-  - `api`
+- сообщения сохраняются в:
+  - `share_messages`
+- данные переживают перезапуск контейнеров за счет volume `estateflow-postgres`
 
-## Production-Only Usage
+## Verification
 
-- Added root quick-start file: `PROD_COMMANDS.md`
-- Added production aliases:
-  - `npm run prod:up`
-  - `npm run prod:down`
-  - `npm run prod:logs`
-  - `npm run prod:reset-db`
-- For diploma usage, `dev` commands can now be ignored
+- генератор [scripts/build_zubach_pz.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/scripts/build_zubach_pz.py) выполняется успешно
+- итоговый файл [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx) собран
+- визуальные PNG-артефакты сгенерированы
 
-## What Was Done In This Iteration
+## Render QA Status
 
-- property titles are now normalized more aggressively in search-service
-- bad titles like `Все новостройки`, `Избранное`, `Отзывы` are filtered
-- property descriptions are generated from structured characteristics instead of page garbage
-- bad images are filtered more strictly
-- listing cards no longer show photos
-- property list cards no longer show match percent or progress bars
-- client page no longer contains the large activity chart
-- dashboard KPI cards are calmer and no longer show fake trend percentages
-- parsing documentation added:
-  - `docs/PARSING_SOURCES.md`
-- search QA checklist added:
-  - `docs/SEARCH_QA_CHECKLIST.md`
-- unit tests added for matcher and normalization:
-  - `apps/search-service/tests/test_matcher.py`
-  - `apps/search-service/tests/test_normalization.py`
-- diploma note draft started:
-  - `docs/Пояснительная_записка_Тэона.md`
-  - `Пояснительная_записка_Тэона.docx`
+- попытка прогнать `docx -> png` через render tool была выполнена
+- полная render-проверка не завершилась, потому что в среде отсутствует `soffice`
+- это ограничение окружения, а не ошибка генератора DOCX
 
-## How Parsing Works Right Now
+## Commands
 
-- sources are not discovered automatically
-- sources are hardcoded in `apps/search-service/app/adapters/sources.py`
-- one base adapter normalizes output to a common schema
-- apartments and houses use different source lists
-- if one source fails, search continues with other sources
-- logo/icon/favicon URLs are filtered out before images are saved
-- object title is rebuilt from rooms/area/location when the source title is garbage
-
-## Connected Sources
-
-Apartment sources currently include:
-
-- НАШ.ДОМ.РФ
-- Домострой Краснодар
-- ССК
-- ВКБ-Новостройки
-- ГК ТОЧНО
-- DOGMA
-- СК Семья
-- Неометрия
-- НВМ
-- ЕкатеринодарИнвест-Строй
-- Novostroyka123
-- Novostrojki-KRD
-- 23kvartiri
-- Krasdom
-
-House sources currently include:
-
-- Doma-kr
-- КП Краснодар
-- Поселки Краснодара
-- 23kvartiri
-- Novostrojki-KRD
-
-## How Search Was Checked
-
-- TypeScript typecheck: passed
-- production build: passed
-- Python unit tests for matcher and normalization: passed
-- live external search was not re-run from this Codex environment because outbound network is limited
-- a manual QA checklist for local verification is prepared in `docs/SEARCH_QA_CHECKLIST.md`
+- пересобрать ПЗ:
+  - `/Users/like-shockpritotskaya-event/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/build_zubach_pz.py`
 
 ## Remaining Work
 
-- run manual local search QA against real websites on your machine
-- visually inspect updated frontend in browser after local startup
-- improve and expand diploma explanatory note based on your reference sample
-- optionally simplify frontend stack further if you want to remove extra libraries before final defense
-
-## DOCX Note
-
-- `Пояснительная_записка_Тэона.docx` is generated
-- visual render QA through the documents renderer could not be completed in this environment because `soffice` is unavailable
-
-## What Will Be Needed From User
-
-For PostgreSQL and deploy:
-
-- Timeweb server access method: SSH or panel
-- server IP
-- SSH user
-- SSH password or SSH private key
-- target OS on server
-- preferred app domain/subdomain
-
-For domain setup:
-
-- bought domain at REG.RU
-- access to DNS zone or exact DNS records to set
-
-For production env:
-
-- production `JWT_SECRET`
-- final domain names for frontend and API
-
-## Notes
-
-- This file should be updated after each implementation iteration.
-- Each iteration should end with a new git commit and push when GitHub access works.
+- вручную открыть [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx) в Word и обновить содержание
+- после просмотра преподавателем внести точечные правки по формулировкам, если они появятся
+- при следующей итерации можно добавить еще более детализированные SQL-приложения и расширенные тест-кейсы, если это потребуется
