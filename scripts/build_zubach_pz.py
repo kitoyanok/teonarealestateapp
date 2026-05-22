@@ -76,6 +76,7 @@ FONT_24 = load_font(24)
 FONT_28 = load_font(28)
 FONT_32 = load_font(32, bold=True)
 FONT_40 = load_font(40, bold=True)
+FONT_18 = load_font(18)
 FONT_18B = load_font(18, bold=True)
 
 
@@ -159,6 +160,170 @@ def build_activity_diagram() -> Path:
     draw_box(draw, (1120, 520, 1470, 620), "Исключение.\nИсточники недоступны.", fill="#fff2f2")
     draw_arrow(draw, (1030, 570), (1120, 570))
     return save(image, "02_activity.png")
+
+
+def build_use_case_search_diagram() -> Path:
+    image, draw = canvas("Диаграмма вариантов использования модуля поиска объектов")
+    draw_box(draw, (70, 250, 250, 610), "Риелтор", fill="#fafafa", font=FONT_32)
+    cases = [
+        ((430, 120, 810, 210), "Ввод параметров\nклиента"),
+        ((430, 265, 810, 355), "Запуск поиска"),
+        ((430, 410, 810, 500), "Просмотр найденных\nобъектов"),
+        ((970, 120, 1360, 210), "Фильтрация по\nгороду Краснодар"),
+        ((970, 265, 1360, 355), "Расчет процента\nсовпадения"),
+        ((970, 410, 1360, 500), "Сохранение\nрезультатов"),
+    ]
+    for box, text in cases:
+        draw_box(draw, box, text, fill="#fff9f4")
+    for y in [165, 310, 455]:
+        draw_arrow(draw, (250, 430), (430, y))
+    draw_arrow(draw, (810, 310), (970, 165))
+    draw_arrow(draw, (810, 310), (970, 310))
+    draw_arrow(draw, (810, 455), (970, 455))
+    draw.text((420, 650), "Модуль поиска отвечает за получение параметров клиента, обращение к источникам,\nотсечение объектов не из Краснодара и сохранение релевантных результатов.", font=FONT_24, fill=GRAY, spacing=8)
+    return save(image, "02_1_use_case_search.png")
+
+
+def build_use_case_shortlist_diagram() -> Path:
+    image, draw = canvas("Диаграмма вариантов использования модуля подборки")
+    draw_box(draw, (70, 250, 250, 610), "Риелтор", fill="#fafafa", font=FONT_32)
+    cases = [
+        ((430, 120, 830, 210), "Открыть карточку\nклиента"),
+        ((430, 265, 830, 355), "Добавить объект\nв подборку"),
+        ((430, 410, 830, 500), "Удалить объект\nиз подборки"),
+        ((970, 190, 1390, 280), "Подготовить текст\nсообщения"),
+        ((970, 350, 1390, 440), "Отметить подборку\nотправленной"),
+    ]
+    for box, text in cases:
+        draw_box(draw, box, text, fill="#fff9f4")
+    for y in [165, 310, 455]:
+        draw_arrow(draw, (250, 430), (430, y))
+    draw_arrow(draw, (830, 310), (970, 235))
+    draw_arrow(draw, (1180, 280), (1180, 350))
+    draw.text((420, 650), "Модуль подборки сохраняет ручной выбор риелтора в PostgreSQL и формирует текст,\nкоторый риелтор копирует клиенту без автоматической отправки во внешние мессенджеры.", font=FONT_24, fill=GRAY, spacing=8)
+    return save(image, "02_2_use_case_shortlist.png")
+
+
+def build_state_diagram() -> Path:
+    image, draw = canvas("Диаграмма состояний клиентской заявки")
+    states = [
+        ((90, 220, 310, 320), "new\nНовая"),
+        ((430, 220, 680, 320), "searching\nИдет поиск"),
+        ((820, 220, 1060, 320), "found\nНайдены объекты"),
+        ((1200, 220, 1500, 320), "shortlist_ready\nПодборка готова"),
+        ((820, 520, 1060, 620), "sent\nОтправлено"),
+        ((430, 520, 680, 620), "no_results\nНет объектов"),
+        ((90, 520, 310, 620), "error\nОшибка"),
+    ]
+    for box, text in states:
+        draw_box(draw, box, text, fill="#fff9f4")
+    draw_arrow(draw, (310, 270), (430, 270))
+    draw_arrow(draw, (680, 270), (820, 270))
+    draw_arrow(draw, (1060, 270), (1200, 270))
+    draw_arrow(draw, (1350, 320), (955, 520))
+    draw_arrow(draw, (555, 320), (555, 520))
+    draw_arrow(draw, (430, 570), (310, 570))
+    draw.text((105, 735), "Состояние клиента меняется серверной логикой. История поиска хранится отдельно в search_runs,\nпоэтому повторный запуск поиска не уничтожает предыдущий контекст.", font=FONT_24, fill=GRAY, spacing=8)
+    return save(image, "15_state_client.png")
+
+
+def build_component_diagram() -> Path:
+    image, draw = canvas("Диаграмма компонентов приложения «Тэона»")
+    draw_box(draw, (90, 160, 430, 300), "Web UI\nReact, Vite", fill="#fff9f4", font=FONT_28)
+    draw_box(draw, (620, 160, 980, 300), "API\nExpress, pg", fill="#fff9f4", font=FONT_28)
+    draw_box(draw, (1160, 160, 1520, 300), "Search-service\nFastAPI", fill="#fff9f4", font=FONT_28)
+    draw_box(draw, (620, 500, 980, 640), "PostgreSQL\nclients, properties,\nshortlist", fill="#fff9f4", font=FONT_28)
+    draw_box(draw, (1160, 500, 1520, 640), "Источники\nзастройщики и\nагрегаторы", fill="#fafafa", font=FONT_28)
+    draw_arrow(draw, (430, 230), (620, 230))
+    draw_arrow(draw, (980, 230), (1160, 230))
+    draw_arrow(draw, (800, 300), (800, 500))
+    draw_arrow(draw, (1340, 500), (1340, 300))
+    draw.text((90, 760), "Компоненты развертываются через Docker Compose. Frontend обращается только к API,\nAPI координирует работу БД и search-service, а search-service не имеет прямого доступа к PostgreSQL.", font=FONT_24, fill=GRAY, spacing=8)
+    return save(image, "16_component.png")
+
+
+def build_parsing_algorithm_diagram() -> Path:
+    image, draw = canvas("Алгоритм парсинга и географической фильтрации")
+    nodes = [
+        ((570, 80, 1080, 150), "Начало. Получен SearchRequest."),
+        ((570, 210, 1080, 290), "Выбор источников по типу недвижимости."),
+        ((570, 350, 1080, 430), "Загрузка HTML и JSON-LD."),
+        ((570, 490, 1080, 570), "Извлечение цены, площади, комнат,\nрайона, адреса и ссылки."),
+        ((570, 630, 1080, 710), "Проверка: объект относится\nк городу Краснодар?"),
+        ((570, 770, 1080, 850), "Нормализация title, description,\nизображений и характеристик."),
+    ]
+    for box, text in nodes:
+        draw_box(draw, box, text)
+    for idx in range(len(nodes) - 1):
+        draw_arrow(draw, ((nodes[idx][0][0] + nodes[idx][0][2]) // 2, nodes[idx][0][3]), ((nodes[idx + 1][0][0] + nodes[idx + 1][0][2]) // 2, nodes[idx + 1][0][1]))
+    draw_box(draw, (1170, 620, 1530, 720), "Нет.\nКарточка отбрасывается.", fill="#fff2f2")
+    draw_arrow(draw, (1080, 670), (1170, 670))
+    return save(image, "17_algorithm_parsing.png")
+
+
+def build_scoring_algorithm_diagram() -> Path:
+    image, draw = canvas("Алгоритм расчета match score")
+    nodes = [
+        ((90, 170, 470, 260), "Проверить бюджет"),
+        ((640, 170, 1020, 260), "Проверить площадь\nи комнатность"),
+        ((1190, 170, 1570, 260), "Проверить район\nили поселок"),
+        ((90, 470, 470, 560), "Проверить срок,\nотделку, этажность"),
+        ((640, 470, 1020, 560), "Сформировать причины\nсовпадения"),
+        ((1190, 470, 1570, 560), "Ограничить итог\nдиапазоном 0-100"),
+    ]
+    for box, text in nodes:
+        draw_box(draw, box, text, fill="#fff9f4")
+    draw_arrow(draw, (470, 215), (640, 215))
+    draw_arrow(draw, (1020, 215), (1190, 215))
+    draw_arrow(draw, (1380, 260), (280, 470))
+    draw_arrow(draw, (470, 515), (640, 515))
+    draw_arrow(draw, (1020, 515), (1190, 515))
+    draw.text((120, 760), "Для квартир учитываются цена, комнаты, площадь, район, срок сдачи и отделка.\nДля домов учитываются бюджет, площадь дома, участок, локация, коммуникации, этажность и спальни.", font=FONT_24, fill=GRAY, spacing=8)
+    return save(image, "18_algorithm_scoring.png")
+
+
+def build_persistence_algorithm_diagram() -> Path:
+    image, draw = canvas("Алгоритм сохранения результатов поиска")
+    nodes = [
+        ((600, 90, 1050, 170), "API получает PropertyItem."),
+        ((600, 240, 1050, 320), "upsert properties по source_url."),
+        ((600, 390, 1050, 470), "upsert client_found_properties."),
+        ((600, 540, 1050, 620), "Обновление search_runs."),
+        ((600, 690, 1050, 770), "Обновление статуса клиента."),
+    ]
+    for box, text in nodes:
+        draw_box(draw, box, text)
+    for idx in range(len(nodes) - 1):
+        draw_arrow(draw, ((nodes[idx][0][0] + nodes[idx][0][2]) // 2, nodes[idx][0][3]), ((nodes[idx + 1][0][0] + nodes[idx + 1][0][2]) // 2, nodes[idx + 1][0][1]))
+    draw_box(draw, (150, 390, 500, 510), "Если source_url уже есть,\nкарточка обновляется.", fill="#fafafa")
+    draw_arrow(draw, (600, 430), (500, 450))
+    draw_box(draw, (1140, 390, 1500, 510), "Если объект новый,\nсоздается новая запись.", fill="#fafafa")
+    draw_arrow(draw, (1050, 430), (1140, 450))
+    return save(image, "19_algorithm_persistence.png")
+
+
+def build_test_results_image() -> Path:
+    image, draw = canvas("Результаты автоматизированного тестирования")
+    draw_box(draw, (110, 140, 1540, 810), "", fill="#111111", outline="#111111", radius=20)
+    lines = [
+        "> npm run typecheck",
+        "@estateflow/web: tsc -b --noEmit ... OK",
+        "@estateflow/api: tsc -p tsconfig.json --noEmit ... OK",
+        "",
+        "> npm run build",
+        "Vite build completed successfully.",
+        "API TypeScript build completed successfully.",
+        "",
+        "> python -m unittest discover -s tests -v",
+        "Ran 10 tests in 0.001s",
+        "OK",
+    ]
+    y = 185
+    mono = load_font(26)
+    for line in lines:
+        draw.text((160, y), line, font=mono, fill="#f4f4f4")
+        y += 48
+    return save(image, "20_test_results.png")
 
 
 def build_architecture_diagram() -> Path:
@@ -312,7 +477,7 @@ def build_screen_dashboard() -> Path:
         draw.rounded_rectangle((80, y, 225, y + 54), radius=16, fill=fill, outline=outline, width=2)
         draw.text((105, y + 15), label, font=FONT_20, fill=ORANGE if idx == 0 else BLACK)
     draw_topbar(draw)
-    cards = [("1", "Клиенты в работе"), ("64", "Найдено объектов"), ("2", "В подборках"), ("1", "Готово к отправке")]
+    cards = [("1", "Клиенты в работе"), ("81", "Найдено объектов"), ("7", "В подборках"), ("1", "Готово к отправке")]
     for idx, (num, label) in enumerate(cards):
         x1 = 300 + idx * 320
         draw.rounded_rectangle((x1, 250, x1 + 290, 430), radius=24, fill=WHITE, outline=MID, width=2)
@@ -353,10 +518,10 @@ def build_screen_clients() -> Path:
     for x, h in zip(xs, headers):
         draw.text((x, 410), h, font=FONT_20, fill=GRAY)
     rows = [
-        ("Иван Иванов", "до 8 млн ₽ • 1-2 комн.", "найдено", "21.05.2026"),
-        ("Анна Петрова", "до 6 млн ₽ • студия-1 комн.", "новый", "20.05.2026"),
+        ("Иван Иванов", "до 8 млн руб. • 1-2 комн.", "найдено", "21.05.2026"),
+        ("Анна Петрова", "до 6 млн руб. • студия-1 комн.", "новый", "20.05.2026"),
         ("Николай Громов", "дом от 120 м² • 5 сот.", "подборка", "20.05.2026"),
-        ("Тамара Белая", "до 10 млн ₽ • 2-3 комн.", "отправлено", "19.05.2026"),
+        ("Тамара Белая", "до 10 млн руб. • 2-3 комн.", "отправлено", "19.05.2026"),
     ]
     for idx, row in enumerate(rows):
         y = 470 + idx * 92
@@ -374,24 +539,25 @@ def build_screen_client_card() -> Path:
     draw.text((95, 170), "Тэона", font=FONT_32, fill=BLACK)
     draw_topbar(draw)
     draw.text((305, 235), "Иван Иванов", font=FONT_32, fill=BLACK)
-    draw.text((305, 278), "до 8 млн ₽ • 1-2 комн.", font=FONT_24, fill=GRAY)
+    draw.text((305, 278), "до 8 млн руб. • 1-2 комн.", font=FONT_24, fill=GRAY)
     draw.rounded_rectangle((300, 320, 980, 470), radius=24, fill=WHITE, outline=MID, width=2)
     draw.text((335, 360), "Параметры клиента", font=FONT_24, fill=BLACK)
-    draw.text((335, 405), "Бюджет: до 8 млн ₽\nКомнатность: 1-2\nРайон: Прикубанский", font=FONT_20, fill=GRAY, spacing=8)
+    draw.text((335, 405), "Бюджет: до 8 млн руб.\nКомнатность: 1-2\nРайон: Прикубанский", font=FONT_20, fill=GRAY, spacing=8)
     draw.rounded_rectangle((1000, 320, 1585, 900), radius=24, fill=WHITE, outline=MID, width=2)
     draw.text((1040, 360), "Подборка клиента", font=FONT_24, fill=BLACK)
     draw.rounded_rectangle((1040, 780, 1540, 845), radius=18, fill=ORANGE, outline=ORANGE)
     draw.text((1150, 800), "Подготовить сообщение", font=FONT_24, fill=WHITE)
-    card_positions = [(300, 510), (620, 510)]
-    titles = ["ЖК «Nova Vita», литер 20", "2-комн. квартира, ЖК «Точно»"]
-    prices = ["5 275 000 ₽", "6 540 000 ₽"]
-    for (x, y), title, price in zip(card_positions, titles, prices):
-        draw.rounded_rectangle((x, y, x + 290, y + 325), radius=22, fill=WHITE, outline=MID, width=2)
-        draw.rounded_rectangle((x + 16, y + 16, x + 274, y + 140), radius=18, fill=LIGHT, outline=LIGHT)
+    card_positions = [(300, 510), (635, 510)]
+    titles = ["1-к квартира, 40.6 м²", "2-к квартира, 53.8 м²"]
+    prices = ["5 275 000 руб.", "6 540 000 руб."]
+    meta = ["ЖК «Nova Vita»\nПрикубанский район", "ЖК «Точно»\nЦентральный район"]
+    for (x, y), title, price, meta_line in zip(card_positions, titles, prices, meta):
+        draw.rounded_rectangle((x, y, x + 310, y + 360), radius=22, fill=WHITE, outline=MID, width=2)
+        draw.rounded_rectangle((x + 16, y + 16, x + 294, y + 140), radius=18, fill=LIGHT, outline=LIGHT)
         draw.text((x + 28, y + 170), title, font=FONT_20, fill=BLACK)
-        draw.text((x + 28, y + 222), "1-комн. • 40.6 м² • Домострой", font=FONT_20, fill=GRAY)
-        draw.text((x + 28, y + 270), price, font=FONT_28, fill=BLACK)
-        draw.text((x + 28, y + 308), "Совпадение: 68%", font=FONT_20, fill=GRAY)
+        draw.multiline_text((x + 28, y + 210), meta_line, font=FONT_18, fill=GRAY, spacing=5)
+        draw.text((x + 28, y + 275), price, font=FONT_28, fill=BLACK)
+        draw.text((x + 28, y + 322), "Совпадение: 68%", font=FONT_20, fill=GRAY)
     return save(image, "12_screen_client_card.png")
 
 
@@ -409,8 +575,8 @@ def build_screen_message_modal() -> Path:
     draw.rounded_rectangle((500, 480, 1160, 680), radius=18, fill="#fffdfb", outline=MID, width=2)
     message = (
         "Здравствуйте. Подобрал для вас несколько вариантов.\n\n"
-        "1. ЖК «Nova Vita», 40.6 м², 5 275 000 ₽.\n"
-        "2. ЖК «Точно», 53.8 м², 6 540 000 ₽.\n\n"
+        "1. 1-к квартира, 40.6 м², 5 275 000 руб.\n"
+        "2. 2-к квартира, 53.8 м², 6 540 000 руб.\n\n"
         "Если нужно, подготовлю еще варианты."
     )
     draw.multiline_text((530, 515), message, font=FONT_20, fill=BLACK, spacing=10)
@@ -450,9 +616,17 @@ def build_screen_db_view() -> Path:
 def build_assets() -> dict[str, Path]:
     return {
         "use_case": build_use_case_diagram(),
+        "use_case_search": build_use_case_search_diagram(),
+        "use_case_shortlist": build_use_case_shortlist_diagram(),
         "activity": build_activity_diagram(),
         "architecture": build_architecture_diagram(),
         "er": build_er_schema(),
+        "state": build_state_diagram(),
+        "component": build_component_diagram(),
+        "algorithm_parsing": build_parsing_algorithm_diagram(),
+        "algorithm_scoring": build_scoring_algorithm_diagram(),
+        "algorithm_persistence": build_persistence_algorithm_diagram(),
+        "test_results": build_test_results_image(),
         "wf_login": build_wireframe_login(),
         "wf_dashboard": build_wireframe_dashboard(),
         "wf_clients": build_wireframe_clients(),
@@ -476,10 +650,12 @@ def set_text_style(run, size: int = 14, bold: bool = False, italic: bool = False
 
 def configure_styles(document: Document) -> None:
     for section in document.sections:
-        section.top_margin = Cm(2)
-        section.bottom_margin = Cm(2)
-        section.left_margin = Cm(3)
-        section.right_margin = Cm(1.5)
+        section.page_width = Cm(21)
+        section.page_height = Cm(29.7)
+        section.top_margin = Cm(1.63)
+        section.bottom_margin = Cm(3.6)
+        section.left_margin = Cm(2)
+        section.right_margin = Cm(0.55)
     normal = document.styles["Normal"]
     normal.font.name = "Times New Roman"
     normal._element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
@@ -488,12 +664,19 @@ def configure_styles(document: Document) -> None:
     pf.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     pf.space_after = Pt(0)
     pf.first_line_indent = Cm(1.25)
-    for style_name, size in [("Title", 16), ("Heading 1", 16), ("Heading 2", 14), ("Heading 3", 14)]:
+    list_style = document.styles["List Paragraph"]
+    list_style.font.name = "Times New Roman"
+    list_style._element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
+    list_style.font.size = Pt(14)
+    list_style.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+    list_style.paragraph_format.space_after = Pt(0)
+    list_style.paragraph_format.first_line_indent = Cm(1.5)
+    for style_name, size in [("Title", 14), ("Heading 1", 14), ("Heading 2", 14), ("Heading 3", 14)]:
         style = document.styles[style_name]
         style.font.name = "Times New Roman"
         style._element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
         style.font.size = Pt(size)
-        style.font.bold = True
+        style.font.bold = False
 
 
 def set_paragraph(paragraph, center: bool = False, indent: bool = True) -> None:
@@ -514,9 +697,9 @@ def add_text(document: Document, text: str, *, center: bool = False, bold: bool 
 def add_heading(document: Document, text: str, level: int = 1) -> None:
     paragraph = document.add_paragraph(style=f"Heading {min(level, 3)}")
     run = paragraph.add_run(text)
-    set_text_style(run, size=16 if level == 1 else 14, bold=True)
-    paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    paragraph.paragraph_format.first_line_indent = Pt(0)
+    set_text_style(run, size=14, bold=False)
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    paragraph.paragraph_format.first_line_indent = Cm(1.5)
     paragraph.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     paragraph.paragraph_format.space_before = Pt(6)
     paragraph.paragraph_format.space_after = Pt(0)
@@ -677,7 +860,7 @@ def write_section_1(document: Document) -> None:
     add_heading(document, "1 Назначение и цели разработки")
     content = [
         "Разрабатываемое веб-приложение предназначено для автоматизации процессов работы риелтора с клиентскими заявками на подбор недвижимости. Система должна обеспечивать единое рабочее пространство, в котором специалист может авторизоваться, создать карточку клиента, сохранить параметры поиска, запустить подбор объектов, сформировать shortlist и подготовить текст сообщения для клиента.",
-        "Пользователем системы является риелтор, сопровождающий клиентов на этапах первичного запроса, поиска объектов и подготовки персональной подборки. Приложение ориентировано на рынок новостроек и загородной недвижимости Краснодара и прилегающих территорий.",
+        "Пользователем системы является риелтор, сопровождающий клиентов на этапах первичного запроса, поиска объектов и подготовки персональной подборки. Приложение ориентировано на рынок новостроек и загородной недвижимости города Краснодара.",
         "Основной целью разработки является создание прикладного программного средства, сокращающего трудозатраты на поиск и систематизацию объектов недвижимости. Частные задачи проекта включают обеспечение постоянного хранения данных в PostgreSQL, поддержку работы через Docker Compose, нормализацию карточек объектов из внешних источников и предоставление понятного интерфейса для ежедневной работы.",
     ]
     for paragraph in content:
@@ -875,7 +1058,6 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     document = Document()
     configure_styles(document)
     add_page_number(document.sections[0])
-    write_title_page(document)
 
     add_heading(document, "Содержание")
     add_toc(document)
@@ -918,56 +1100,80 @@ def build_document(asset_paths: dict[str, Path]) -> None:
         ["Развертывание", "Система должна запускаться через Docker Compose с минимальным числом команд."],
     ])
 
-    add_heading(document, "2 Разработка технического проекта")
-    add_heading(document, "2.1 Определение спецификаций программного обеспечения", level=2)
+    add_heading(document, "2 Технический проект")
+    add_heading(document, "2.1 Проектирование диаграмм вариантов использования и описание сценариев", level=2)
     add_text(document, "С целью формализации требований к приложению была построена диаграмма вариантов использования, отражающая взаимодействие риелтора с системой. Диаграмма демонстрирует ключевые операции: авторизацию, создание клиента, запуск поиска, просмотр найденных объектов, формирование подборки и подготовку сообщения.")
     add_figure(document, "Рисунок 1 – Диаграмма вариантов использования приложения «Тэона»", asset_paths["use_case"], width_cm=16)
+    add_text(document, "На рисунке 2 представлена диаграмма вариантов использования модуля поиска объектов. Она отражает отдельную ответственность поискового контура: получение параметров клиента, обращение к источникам, фильтрацию по городу Краснодар, расчет процента совпадения и сохранение результата.")
+    add_figure(document, "Рисунок 2 – Диаграмма вариантов использования модуля поиска объектов", asset_paths["use_case_search"], width_cm=16)
+    add_text(document, "На рисунке 3 показан модуль формирования подборки. В нем пользователь вручную выбирает подходящие объекты, формирует текст сообщения, копирует данные для отправки клиенту и отмечает подборку как отправленную.")
+    add_figure(document, "Рисунок 3 – Диаграмма вариантов использования модуля формирования подборки", asset_paths["use_case_shortlist"], width_cm=16)
 
     first, second = use_cases()
     add_text(document, "Для детализации основного варианта использования «Поиск объектов для клиента» была составлена его характеристика и сценарии выполнения.")
-    add_key_value_table(document, "Таблица 4 – Основной вариант использования «Поиск объектов для клиента»", [
+    add_key_value_table(document, "Таблица 1.1 – Главный раздел сценария варианта использования «Поиск объектов для клиента»", [
         ("Вариант использования (прецедент)", first.name),
         ("Актеры", first.actors),
         ("Краткое описание", first.summary),
         ("Цель", first.goal),
         ("Тип", first.kind),
     ])
-    add_scenario_table(document, "Таблица 5 – Сценарий успешного выполнения варианта использования «Поиск объектов для клиента»", first.success_actions, first.success_system)
-    add_scenario_table(document, "Таблица 6 – Сценарии обработки исключительных ситуаций для варианта использования «Поиск объектов для клиента»", first.exception_actions, first.exception_system)
-
-    add_text(document, "На основе сценария подбора объектов была построена блок-схема, описывающая последовательность операций от создания клиента до сохранения найденных объектов.")
-    add_figure(document, "Рисунок 2 – Блок-схема сценария подбора объектов", asset_paths["activity"], width_cm=16)
+    add_scenario_table(document, "Таблица 1.2 – Сценарий успешного выполнения варианта использования «Поиск объектов для клиента»", first.success_actions, first.success_system)
+    add_scenario_table(document, "Таблица 1.3 – Обработка исключительных ситуаций для варианта использования «Поиск объектов для клиента»", first.exception_actions, first.exception_system)
 
     add_text(document, "Вторым ключевым вариантом использования является формирование персональной подборки и подготовка сообщения для клиента.")
-    add_key_value_table(document, "Таблица 7 – Основной вариант использования «Формирование подборки и подготовка сообщения»", [
+    add_key_value_table(document, "Таблица 2.1 – Главный раздел сценария варианта использования «Формирование подборки и подготовка сообщения»", [
         ("Вариант использования (прецедент)", second.name),
         ("Актеры", second.actors),
         ("Краткое описание", second.summary),
         ("Цель", second.goal),
         ("Тип", second.kind),
     ])
-    add_scenario_table(document, "Таблица 8 – Сценарий успешного выполнения варианта использования «Формирование подборки и подготовка сообщения»", second.success_actions, second.success_system)
-    add_scenario_table(document, "Таблица 9 – Сценарии обработки исключительных ситуаций для варианта использования «Формирование подборки и подготовка сообщения»", second.exception_actions, second.exception_system)
+    add_scenario_table(document, "Таблица 2.2 – Сценарий успешного выполнения варианта использования «Формирование подборки и подготовка сообщения»", second.success_actions, second.success_system)
+    add_scenario_table(document, "Таблица 2.3 – Обработка исключительных ситуаций для варианта использования «Формирование подборки и подготовка сообщения»", second.exception_actions, second.exception_system)
 
-    add_heading(document, "2.2 Проектирование модели данных", level=2)
+    add_heading(document, "2.2 Проектирование диаграмм деятельности", level=2)
+    add_text(document, "На основе сценария подбора объектов была построена блок-схема, описывающая последовательность операций от создания клиента до сохранения найденных объектов.")
+    add_figure(document, "Рисунок 4 – Диаграмма деятельности подбора объектов недвижимости", asset_paths["activity"], width_cm=16)
+
+    add_heading(document, "2.3 Проектирование диаграммы состояний", level=2)
+    add_text(document, "Состояние клиентской заявки изменяется серверной частью приложения в зависимости от действий риелтора и результата поискового контура. Диаграмма состояний показывает переходы между новой заявкой, поиском, найденными объектами, готовой подборкой, отправленной подборкой и ошибочными состояниями.")
+    add_figure(document, "Рисунок 5 – Диаграмма состояний клиентской заявки", asset_paths["state"], width_cm=16)
+
+    add_heading(document, "2.4 Проектирование диаграммы компонентов", level=2)
+    add_text(document, "Компонентная модель системы отражает разделение приложения на пользовательский интерфейс, backend API, поисковый сервис, PostgreSQL и внешние источники недвижимости. Такое разделение соответствует фактической структуре проекта и контейнерному развертыванию через Docker Compose.")
+    add_figure(document, "Рисунок 6 – Диаграмма компонентов веб-приложения «Тэона»", asset_paths["component"], width_cm=16)
+
+    add_heading(document, "2.5 Проектирование модели данных", level=2)
     add_text(document, "Модель данных спроектирована с учетом необходимости постоянного хранения клиентов, параметров поиска, найденных объектов, shortlist и истории запусков поиска. В отличие от временных in-memory структур, PostgreSQL обеспечивает сохранность данных после перезапуска контейнеров и позволяет централизованно хранить результат поиска по каждому клиенту.")
-    add_figure(document, "Рисунок 3 – Архитектурная схема системы", asset_paths["architecture"], width_cm=16)
-    add_figure(document, "Рисунок 4 – Схема базы данных PostgreSQL", asset_paths["er"], width_cm=16)
+    add_figure(document, "Рисунок 7 – Архитектурная схема системы", asset_paths["architecture"], width_cm=16)
+    add_figure(document, "Рисунок 8 – Схема базы данных PostgreSQL", asset_paths["er"], width_cm=16)
 
-    add_heading(document, "2.3 Проектирование интерфейса пользователя", level=2)
+    add_heading(document, "2.6 Разработка алгоритмов обработки данных", level=2)
+    add_heading(document, "2.6.1 Разработка алгоритма парсинга и географической фильтрации", level=3)
+    add_text(document, "Алгоритм парсинга отделен от backend API и реализован в search-service. Его задача заключается в получении HTML и JSON-LD из заранее заданных источников, извлечении характеристик объекта, отсечении карточек не из города Краснодар и нормализации результата к единой структуре PropertyItem.")
+    add_figure(document, "Рисунок 9 – Алгоритм парсинга и географической фильтрации", asset_paths["algorithm_parsing"], width_cm=16)
+    add_heading(document, "2.6.2 Разработка алгоритма расчета процента совпадения", level=3)
+    add_text(document, "Алгоритм расчета match score применяется после нормализации объекта. Для квартир учитываются бюджет, комнатность, площадь, район, срок сдачи и отделка. Для домов учитываются бюджет, площадь дома, площадь участка, локация, коммуникации, этажность и спальни.")
+    add_figure(document, "Рисунок 10 – Алгоритм расчета match score", asset_paths["algorithm_scoring"], width_cm=16)
+    add_heading(document, "2.6.3 Разработка алгоритма сохранения результатов поиска", level=3)
+    add_text(document, "Алгоритм сохранения результатов поиска обеспечивает постоянство данных. Backend API сохраняет нормализованные объекты в таблицу properties, связь объекта с клиентом в client_found_properties, а историю запуска поиска в search_runs.")
+    add_figure(document, "Рисунок 11 – Алгоритм сохранения результатов поиска в PostgreSQL", asset_paths["algorithm_persistence"], width_cm=16)
+
+    add_heading(document, "2.7 Проектирование интерфейса пользователя", level=2)
     add_text(document, "Интерфейс приложения был спроектирован в виде набора wireframes, отражающих основные рабочие окна системы. Такой подход позволил определить расположение зон управления, таблиц, карточек и модальных окон до детализации визуального оформления.")
-    add_figure(document, "Рисунок 5 – Wireframe окна авторизации", asset_paths["wf_login"], width_cm=16)
-    add_figure(document, "Рисунок 6 – Wireframe главной страницы", asset_paths["wf_dashboard"], width_cm=16)
-    add_figure(document, "Рисунок 7 – Wireframe списка клиентов", asset_paths["wf_clients"], width_cm=16)
-    add_figure(document, "Рисунок 8 – Wireframe карточки клиента", asset_paths["wf_client"], width_cm=16)
+    add_figure(document, "Рисунок 12 – Wireframe окна авторизации", asset_paths["wf_login"], width_cm=16)
+    add_figure(document, "Рисунок 13 – Wireframe главной страницы", asset_paths["wf_dashboard"], width_cm=16)
+    add_figure(document, "Рисунок 14 – Wireframe списка клиентов", asset_paths["wf_clients"], width_cm=16)
+    add_figure(document, "Рисунок 15 – Wireframe карточки клиента", asset_paths["wf_client"], width_cm=16)
     add_text(document, "После этапа wireframes были подготовлены экранные макеты и рабочие экраны интерфейса, отражающие визуальный стиль системы. Основной темой является светлый CRM-интерфейс с оранжевым акцентом, фиксированным боковым меню и верхней панелью поиска.")
-    add_figure(document, "Рисунок 9 – Экран авторизации приложения", asset_paths["screen_login"], width_cm=16)
-    add_figure(document, "Рисунок 10 – Главная страница приложения", asset_paths["screen_dashboard"], width_cm=16)
-    add_figure(document, "Рисунок 11 – Страница списка клиентов", asset_paths["screen_clients"], width_cm=16)
-    add_figure(document, "Рисунок 12 – Карточка клиента", asset_paths["screen_client"], width_cm=16)
-    add_figure(document, "Рисунок 13 – Модальное окно подготовки сообщения", asset_paths["screen_modal"], width_cm=16)
+    add_figure(document, "Рисунок 16 – Экран авторизации приложения", asset_paths["screen_login"], width_cm=16)
+    add_figure(document, "Рисунок 17 – Главная страница приложения", asset_paths["screen_dashboard"], width_cm=16)
+    add_figure(document, "Рисунок 18 – Страница списка клиентов", asset_paths["screen_clients"], width_cm=16)
+    add_figure(document, "Рисунок 19 – Карточка клиента", asset_paths["screen_client"], width_cm=16)
+    add_figure(document, "Рисунок 20 – Модальное окно подготовки сообщения", asset_paths["screen_modal"], width_cm=16)
 
-    add_heading(document, "3 Рабочий проект")
+    add_heading(document, "3 Реализация")
     add_heading(document, "3.1 Обоснование выбора средств разработки", level=2)
     techs = [
         "Для реализации пользовательского интерфейса выбрана библиотека React и сборщик Vite. Такое решение обеспечивает компонентный подход, быстрый локальный запуск и удобную организацию SPA-приложения.",
@@ -1000,7 +1206,7 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     style_table(table)
     add_text(document, "Для хранения клиентов используется отдельная таблица clients, связанная с users по полю realtor_id. Параметры поиска вынесены в таблицу client_search_profiles, чтобы карточка клиента не перегружалась большим числом nullable-полей. Нормализованные объекты источников сохраняются в properties, а факт соответствия конкретного объекта конкретному клиенту фиксируется в client_found_properties с match score и текстовыми причинами совпадения или несовпадения.")
     add_text(document, "Такая структура позволяет повторно использовать одну и ту же карточку объекта для нескольких клиентов, отслеживать историю запусков поиска и не терять собранные подборки. Для итоговой демонстрации и последующей защиты в проект был подготовлен отдельный скриншот просмотра таблицы clients в базе данных.")
-    add_figure(document, "Рисунок 14 – Просмотр таблицы clients в PostgreSQL", asset_paths["screen_db"], width_cm=16)
+    add_figure(document, "Рисунок 21 – Просмотр таблицы clients в PostgreSQL", asset_paths["screen_db"], width_cm=16)
 
     add_heading(document, "3.3 Программная реализация модулей", level=2)
     modules = [
@@ -1153,8 +1359,8 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     add_text(document, "Результатом работы системы для риелтора являются сформированная подборка и текст сообщения для клиента. Пример структуры сообщения приведен ниже.")
     add_sql_snippet(document, "Пример текста подборки", [
         "Здравствуйте. Подобрал для вас несколько вариантов.",
-        "1. ЖК «Nova Vita», 1-комн., 40.6 м², 5 275 000 ₽.",
-        "2. ЖК «Точно», 2-комн., 53.8 м², 6 540 000 ₽.",
+        "1. 1-к квартира, 40.6 м², ЖК «Nova Vita», 5 275 000 ₽.",
+        "2. 2-к квартира, 53.8 м², ЖК «Точно», 6 540 000 ₽.",
         "Если хотите, могу уточнить детали по каждому варианту.",
     ])
     add_figure(document, "Рисунок Д.1 – Интерфейс модального окна подготовки сообщения", asset_paths["screen_modal"], width_cm=16)

@@ -2,10 +2,61 @@
 
 ## Current Version
 
-- Git version for this iteration: `v0.1.14`
+- Git version for this iteration: `v0.1.15`
 - Branch: `main`
 
-## What Was Fixed In This Iteration
+## What Was Done In This Iteration
+
+Подготовлена новая версия пояснительной записки по референсу `Диплом ПЗ — копия — копия.docx`:
+
+- пересобран файл `67_Зубач_ПЗ.docx`
+- документ приведен ближе к структуре референса: начинается с `Содержание`, далее идут `Введение`, разделы 1-3, заключение, список источников и приложения
+- выставлены параметры страницы как в референсе:
+  - A4
+  - верхнее поле 1.63 см
+  - нижнее поле 3.6 см
+  - левое поле 2 см
+  - правое поле 0.55 см
+  - Times New Roman 14 pt
+  - межстрочный интервал 1.5
+- добавлены диаграммы вариантов использования для приложения, модуля поиска и модуля подборки
+- добавлены диаграммы деятельности, состояний, компонентов и базы данных
+- добавлены блок-схемы алгоритмов:
+  - парсинг и географическая фильтрация по городу Краснодар
+  - расчет процента совпадения
+  - сохранение результатов поиска в PostgreSQL
+- добавлены wireframes окон приложения
+- обновлены демонстрационные скриншоты интерфейса и просмотра БД
+- в ПЗ описаны frontend, backend API, search-service, PostgreSQL, Docker Compose, источники парсинга и сценарии работы
+- тест-кейсы оформлены через `Действие №...`, без простой нумерации `1.`
+- в сценариях use case шаги оформлены через `Действие №...`
+- добавлен раздел с результатами автоматизированного тестирования
+- в изображения для ПЗ заменен символ `₽` на `руб.`, чтобы в PNG не появлялись битые glyph-квадраты
+
+## Files Changed In This Iteration
+
+- [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx)
+- [scripts/build_zubach_pz.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/scripts/build_zubach_pz.py)
+- [docs/assets/zubach_pz](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/docs/assets/zubach_pz)
+- [ITERATION_SUMMARY.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/ITERATION_SUMMARY.md)
+
+## Tests And Verification In This Iteration
+
+Проверки:
+
+- `npm run typecheck` — пройдено
+- `npm run build` — пройдено
+- `cd apps/search-service && .venv/bin/python -m unittest discover -s tests -v` — пройдено, 10 тестов
+- `python3 scripts/build_zubach_pz.py` — пройдено, документ и 22 изображения пересобраны
+- структурная проверка `.docx` через `python-docx` — пройдена:
+  - 3566 параграфов
+  - 24 таблицы
+  - A4
+  - поля совпадают с референсом
+- визуальный render `.docx` через LibreOffice не выполнен, потому что на машине не найден `soffice`
+- PNG-диаграммы и ключевые скриншоты проверены вручную через просмотр изображений
+
+## Previous Iteration v0.1.14
 
 Исправлены проблемы из клиентской карточки и главной страницы:
 
