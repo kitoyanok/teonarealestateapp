@@ -10,6 +10,7 @@ import {
   hasRealPropertyImage,
   profileSummary,
   propertyDescription,
+  propertyDistrictLabel,
   propertyMeta,
   propertySourceLabel,
   propertyTitle
@@ -94,6 +95,7 @@ function PropertyDrawer({
   const safeRooms = property.rooms !== null && property.rooms !== undefined && property.rooms >= 0 && property.rooms <= 8
     ? property.rooms
     : null;
+  const district = propertyDistrictLabel(property);
   return (
     <div className="drawer-backdrop" onClick={onClose}>
       <aside className="property-drawer" onClick={(event) => event.stopPropagation()}>
@@ -121,6 +123,7 @@ function PropertyDrawer({
             ? [
                 ["Дом", property.houseArea ? `${property.houseArea} м²` : null],
                 ["Участок", property.landArea ? `${property.landArea} сот.` : null],
+                ["Район", district],
                 ["Этажей", property.houseFloors],
                 ["Спален", property.bedrooms],
                 ["Материал", property.houseMaterial],
@@ -129,6 +132,7 @@ function PropertyDrawer({
             : [
                 ["Площадь", property.area ? `${property.area} м²` : null],
                 ["Комнат", safeRooms === 0 ? "Студия" : safeRooms],
+                ["Район", district],
                 ["Этаж", property.floor && property.floorsTotal ? `${property.floor}/${property.floorsTotal}` : null],
                 ["Срок сдачи", property.completionYear],
                 ["Отделка", property.finishing],
@@ -331,11 +335,11 @@ export function ClientPage() {
             )}
           </div>
           <div className="client-summary-tiles">
-            <div className="client-summary-card">
+            <div className="client-summary-card client-summary-card--metric">
               <span>В подборке</span>
               <strong>{shortlist.length} объекта</strong>
             </div>
-            <div className="client-summary-card">
+            <div className="client-summary-card client-summary-card--metric">
               <span>Найдено</span>
               <strong>{found.length} объекта</strong>
             </div>

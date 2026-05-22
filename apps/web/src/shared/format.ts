@@ -182,37 +182,52 @@ export function propertyTitle(property: Property) {
   return `${roomsLabel}${area}`.trim().replace(/,$/, "");
 }
 
+export function propertyDistrictLabel(property: Property) {
+  return property.district
+    || extractDistrictFromTitle(property.title)
+    || extractDistrictFromTitle(property.description)
+    || null;
+}
+
 export function propertySourceLabel(property: Property) {
   return property.developerName || property.sourceName || "Источник не указан";
 }
 
 export function propertyMeta(property: Property) {
   const rooms = normalizeRoomCount(property.rooms);
+  const district = propertyDistrictLabel(property);
   if (property.propertyType === "house") {
     return [
       property.houseArea ? `Дом ${property.houseArea} м²` : null,
       property.landArea ? `участок ${property.landArea} сот.` : null,
-      property.settlementName ? wrapProjectName("в КП", property.settlementName) : property.district
+      district ? `район ${district}` : null,
+      property.settlementName ? wrapProjectName("в КП", property.settlementName) : null
     ].filter(Boolean).join(" · ");
   }
 
   return [
     rooms === 0 ? "студия" : rooms ? `${rooms}-комн.` : null,
     property.area ? `${property.area} м²` : null,
-    property.district || shortAddress(property.address)
+    district ? `район ${district}` : shortAddress(property.address)
   ].filter(Boolean).join(" · ");
 }
 
 export function propertyDescription(property: Property) {
   const rooms = normalizeRoomCount(property.rooms);
+  const district = propertyDistrictLabel(property);
   if (property.description && !looksLikeBadDescription(property.description)) {
-    return property.description.trim();
+    const description = property.description.trim();
+    if (district && !description.toLowerCase().includes(district.toLowerCase())) {
+      return `Район ${district}. ${description}`;
+    }
+    return description;
   }
 
   if (property.propertyType === "house") {
     return [
       propertyTitle(property) ? `${propertyTitle(property)}.` : null,
-      property.settlementName ? `Локация: ${property.settlementName}.` : property.district ? `Локация: ${property.district}.` : null,
+      district ? `Район ${district}.` : null,
+      property.settlementName ? `Локация: ${property.settlementName}.` : null,
       property.landArea ? `Участок ${formatLand(property.landArea)}.` : null,
       property.price ? `Цена ${formatMoney(property.price)}.` : null,
       `Источник: ${propertySourceLabel(property)}.`
@@ -221,7 +236,7 @@ export function propertyDescription(property: Property) {
 
   return [
     propertyTitle(property) ? `${propertyTitle(property)}.` : null,
-    property.district ? `Район ${property.district}.` : null,
+    district ? `Район ${district}.` : null,
     property.area ? `Площадь ${formatArea(property.area)}.` : null,
     rooms !== null
       ? `${rooms === 0 ? "Студия" : `${rooms}-комнатная квартира`}.`

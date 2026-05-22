@@ -8,10 +8,10 @@ import { profileSummary } from "../shared/format";
 import { StatusBadge } from "../widgets/StatusBadge";
 
 const kpiConfig = [
-  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness, activityKey: "clients" },
-  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House, activityKey: "found" },
-  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList, activityKey: "shortlisted" },
-  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig, activityKey: "sent" }
+  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness, activityKey: "clients", chartType: "bars" },
+  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House, activityKey: "found", chartType: "line" },
+  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList, activityKey: "shortlisted", chartType: "bars" },
+  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig, activityKey: "sent", chartType: "bars" }
 ] as const;
 
 function MiniBars({ values, accentIndex }: { values: number[]; accentIndex: number }) {
@@ -24,6 +24,30 @@ function MiniBars({ values, accentIndex }: { values: number[]; accentIndex: numb
           style={{ height: `${16 + value * 6}px` }}
         />
       ))}
+    </div>
+  );
+}
+
+function MiniLine({ values }: { values: number[] }) {
+  const max = Math.max(...values, 0);
+  if (max <= 0) {
+    return null;
+  }
+  const width = 260;
+  const height = 78;
+  const step = values.length > 1 ? width / (values.length - 1) : width;
+  const points = values
+    .map((value, index) => {
+      const x = Math.round(index * step);
+      const y = Math.round(height - 10 - (value / max) * 48);
+      return `${x},${y}`;
+    })
+    .join(" ");
+  return (
+    <div className="mini-line" aria-hidden="true">
+      <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
+        <polyline points={points} />
+      </svg>
     </div>
   );
 }
@@ -73,15 +97,18 @@ export function DashboardPage() {
   return (
     <div className="page dashboard-page">
       <section className="kpi-grid">
-        {kpiConfig.map((item, index) => {
+        {kpiConfig.map((item) => {
           const Icon = item.icon;
           const bars = activity.data?.length ? buildSeries(activity.data, item.activityKey) : [];
+          const lineValues = activity.data?.length ? activity.data.map((point) => point[item.activityKey]) : [];
           return (
             <article className="kpi-card" key={item.key}>
               <div className="kpi-card__head">
                 <strong>{summary.data?.[item.key] ?? 0}</strong>
               </div>
-              {bars.length ? <MiniBars values={bars} accentIndex={bars.length - 1} /> : null}
+              {item.chartType === "line"
+                ? (lineValues.some((value) => value > 0) ? <MiniLine values={lineValues} /> : null)
+                : (bars.length ? <MiniBars values={bars} accentIndex={bars.length - 1} /> : null)}
               <div className="kpi-card__label">
                 <Icon size={15} />
                 <div>
