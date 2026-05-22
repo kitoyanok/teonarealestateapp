@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, BriefcaseBusiness, ChartColumnBig, ClipboardList, House } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { ActivityPoint, Client, DashboardSummary } from "../entities/types";
 import { api } from "../shared/api";
 import { profileSummary } from "../shared/format";
@@ -40,17 +40,27 @@ function MiniLine({ values }: { values: number[] }) {
   );
 }
 
+function trendLabel(values: number[]) {
+  const latest = values[values.length - 1] ?? 0;
+  const previous = values[values.length - 2] ?? 0;
+  if (previous <= 0 || latest === previous) {
+    return null;
+  }
+  const percent = ((latest - previous) / previous) * 100;
+  const sign = percent > 0 ? "+" : "";
+  const arrow = percent > 0 ? "↗" : "↘";
+  return `${arrow} ${sign}${percent.toFixed(1)}%`;
+}
+
 function DashboardTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value?: number }>; label?: string }) {
   if (!active || !payload?.length) {
     return null;
   }
-  const foundValue = payload.find((item, index) => index === 0)?.value ?? 0;
-  const shortlistValue = payload.find((item, index) => index === 1)?.value ?? 0;
+  const foundValue = payload[0]?.value ?? 0;
   return (
     <div className="chart-tooltip">
       <strong>{label}</strong>
       <span>Найдено объектов: {foundValue}</span>
-      <span>Добавлено в подборки: {shortlistValue}</span>
     </div>
   );
 }
@@ -79,17 +89,18 @@ export function DashboardPage() {
         {kpiConfig.map((item) => {
           const Icon = item.icon;
           const lineValues = activity.data?.length ? activity.data.map((point) => point[item.activityKey]) : [];
+          const trend = trendLabel(lineValues);
           return (
             <article className="kpi-card" key={item.key}>
               <div className="kpi-card__head">
                 <strong>{summary.data?.[item.key] ?? 0}</strong>
+                {trend ? <span className="kpi-card__trend">{trend}</span> : null}
               </div>
               {lineValues.some((value) => value > 0) ? <MiniLine values={lineValues} /> : null}
               <div className="kpi-card__label">
-                <Icon size={15} />
+                <Icon size={24} />
                 <div>
                   <span>{item.title}</span>
-                  <small>{item.subtitle}</small>
                 </div>
               </div>
             </article>
@@ -113,8 +124,7 @@ export function DashboardPage() {
                   <XAxis dataKey="label" stroke="#8F8F8F" tickLine={false} axisLine={false} />
                   <YAxis stroke="#8F8F8F" tickLine={false} axisLine={false} allowDecimals={false} />
                   <Tooltip content={<DashboardTooltip />} cursor={{ fill: "rgba(253,96,0,0.06)" }} />
-                  <Line dataKey="found" type="monotone" stroke="#FD6000" strokeWidth={4} dot={{ r: 4, fill: "#FD6000" }} activeDot={{ r: 6 }} />
-                  <Bar dataKey="shortlisted" radius={[8, 8, 0, 0]} fill="#FFD6B8" barSize={20} />
+                  <Line dataKey="found" type="monotone" stroke="#FD6000" strokeWidth={5} dot={{ r: 6, fill: "#FD6000", stroke: "#FD6000" }} activeDot={{ r: 8 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>

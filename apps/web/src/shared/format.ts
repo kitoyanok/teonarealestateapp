@@ -73,6 +73,35 @@ function normalizeRoomCount(value?: number | null) {
   return value;
 }
 
+function extractRoomCountFromText(value?: string | null) {
+  const text = value?.toLowerCase();
+  if (!text) {
+    return null;
+  }
+  if (/(^|\s)(студия|студии|студию)(\s|$|,|\.)/.test(text)) {
+    return 0;
+  }
+  const patterns = [
+    /(^|[^\d])([1-8])\s*[-–—]?\s*к(?:\s|\.|,|$)/,
+    /(^|[^\d])([1-8])\s*[-–—]?\s*комн(?:атн(?:ая|ый|ые|ое)?)?(?:\s|\.|,|$)/,
+    /(^|[^\d])([1-8])\s*комнат(?:а|ы)?(?:\s|\.|,|$)/
+  ];
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    const rooms = match?.[2] ? Number(match[2]) : null;
+    if (rooms !== null) {
+      return normalizeRoomCount(rooms);
+    }
+  }
+  return null;
+}
+
+function propertyRooms(property: Property) {
+  return normalizeRoomCount(property.rooms)
+    ?? extractRoomCountFromText(property.title)
+    ?? extractRoomCountFromText(property.description);
+}
+
 function looksLikeBadDescription(value?: string | null) {
   const text = value?.trim().toLowerCase();
   if (!text) {
@@ -167,10 +196,16 @@ function extractAddressFromTitle(value?: string | null) {
 }
 
 export function propertyTitle(property: Property) {
-  const rooms = normalizeRoomCount(property.rooms);
+  const rooms = propertyRooms(property);
 
   if (property.propertyType === "house") {
-    return property.houseArea ? `Дом ${property.houseArea} м²` : "Дом";
+    const houseRooms = normalizeRoomCount(property.bedrooms)
+      ?? rooms
+      ?? extractRoomCountFromText(property.title)
+      ?? extractRoomCountFromText(property.description);
+    const houseLabel = houseRooms ? `${houseRooms}-к дом` : "Дом";
+    const area = property.houseArea ? `, ${property.houseArea} м²` : "";
+    return `${houseLabel}${area}`;
   }
 
   const roomsLabel = rooms === 0
@@ -194,7 +229,7 @@ export function propertySourceLabel(property: Property) {
 }
 
 export function propertyMeta(property: Property) {
-  const rooms = normalizeRoomCount(property.rooms);
+  const rooms = propertyRooms(property);
   const district = propertyDistrictLabel(property);
   if (property.propertyType === "house") {
     return [
@@ -213,7 +248,7 @@ export function propertyMeta(property: Property) {
 }
 
 export function propertyDescription(property: Property) {
-  const rooms = normalizeRoomCount(property.rooms);
+  const rooms = propertyRooms(property);
   const district = propertyDistrictLabel(property);
   if (property.description && !looksLikeBadDescription(property.description)) {
     const description = property.description.trim();
