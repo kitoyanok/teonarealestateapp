@@ -2,7 +2,7 @@
 
 ## Current Version
 
-- Git version for this iteration: `v0.1.13`
+- Git version for this iteration: `v0.1.14`
 - Branch: `main`
 
 ## What Was Fixed In This Iteration
@@ -29,6 +29,19 @@
   - `2-к квартира`
   - `Студия`
   - `3-к дом`
+- парсинг географии ужесточен до города Краснодар:
+  - объекты из других городов Краснодарского края отбрасываются до matcher
+  - Сочи, Анапа, Новороссийск, Геленджик, Армавир и другие города края не попадают в выдачу
+  - город и район проверяются на уровне search-service до сохранения в PostgreSQL
+- извлечение района и характеристик усилено:
+  - район города Краснодар
+  - этаж и этажность
+  - отделка
+  - этажность дома
+  - спальни
+  - материал дома
+  - коммуникации
+- документация по источникам обновлена: источники лежат в `apps/search-service/app/adapters/sources.py`, поиск по новым сайтам не происходит автоматически
 
 ## Files Changed
 
@@ -42,6 +55,7 @@
 - [apps/search-service/app/adapters/base.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/adapters/base.py)
 - [apps/search-service/app/utils/text.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/utils/text.py)
 - [apps/search-service/tests/test_normalization.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/tests/test_normalization.py)
+- [docs/PARSING_SOURCES.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/docs/PARSING_SOURCES.md)
 
 ## Client Page Changes
 

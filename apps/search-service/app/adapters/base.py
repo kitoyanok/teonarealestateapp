@@ -34,14 +34,28 @@ BAD_DESCRIPTION_PHRASES = (
     "в продаже",
 )
 
-DISTRICT_MARKERS = (
-    "прикубанский",
-    "карасунский",
-    "западный",
-    "центральный",
-    "фестивальный",
-    "юбилейный",
-    "гидростроителей"
+KRASNODAR_CITY_PATTERNS = (
+    r"\bг\.?\s*краснодар\b",
+    r"\bгород\s+краснодар\b",
+    r"\bкраснодар[,.\s]",
+    r"\bкраснодар\s*,\s*ул",
+)
+KRASNODAR_URL_MARKERS = ("krasnodar", "krd", "%d0%ba%d1%80%d0%b0%d1%81%d0%bd%d0%be%d0%b4%d0%b0%d1%80")
+EXCLUDED_KRAI_LOCALITIES = (
+    "сочи", "адлер", "анап", "геленджик", "новороссийск", "армавир", "ейск", "туапсе",
+    "горячий ключ", "славянск-на-кубани", "крымск", "тимашевск", "лабинск", "курганинск",
+    "белореченск", "апшеронск", "темрюк", "абинск", "кореновск", "усть-лабинск", "динская",
+    "северская", "афипский", "яблоновский", "адыгейск", "тахтамукай"
+)
+
+DISTRICT_ALIASES = (
+    ("Прикубанский", ("прикубанский", "прик")),
+    ("Карасунский", ("карасунский", "кмр", "гидростроителей", "гмр", "пашковский")),
+    ("Западный", ("западный", "юмр", "юбилейный")),
+    ("Центральный", ("центральный", "центр", "цмр", "черемушки", "чмр")),
+    ("Фестивальный", ("фестивальный", "фмр")),
+    ("Юбилейный", ("юбилейный", "юмр")),
+    ("Гидростроителей", ("гидростроителей", "гмр")),
 )
 
 
@@ -104,6 +118,8 @@ class BaseAdapter:
         for item in items:
             if item.price is None:
                 continue
+            if item.city != "Краснодар":
+                continue
             unique[item.sourceUrl] = item
         return list(unique.values())[:40]
 
@@ -152,6 +168,8 @@ class BaseAdapter:
         brand = node.get("brand")
         developer_name = clean_text(brand.get("name")) if isinstance(brand, dict) else clean_text(str(brand or "")) or None
         text = clean_text(f"{raw_title} {node.get('description') or ''}")
+        if not self._is_krasnodar_city(text, urljoin(url, item_url)):
+            return None
         area = parse_area(text)
         rooms = parse_rooms(text)
         land_area = self._parse_land_area(text)
@@ -205,7 +223,14 @@ class BaseAdapter:
             rooms=rooms,
             houseArea=area if request.propertyType == "house" else None,
             landArea=land_area if request.propertyType == "house" else None,
+            floor=self._parse_floor(text)[0],
+            floorsTotal=self._parse_floor(text)[1],
+            bedrooms=self._parse_bedrooms(text),
+            houseFloors=self._parse_house_floors(text),
+            houseMaterial=self._parse_house_material(text),
+            communications=self._parse_communications(text),
             completionYear=extract_year(text),
+            finishing=self._parse_finishing(text),
             images=images,
             rawData={"sourceType": "json-ld", "adapter": self.config.adapter_key}
         )
@@ -231,6 +256,8 @@ class BaseAdapter:
 
             href = link.get("href") or url
             item_url = urljoin(url, href)
+            if not self._is_krasnodar_city(text, item_url):
+                continue
             raw_title = clean_text(link.get_text(" ", strip=True)) or text[:120]
             image = card.select_one("img")
             image_url = image.get("src") or image.get("data-src") if image else None
@@ -297,7 +324,14 @@ class BaseAdapter:
                     rooms=rooms if request.propertyType == "apartment" else None,
                     houseArea=area if request.propertyType == "house" else None,
                     landArea=land_area if request.propertyType == "house" else None,
+                    floor=self._parse_floor(text)[0] if request.propertyType == "apartment" else None,
+                    floorsTotal=self._parse_floor(text)[1] if request.propertyType == "apartment" else None,
+                    bedrooms=self._parse_bedrooms(text) if request.propertyType == "house" else None,
+                    houseFloors=self._parse_house_floors(text) if request.propertyType == "house" else None,
+                    houseMaterial=self._parse_house_material(text) if request.propertyType == "house" else None,
+                    communications=self._parse_communications(text) if request.propertyType == "house" else [],
                     completionYear=extract_year(text),
+                    finishing=self._parse_finishing(text) if request.propertyType == "apartment" else None,
                     images=[normalized_image] if normalized_image else [],
                     rawData={"sourceType": "visible-card", "adapter": self.config.adapter_key}
                 )
@@ -453,9 +487,9 @@ class BaseAdapter:
 
     def _extract_district(self, text: str) -> str | None:
         lowered = text.lower()
-        for marker in DISTRICT_MARKERS:
-            if marker in lowered:
-                return marker.capitalize()
+        for district, aliases in DISTRICT_ALIASES:
+            if any(re.search(rf"(^|[^а-яa-z]){re.escape(alias)}([^а-яa-z]|$)", lowered) for alias in aliases):
+                return district
         return None
 
     def _extract_address(self, text: str) -> str | None:
@@ -479,6 +513,85 @@ class BaseAdapter:
         if not match:
             return None
         return float(match.group(1).replace(",", "."))
+
+    def _is_krasnodar_city(self, text: str, url: str) -> bool:
+        lowered = clean_text(text).lower()
+        lowered_url = url.lower()
+        if any(locality in lowered for locality in EXCLUDED_KRAI_LOCALITIES):
+            return False
+        if any(re.search(pattern, lowered) for pattern in KRASNODAR_CITY_PATTERNS):
+            return True
+        if self._extract_district(text):
+            return True
+        return any(marker in lowered_url for marker in KRASNODAR_URL_MARKERS)
+
+    def _parse_floor(self, text: str) -> tuple[int | None, int | None]:
+        lowered = text.lower()
+        match = re.search(r"(?<!\d)(\d{1,2})\s*/\s*(\d{1,2})\s*эт", lowered)
+        if match:
+            return int(match.group(1)), int(match.group(2))
+        match = re.search(r"этаж\s*(\d{1,2})\s*(?:из|/)\s*(\d{1,2})", lowered)
+        if match:
+            return int(match.group(1)), int(match.group(2))
+        match = re.search(r"(\d{1,2})\s*этаж(?:\s*из\s*(\d{1,2}))?", lowered)
+        if match:
+            floor = int(match.group(1))
+            total = int(match.group(2)) if match.group(2) else None
+            return floor, total
+        match = re.search(r"(\d{1,2})\s*-\s*(\d{1,2})\s*этаж", lowered)
+        if match:
+            return None, int(match.group(2))
+        match = re.search(r"(\d{1,2})\s*этажа?", lowered)
+        if match:
+            return None, int(match.group(1))
+        return None, None
+
+    def _parse_finishing(self, text: str) -> str | None:
+        lowered = text.lower()
+        if "white box" in lowered or "предчист" in lowered:
+            return "предчистовая"
+        if "чистовая" in lowered or "с отделкой" in lowered or "ремонт" in lowered:
+            return "с отделкой"
+        if "без отделки" in lowered:
+            return "без отделки"
+        return None
+
+    def _parse_bedrooms(self, text: str) -> int | None:
+        match = re.search(r"([1-8])\s*спаль", text.lower())
+        return int(match.group(1)) if match else None
+
+    def _parse_house_floors(self, text: str) -> int | None:
+        lowered = text.lower()
+        match = re.search(r"([1-4])\s*(?:этажа?|уровн)", lowered)
+        return int(match.group(1)) if match else None
+
+    def _parse_house_material(self, text: str) -> str | None:
+        lowered = text.lower()
+        materials = (
+            ("монолит-кирпич", ("монолит-кирпич", "монолит кирпич")),
+            ("кирпич", ("кирпич", "кирпичный")),
+            ("монолит", ("монолит", "монолитный")),
+            ("газобетон", ("газобетон", "газоблок")),
+            ("керамический блок", ("керамический блок", "керамоблок")),
+            ("каркас", ("каркас", "каркасный")),
+        )
+        for label, markers in materials:
+            if any(marker in lowered for marker in markers):
+                return label
+        return None
+
+    def _parse_communications(self, text: str) -> list[str]:
+        lowered = text.lower()
+        communications: list[str] = []
+        for label, markers in (
+            ("газ", ("газ", "газифиц")),
+            ("электричество", ("электричество", "свет", "эл-во")),
+            ("вода", ("вода", "водоснабжение")),
+            ("канализация", ("канализация", "септик")),
+        ):
+            if any(marker in lowered for marker in markers):
+                communications.append(label)
+        return communications
 
     def _prefixed_project_name(self, value: str | None, prefix: str) -> str | None:
         if not value:

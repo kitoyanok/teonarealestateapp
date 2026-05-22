@@ -59,6 +59,29 @@ class NormalizationTests(unittest.TestCase):
         )
         self.assertIsNone(description)
 
+    def test_krasnodar_city_filter_rejects_other_krai_cities(self):
+        self.assertFalse(
+            self.adapter._is_krasnodar_city(
+                "Краснодарский край, Новороссийск, 1-к квартира 40 м²",
+                "https://krasnodar.example.com/catalog"
+            )
+        )
+
+    def test_krasnodar_city_filter_accepts_city_district(self):
+        self.assertTrue(
+            self.adapter._is_krasnodar_city(
+                "Краснодар, Прикубанский район, 2-к квартира 65 м²",
+                "https://example.com/catalog"
+            )
+        )
+
+    def test_city_district_and_characteristics_are_extracted(self):
+        text = "г. Краснодар, Карасунский район, 2-к квартира 54 м², 7/16 этаж, предчистовая отделка"
+
+        self.assertEqual(self.adapter._extract_district(text), "Карасунский")
+        self.assertEqual(self.adapter._parse_floor(text), (7, 16))
+        self.assertEqual(self.adapter._parse_finishing(text), "предчистовая")
+
 
 if __name__ == "__main__":
     unittest.main()
