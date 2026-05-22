@@ -8,49 +8,11 @@ import { profileSummary } from "../shared/format";
 import { StatusBadge } from "../widgets/StatusBadge";
 
 const kpiConfig = [
-  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness, activityKey: "clients" },
-  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House, activityKey: "found" },
-  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList, activityKey: "shortlisted" },
-  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig, activityKey: "ready" }
+  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness },
+  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House },
+  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList },
+  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig }
 ] as const;
-
-function MiniLine({ values }: { values: number[] }) {
-  const max = Math.max(...values, 0);
-  if (max <= 0) {
-    return null;
-  }
-  const min = Math.min(...values);
-  const width = 260;
-  const height = 78;
-  const step = values.length > 1 ? width / (values.length - 1) : width;
-  const points = values
-    .map((value, index) => {
-      const x = Math.round(index * step);
-      const ratio = max === min ? 0.45 : (value - min) / (max - min);
-      const y = Math.round(height - 12 - ratio * 52);
-      return `${x},${y}`;
-    })
-    .join(" ");
-  return (
-    <div className="mini-line" aria-hidden="true">
-      <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
-        <polyline points={points} />
-      </svg>
-    </div>
-  );
-}
-
-function trendLabel(values: number[]) {
-  const latest = values[values.length - 1] ?? 0;
-  const previous = values[values.length - 2] ?? 0;
-  if (previous <= 0 || latest === previous) {
-    return null;
-  }
-  const percent = ((latest - previous) / previous) * 100;
-  const sign = percent > 0 ? "+" : "";
-  const arrow = percent > 0 ? "↗" : "↘";
-  return `${arrow} ${sign}${percent.toFixed(1)}%`;
-}
 
 function DashboardTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value?: number }>; label?: string }) {
   if (!active || !payload?.length) {
@@ -88,19 +50,16 @@ export function DashboardPage() {
       <section className="kpi-grid">
         {kpiConfig.map((item) => {
           const Icon = item.icon;
-          const lineValues = activity.data?.length ? activity.data.map((point) => point[item.activityKey]) : [];
-          const trend = trendLabel(lineValues);
           return (
             <article className="kpi-card" key={item.key}>
               <div className="kpi-card__head">
                 <strong>{summary.data?.[item.key] ?? 0}</strong>
-                {trend ? <span className="kpi-card__trend">{trend}</span> : null}
               </div>
-              {lineValues.some((value) => value > 0) ? <MiniLine values={lineValues} /> : null}
               <div className="kpi-card__label">
-                <Icon size={24} />
+                <Icon size={15} />
                 <div>
                   <span>{item.title}</span>
+                  <small>{item.subtitle}</small>
                 </div>
               </div>
             </article>
