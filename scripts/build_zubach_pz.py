@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
-
 from docx import Document
 from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_ALIGN_VERTICAL, WD_TABLE_ALIGNMENT
@@ -663,7 +661,7 @@ def configure_styles(document: Document) -> None:
     pf = normal.paragraph_format
     pf.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     pf.space_after = Pt(0)
-    pf.first_line_indent = Cm(1.25)
+    pf.first_line_indent = Cm(1.5)
     list_style = document.styles["List Paragraph"]
     list_style.font.name = "Times New Roman"
     list_style._element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
@@ -684,7 +682,7 @@ def set_paragraph(paragraph, center: bool = False, indent: bool = True) -> None:
     paragraph.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     paragraph.paragraph_format.space_after = Pt(0)
     paragraph.paragraph_format.space_before = Pt(0)
-    paragraph.paragraph_format.first_line_indent = Cm(1.25) if indent and not center else Pt(0)
+    paragraph.paragraph_format.first_line_indent = Cm(1.5) if indent and not center else Pt(0)
 
 
 def add_text(document: Document, text: str, *, center: bool = False, bold: bool = False, italic: bool = False, indent: bool = True, size: int = 14) -> None:
@@ -1044,16 +1042,6 @@ def testcases() -> list[TestCase]:
     ]
 
 
-def add_sql_snippet(document: Document, title: str, lines: Iterable[str]) -> None:
-    add_heading(document, title, level=3)
-    for line in lines:
-        p = document.add_paragraph()
-        p.paragraph_format.first_line_indent = Pt(0)
-        p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-        run = p.add_run(line)
-        set_text_style(run, size=11, font_name="Courier New")
-
-
 def build_document(asset_paths: dict[str, Path]) -> None:
     document = Document()
     configure_styles(document)
@@ -1174,7 +1162,7 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     add_figure(document, "Рисунок 20 – Модальное окно подготовки сообщения", asset_paths["screen_modal"], width_cm=16)
 
     add_heading(document, "3 Реализация")
-    add_heading(document, "3.1 Обоснование выбора средств разработки", level=2)
+    add_heading(document, "3.1 Обоснование выбора средств разработки и методов разработки", level=2)
     techs = [
         "Для реализации пользовательского интерфейса выбрана библиотека React и сборщик Vite. Такое решение обеспечивает компонентный подход, быстрый локальный запуск и удобную организацию SPA-приложения.",
         "Серверная часть разработана на Node.js и Express. Библиотека pg используется для прямого подключения к PostgreSQL, что соответствует целевой архитектуре проекта и исключает промежуточный ORM-слой.",
@@ -1184,7 +1172,7 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     for paragraph in techs:
         add_text(document, paragraph)
 
-    add_heading(document, "3.2 Разработка физической модели данных", level=2)
+    add_heading(document, "3.2 Разработка базы данных в среде СУБД", level=2)
     add_text(document, "Физическая модель данных реализована в SQL-скрипте database/init.sql. Основные таблицы и их назначение представлены в таблице 10.")
     add_caption(document, "Таблица 10 – Назначение основных таблиц базы данных")
     table = document.add_table(rows=1, cols=2)
@@ -1208,7 +1196,7 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     add_text(document, "Такая структура позволяет повторно использовать одну и ту же карточку объекта для нескольких клиентов, отслеживать историю запусков поиска и не терять собранные подборки. Для итоговой демонстрации и последующей защиты в проект был подготовлен отдельный скриншот просмотра таблицы clients в базе данных.")
     add_figure(document, "Рисунок 21 – Просмотр таблицы clients в PostgreSQL", asset_paths["screen_db"], width_cm=16)
 
-    add_heading(document, "3.3 Программная реализация модулей", level=2)
+    add_heading(document, "3.3 Программная реализация модулей в среде программирования", level=2)
     modules = [
         "Frontend-модуль реализует экран авторизации, главную страницу с KPI, список клиентов, форму создания клиента, карточку клиента, модальные окна просмотра объекта и подготовки сообщения, а также вспомогательные страницы профиля, помощи и настроек.",
         "Backend API предоставляет маршруты /api/auth, /api/dashboard, /api/clients и /api/properties. Через эти маршруты выполняются аутентификация, загрузка KPI, управление клиентами, запуск поиска, сохранение shortlist и подготовка текста сообщения.",
@@ -1276,17 +1264,16 @@ def build_document(asset_paths: dict[str, Path]) -> None:
         cells[0].text = row[0]
         cells[1].text = row[1]
     style_table(checks)
+    add_figure(document, "Рисунок 22 – Результаты автоматизированных проверок", asset_paths["test_results"], width_cm=16)
 
     add_heading(document, "3.4.2 Интеграционное тестирование", level=3)
-    add_text(document, "Интеграционное тестирование ориентировано на проверку сквозных пользовательских сценариев: авторизации, создания клиента, запуска поиска, добавления объекта в подборку и подготовки текста сообщения. Подробные тест-кейсы приведены в приложении Е.")
+    add_text(document, "Интеграционное тестирование ориентировано на проверку сквозных пользовательских сценариев: авторизации, создания клиента, запуска поиска, добавления объекта в подборку и подготовки текста сообщения. Подробные тест-кейсы приведены в приложении В.")
     add_text(document, "Отдельно проверяется постоянство хранения данных после перезапуска контейнеров Docker Compose. Этот сценарий критичен для дипломного проекта, так как одним из ключевых требований является переход на PostgreSQL и отказ от временного in-memory хранения.")
 
     add_heading(document, "3.5 Разработка эксплуатационной документации", level=2)
-    add_text(document, "Для проекта подготовлена эксплуатационная документация, предназначенная для демонстрации и развертывания системы. В корне проекта размещены файлы PROD_COMMANDS.md, README.md, ARCHITECTURE.md и ITERATION_SUMMARY.md, позволяющие быстро поднять окружение, понять состав контейнеров и восстановить контекст предыдущих итераций.")
-    add_text(document, "Файл PROD_COMMANDS.md содержит минимальный набор команд для production-сценария дипломной защиты: запуск контейнеров, просмотр логов, остановка без удаления данных и полный сброс базы. ARCHITECTURE.md описывает стек и поток данных между frontend, backend, search-service и PostgreSQL. ITERATION_SUMMARY.md используется как журнал состояния проекта между итерациями разработки.")
-    add_heading(document, "3.6 Развертывание через Docker Compose", level=2)
-    add_text(document, "В production-конфигурации используются четыре контейнера: postgres, search-service, api и web. Контейнер PostgreSQL инициализируется SQL-скриптом database/init.sql и хранит данные в named volume estateflow-postgres. Search-service и API ожидают readiness зависимостей через healthcheck, а web-контейнер отдает собранный frontend через Nginx.")
-    add_text(document, "Такое развертывание дает два практических преимущества для дипломной работы. Во-первых, система поднимается повторяемо на любом ноутбуке или сервере с Docker Desktop без ручной настройки зависимостей. Во-вторых, все компоненты запускаются в явно определенной конфигурации, что упрощает демонстрацию, защиту и последующий перенос на сервер Timeweb.")
+    add_text(document, "Для проекта подготовлен комплект эксплуатационных материалов, предназначенный для демонстрации и практического использования системы. Основой эксплуатационной документации являются руководство пользователя, инструкция по запуску production-сборки через Docker Compose и описание типовых сообщений интерфейса.")
+    add_text(document, "В production-конфигурации используются четыре контейнера: postgres, search-service, api и web. Контейнер PostgreSQL инициализируется схемой базы данных при первом запуске и хранит данные в отдельном volume, что обеспечивает сохранность клиентской базы, найденных объектов и подборок после перезапуска системы.")
+    add_text(document, "Такой формат развертывания подходит для защиты дипломной работы, так как система поднимается повторяемо на любом компьютере с Docker Desktop и не требует ручной установки Node.js, Python, PostgreSQL и сопутствующих зависимостей.")
 
     add_heading(document, "Заключение")
     add_text(document, "В результате дипломного проекта разработано веб-приложение «Тэона», предназначенное для автоматизации работы риелтора при подборе недвижимости. Система объединяет клиентскую базу, параметры поиска, live-поиск по внешним источникам, формирование shortlist и подготовку текста сообщения для клиента.")
@@ -1309,180 +1296,71 @@ def build_document(asset_paths: dict[str, Path]) -> None:
     add_page_break(document)
     add_heading(document, "Приложение А", level=1)
     add_text(document, "(обязательное)", center=True, indent=False)
-    add_heading(document, "Требования к приложению", level=2)
-    appendix_a = [
-        "Приложение должно обеспечивать авторизацию риелтора, создание карточек клиентов, ввод параметров поиска, запуск поиска объектов, сохранение результатов в PostgreSQL, формирование shortlist и подготовку текста сообщения для клиента.",
-        "Система должна поддерживать два типа недвижимости: квартиры и дома.",
-        "Данные клиента, параметры поиска, найденные объекты, подборка и история поиска должны сохраняться после перезапуска контейнеров.",
-        "Интерфейс должен предоставлять понятные страницы: вход, главная, список клиентов, карточка клиента, профиль, помощь, настройки и аналитика.",
-        "Приложение должно запускаться в production-режиме через Docker Compose.",
-        "Поисковый сервис должен быть способен продолжать работу, если часть внешних источников недоступна.",
-        "Система должна исключать из результатов служебные карточки, логотипы, иконки и невалидные ссылки на объекты.",
-    ]
-    for paragraph in appendix_a:
-        add_text(document, paragraph)
+    add_heading(document, "Требования к функциональным характеристикам", level=2)
+    add_heading(document, "1 Требования к функциональным характеристикам", level=3)
+    add_text(document, "Приложение должно обеспечивать автоматизацию подбора жилой недвижимости для клиентов риелтора. Система должна поддерживать создание клиентской карточки, сохранение параметров поиска, подбор объектов, формирование shortlist и подготовку текста сообщения для клиента.")
+    add_heading(document, "1.1 Требования к модулю авторизации", level=3)
+    add_text(document, "Модуль авторизации должен обеспечивать вход пользователя по логину и паролю, создание пользовательской сессии и защиту маршрутов приложения от неавторизованного доступа.")
+    add_heading(document, "1.2 Требования к составу выполняемых функций модуля работы с клиентами", level=3)
+    add_text(document, "Модуль работы с клиентами должен обеспечивать создание, просмотр, редактирование и удаление карточек клиентов, хранение контактных данных, статуса работы и типа подбираемой недвижимости.")
+    add_heading(document, "1.3 Требования к составу выполняемых функций модуля подбора недвижимости", level=3)
+    add_text(document, "Модуль подбора недвижимости должен обеспечивать запуск поиска по параметрам клиента, фильтрацию объектов по городу Краснодар, сохранение найденных карточек, расчет процента совпадения и отображение результатов в карточке клиента.")
+    add_heading(document, "1.4 Требования к составу входных и выходных данных", level=3)
+    add_heading(document, "1.4.1 Требования к входным данным", level=3)
+    add_text(document, "Входными данными являются сведения о клиенте, включая бюджет, тип недвижимости, желаемую площадь, число комнат, район города, срок сдачи, отделку и дополнительные характеристики для дома или квартиры.")
+    add_heading(document, "1.4.2 Требования к выходным данным", level=3)
+    add_text(document, "Выходными данными являются список найденных объектов, shortlist клиента, текст сообщения для отправки клиенту, а также агрегированные показатели по клиентской базе и результатам поиска.")
+    add_heading(document, "1.5 Общие ограничения к данным", level=3)
+    add_text(document, "Система должна сохранять только валидные карточки объектов недвижимости с корректной ссылкой на источник. Из результатов должны исключаться объекты из других городов Краснодарского края, служебные карточки, логотипы и записи без существенных характеристик.")
 
     add_page_break(document)
     add_heading(document, "Приложение Б", level=1)
     add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Руководство по стилю", level=2)
-    for paragraph in [
-        "Основная тема интерфейса светлая. В качестве акцентного цвета используется оранжевый цвет, применяемый к primary-кнопкам, активным элементам и индикаторам совпадения.",
-        "Навигация организована через фиксированный sidebar и верхнюю панель, а таблицы и карточки построены в спокойном CRM-стиле без декоративных элементов.",
-        "Для карточек найденных объектов используется четкая иерархия: заголовок, источник, цена, базовые характеристики, процент совпадения, шкала совпадения, кнопки «Подробнее» и «В подборку».",
-        "Основной шрифт интерфейса – системный без засечек. Для заголовков используются укрупненные начертания, для служебных текстов – спокойные серые оттенки. Кнопка «В подборку» должна быть оранжевой по умолчанию и переходить в состояние с белой заливкой и оранжевой обводкой при наведении.",
-        "В списках и таблицах используются ровные внутренние отступы, sticky-header для длинных таблиц и отдельный scroll у больших рабочих областей. Это соответствует характеру CRM-интерфейса и снижает визуальный шум.",
-    ]:
-        add_text(document, paragraph)
+    add_heading(document, "Требования к пользовательскому интерфейсу", level=2)
+    add_text(document, "Интерфейс приложения должен быть выполнен в светлом, сдержанном деловом стиле. Основным акцентным цветом является оранжевый, используемый для активных кнопок, элементов выбора и показателей совпадения.")
+    add_text(document, "Навигация должна быть организована через фиксированное боковое меню и верхнюю панель. Карточки объектов должны содержать короткий заголовок, цену, базовые характеристики, источник, район и действия риелтора.")
+    add_text(document, "Все экраны должны корректно работать в браузере на настольном компьютере, не допускать наложения текста, переполнения карточек и визуальной неоднородности между разделами интерфейса.")
 
     add_page_break(document)
     add_heading(document, "Приложение В", level=1)
-    add_text(document, "(обязательное)", center=True, indent=False)
-    add_heading(document, "SQL-скрипты таблиц базы данных", level=2)
-    add_text(document, "Ниже приводится полный SQL-скрипт инициализации базы данных, используемый при запуске Docker Compose.", indent=False)
-    add_sql_snippet(document, "Полный SQL-скрипт инициализации", ROOT.joinpath("database", "init.sql").read_text(encoding="utf-8").splitlines())
-
-    add_page_break(document)
-    add_heading(document, "Приложение Г", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Программный код модулей системы", level=2)
-    add_text(document, "Структура проекта организована по модулям apps/web, apps/api и apps/search-service. Ниже приведены фрагменты, отражающие точки входа в систему.")
-    add_sql_snippet(document, "Фрагмент backend API (apps/api/src/app.ts)", ROOT.joinpath("apps", "api", "src", "app.ts").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Фрагмент orchestration поиска (apps/api/src/services/searchService.ts)", ROOT.joinpath("apps", "api", "src", "services", "searchService.ts").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Фрагмент matcher search-service (apps/search-service/app/services/matcher.py)", ROOT.joinpath("apps", "search-service", "app", "services", "matcher.py").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Фрагмент Docker Compose", ROOT.joinpath("docker-compose.yml").read_text(encoding="utf-8").splitlines())
-
-    add_page_break(document)
-    add_heading(document, "Приложение Д", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Формы выходных документов", level=2)
-    add_text(document, "Результатом работы системы для риелтора являются сформированная подборка и текст сообщения для клиента. Пример структуры сообщения приведен ниже.")
-    add_sql_snippet(document, "Пример текста подборки", [
-        "Здравствуйте. Подобрал для вас несколько вариантов.",
-        "1. 1-к квартира, 40.6 м², ЖК «Nova Vita», 5 275 000 ₽.",
-        "2. 2-к квартира, 53.8 м², ЖК «Точно», 6 540 000 ₽.",
-        "Если хотите, могу уточнить детали по каждому варианту.",
-    ])
-    add_figure(document, "Рисунок Д.1 – Интерфейс модального окна подготовки сообщения", asset_paths["screen_modal"], width_cm=16)
-
-    add_page_break(document)
-    add_heading(document, "Приложение Е", level=1)
     add_text(document, "(обязательное)", center=True, indent=False)
     add_heading(document, "Тест-кейсы", level=2)
     for case in testcases():
         add_testcase_table(document, f"Таблица {case.ident} – {case.name}", case)
 
     add_page_break(document)
-    add_heading(document, "Приложение Ж", level=1)
+    add_heading(document, "Приложение Г", level=1)
     add_text(document, "(обязательное)", center=True, indent=False)
     add_heading(document, "Руководство пользователя", level=2)
+    add_heading(document, "1 Выполнение программы", level=3)
     guide = [
-        "Действие №1. Установить Docker Desktop на ноутбук и запустить приложение.",
-        "Действие №2. В корне проекта выполнить команды cp .env.example .env и npm run prod:up.",
-        "Действие №3. Открыть приложение по адресу http://localhost:5002.",
-        "Действие №4. Выполнить вход с тестовыми учетными данными test / test.",
-        "Действие №5. Создать нового клиента и заполнить параметры поиска.",
-        "Действие №6. Дождаться результатов поиска и при необходимости повторно запустить поиск из карточки клиента.",
-        "Действие №7. Добавить подходящие объекты в подборку, сформировать сообщение и скопировать текст для отправки клиенту.",
-        "Действие №8. Для остановки системы выполнить команду npm run prod:down.",
+        "Действие №1. Установить Docker Desktop на компьютер пользователя.",
+        "Действие №2. В корне проекта подготовить файл окружения и выполнить команду production-запуска контейнеров.",
+        "Действие №3. Открыть веб-приложение по локальному адресу в браузере.",
+        "Действие №4. Выполнить вход с учетными данными риелтора.",
+        "Действие №5. Создать карточку клиента и заполнить параметры подбора.",
+        "Действие №6. Дождаться результатов поиска и при необходимости повторно запустить подбор.",
+        "Действие №7. Добавить подходящие объекты в подборку и сформировать сообщение клиенту.",
     ]
     for line in guide:
         add_text(document, line, indent=False)
-    add_figure(document, "Рисунок Ж.1 – Окно авторизации", asset_paths["screen_login"], width_cm=16)
-    add_figure(document, "Рисунок Ж.2 – Главная страница", asset_paths["screen_dashboard"], width_cm=16)
-    add_figure(document, "Рисунок Ж.3 – Список клиентов", asset_paths["screen_clients"], width_cm=16)
-    add_figure(document, "Рисунок Ж.4 – Карточка клиента", asset_paths["screen_client"], width_cm=16)
+    add_heading(document, "2 Сообщения пользователю", level=3)
+    add_text(document, "При некорректном логине или пароле система выводит сообщение о невозможности входа. При пустой подборке система сообщает, что формирование текста сообщения пока недоступно. Если поиск не дал результатов, в карточке клиента отображается соответствующий статус.")
+    add_figure(document, "Рисунок Г.1 – Окно авторизации", asset_paths["screen_login"], width_cm=16)
+    add_figure(document, "Рисунок Г.2 – Карточка клиента", asset_paths["screen_client"], width_cm=16)
 
     add_page_break(document)
-    add_heading(document, "Приложение И", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Алгоритмы работы search-service", level=2)
-    add_text(document, "В данном приложении собраны текстовые алгоритмы основных этапов парсинга и нормализации данных. Они оформлены в том виде, в котором могут быть использованы при защите проекта для объяснения логики работы сервиса.", indent=False)
-    algorithms = [
-        "Действие №1. Search-service получает объект SearchRequest от backend API.",
-        "Действие №2. На основе propertyType выбирается набор адаптеров источников.",
-        "Действие №3. Для каждого стартового URL проверяется robots.txt.",
-        "Действие №4. HTML загружается через httpx.AsyncClient с установленным timeout.",
-        "Действие №5. Из документа извлекаются JSON-LD узлы и видимые карточки.",
-        "Действие №6. Для каждой карточки вычисляются цена, площадь, комнаты, локация и ссылка.",
-        "Действие №7. Из заголовков удаляются служебные и маркетинговые конструкции.",
-        "Действие №8. Из изображений удаляются logo, favicon, icon, sprite, placeholder и SVG.",
-        "Действие №9. Для объекта рассчитывается match score и формируются причины совпадения.",
-        "Действие №10. Backend сохраняет результат в properties и client_found_properties.",
-    ]
-    add_list_paragraphs(document, algorithms)
-
-    add_page_break(document)
-    add_heading(document, "Приложение К", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Скриншоты интерфейса и демонстрационные материалы", level=2)
-    add_figure(document, "Рисунок К.1 – Экран входа", asset_paths["screen_login"], width_cm=16)
-    add_figure(document, "Рисунок К.2 – Главная страница", asset_paths["screen_dashboard"], width_cm=16)
-    add_figure(document, "Рисунок К.3 – Список клиентов", asset_paths["screen_clients"], width_cm=16)
-    add_figure(document, "Рисунок К.4 – Карточка клиента", asset_paths["screen_client"], width_cm=16)
-    add_figure(document, "Рисунок К.5 – Подготовка сообщения", asset_paths["screen_modal"], width_cm=16)
-    add_figure(document, "Рисунок К.6 – Просмотр базы данных", asset_paths["screen_db"], width_cm=16)
-
-    add_page_break(document)
-    add_heading(document, "Приложение Л", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Подключенные источники парсинга", level=2)
-    add_matrix_table(document, "Таблица Л.1 – Список источников для квартир", ["Источник", "Тип", "Стартовый URL"], [
-        ["НАШ.ДОМ.РФ", "Официальный реестр", "https://наш.дом.рф/новостройки/краснодар/"],
-        ["Домострой Краснодар", "Агрегатор", "https://krasnodar.domostroyrf.ru/"],
-        ["ССК", "Застройщик", "https://sskuban.ru/"],
-        ["ВКБ-Новостройки", "Застройщик", "https://vkbn.ru/"],
-        ["ГК ТОЧНО", "Застройщик", "https://tochno.life/complexes/"],
-        ["DOGMA", "Застройщик", "https://dogma.ru/kvartiry"],
-        ["СК Семья", "Застройщик", "https://family-yug.ru/novostroyki/"],
-        ["Неометрия", "Застройщик", "https://neometria.ru/krasnodar/kupit-kvartiru"],
-        ["НВМ", "Застройщик", "https://gk-nvm.ru/"],
-        ["ЕкатеринодарИнвест-Строй", "Застройщик", "https://ek-invest.ru/"],
-    ])
-    add_matrix_table(document, "Таблица Л.2 – Список источников для домов", ["Источник", "Тип", "Стартовый URL"], [
-        ["Doma-kr", "Каталог домов", "https://doma-kr.ru/"],
-        ["КП Краснодар", "Каталог домов", "https://kp-krd.ru/doma-kottedzhi-taunkhausy"],
-        ["Поселки Краснодара", "Каталог поселков", "https://поселки-краснодара.рф/"],
-        ["23kvartiri", "Агрегатор", "https://23kvartiri.ru/"],
-        ["Novostrojki-KRD", "Агрегатор", "https://novostrojki-krd.ru/"],
-    ])
-
-    add_page_break(document)
-    add_heading(document, "Приложение М", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Листинги backend-модулей", level=2)
-    add_text(document, "В приложении приведены полные листинги ключевых backend-файлов, отвечающих за обработку клиентских запросов и координацию поиска.", indent=False)
-    add_sql_snippet(document, "Листинг apps/api/src/routes/clients.ts", ROOT.joinpath("apps", "api", "src", "routes", "clients.ts").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Листинг apps/api/src/routes/dashboard.ts", ROOT.joinpath("apps", "api", "src", "routes", "dashboard.ts").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Листинг apps/api/src/routes/auth.ts", ROOT.joinpath("apps", "api", "src", "routes", "auth.ts").read_text(encoding="utf-8").splitlines())
-
-    add_page_break(document)
-    add_heading(document, "Приложение Н", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Листинги search-service и алгоритмов нормализации", level=2)
-    add_text(document, "Ниже приведены полные листинги поискового контура, реализующего HTTP-запросы к внешним источникам, парсинг, очистку данных и расчет match score.", indent=False)
-    add_sql_snippet(document, "Листинг apps/search-service/app/adapters/base.py", ROOT.joinpath("apps", "search-service", "app", "adapters", "base.py").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Листинг apps/search-service/app/services/search.py", ROOT.joinpath("apps", "search-service", "app", "services", "search.py").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Листинг apps/search-service/app/adapters/sources.py", ROOT.joinpath("apps", "search-service", "app", "adapters", "sources.py").read_text(encoding="utf-8").splitlines())
-
-    add_page_break(document)
-    add_heading(document, "Приложение П", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Листинги ключевых frontend-страниц", level=2)
-    add_text(document, "В приложении собраны листинги основных интерфейсных страниц, определяющих рабочий UX риелтора.", indent=False)
-    add_sql_snippet(document, "Листинг apps/web/src/pages/ClientPage.tsx", ROOT.joinpath("apps", "web", "src", "pages", "ClientPage.tsx").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Листинг apps/web/src/pages/NewClientPage.tsx", ROOT.joinpath("apps", "web", "src", "pages", "NewClientPage.tsx").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "Листинг apps/web/src/pages/DashboardPage.tsx", ROOT.joinpath("apps", "web", "src", "pages", "DashboardPage.tsx").read_text(encoding="utf-8").splitlines())
-
-    add_page_break(document)
-    add_heading(document, "Приложение Р", level=1)
-    add_text(document, "(справочное)", center=True, indent=False)
-    add_heading(document, "Эксплуатационные документы проекта", level=2)
-    add_text(document, "Для ускорения развертывания и понимания состава системы вместе с проектом поставляются эксплуатационные markdown-документы. Их содержимое приведено ниже как часть полного комплекта ПЗ.", indent=False)
-    add_sql_snippet(document, "README.md", ROOT.joinpath("README.md").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "ARCHITECTURE.md", ROOT.joinpath("ARCHITECTURE.md").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "docs/PARSING_SOURCES.md", ROOT.joinpath("docs", "PARSING_SOURCES.md").read_text(encoding="utf-8").splitlines())
-    add_sql_snippet(document, "docs/SEARCH_QA_CHECKLIST.md", ROOT.joinpath("docs", "SEARCH_QA_CHECKLIST.md").read_text(encoding="utf-8").splitlines())
+    add_heading(document, "Приложение Д", level=1)
+    add_text(document, "(обязательное)", center=True, indent=False)
+    add_heading(document, "Руководство по развертыванию программы", level=2)
+    add_heading(document, "1 Характеристика программы", level=3)
+    add_text(document, "Программа представляет собой веб-приложение для автоматизации подбора недвижимости клиентам риелтора. В состав системы входят frontend, backend API, поисковый сервис и PostgreSQL.")
+    add_heading(document, "2 Обращение к программе", level=3)
+    add_text(document, "Для запуска программы используется Docker Compose. После старта контейнеров пользователь обращается к приложению через браузер. Для остановки системы применяются штатные команды Docker Compose без удаления volume базы данных.")
+    add_heading(document, "3 Сообщения", level=3)
+    add_text(document, "При отсутствии соединения с одним из внешних источников поиска система продолжает работу с остальными источниками. При ошибке поискового контура статус клиента переводится в состояние ошибки, что позволяет повторно выполнить поиск после устранения проблемы.")
+    add_figure(document, "Рисунок Д.1 – Главная страница приложения", asset_paths["screen_dashboard"], width_cm=16)
+    add_figure(document, "Рисунок Д.2 – Просмотр таблицы clients в PostgreSQL", asset_paths["screen_db"], width_cm=16)
 
     document.save(OUTPUT)
 
