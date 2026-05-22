@@ -573,7 +573,7 @@ tbody tr:hover {
 .kpi-card {
   display: grid;
   gap: 14px;
-  min-height: 158px;
+  min-height: 176px;
   padding: 14px 15px;
   border: 1px solid var(--color-border);
   border-radius: 10px;
@@ -612,7 +612,12 @@ tbody tr:hover {
 }
 
 .mini-line {
+  display: grid;
+  align-items: end;
   min-height: 82px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fbfbfb 0%, #f8f8f8 100%);
+  overflow: hidden;
 }
 
 .mini-line svg {
@@ -1278,15 +1283,26 @@ tbody tr:hover {
 .details-grid div {
   display: grid;
   gap: 4px;
+  align-content: start;
   padding: 12px;
   border: 1px solid var(--color-border);
   border-radius: 10px;
   background: var(--color-bg);
 }
 
+.details-grid div.is-missing {
+  background: #fbfbfb;
+}
+
 .details-grid span {
   color: var(--color-muted);
   font-size: 12px;
+}
+
+.details-grid div.is-missing strong {
+  color: var(--color-muted);
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .drawer-section {

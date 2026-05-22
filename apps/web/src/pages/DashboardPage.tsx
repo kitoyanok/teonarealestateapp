@@ -8,38 +8,26 @@ import { profileSummary } from "../shared/format";
 import { StatusBadge } from "../widgets/StatusBadge";
 
 const kpiConfig = [
-  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness, activityKey: "clients", chartType: "bars" },
-  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House, activityKey: "found", chartType: "line" },
-  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList, activityKey: "shortlisted", chartType: "bars" },
-  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig, activityKey: "sent", chartType: "bars" }
+  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness, activityKey: "clients" },
+  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House, activityKey: "found" },
+  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList, activityKey: "shortlisted" },
+  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig, activityKey: "ready" }
 ] as const;
-
-function MiniBars({ values, accentIndex }: { values: number[]; accentIndex: number }) {
-  return (
-    <div className="mini-bars" aria-hidden="true">
-      {values.map((value, index) => (
-        <span
-          key={`${index}-${value}`}
-          className={index === accentIndex ? "is-accent" : undefined}
-          style={{ height: `${16 + value * 6}px` }}
-        />
-      ))}
-    </div>
-  );
-}
 
 function MiniLine({ values }: { values: number[] }) {
   const max = Math.max(...values, 0);
   if (max <= 0) {
     return null;
   }
+  const min = Math.min(...values);
   const width = 260;
   const height = 78;
   const step = values.length > 1 ? width / (values.length - 1) : width;
   const points = values
     .map((value, index) => {
       const x = Math.round(index * step);
-      const y = Math.round(height - 10 - (value / max) * 48);
+      const ratio = max === min ? 0.45 : (value - min) / (max - min);
+      const y = Math.round(height - 12 - ratio * 52);
       return `${x},${y}`;
     })
     .join(" ");
@@ -50,15 +38,6 @@ function MiniLine({ values }: { values: number[] }) {
       </svg>
     </div>
   );
-}
-
-function buildSeries(points: ActivityPoint[], key: keyof Pick<ActivityPoint, "clients" | "found" | "shortlisted" | "sent" | "ready">) {
-  const values = points.map((point) => point[key]);
-  const max = Math.max(...values, 0);
-  if (max <= 0) {
-    return [];
-  }
-  return values.map((value) => Math.max(2, Math.round((value / max) * 8)));
 }
 
 function DashboardTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value?: number }>; label?: string }) {
@@ -99,16 +78,13 @@ export function DashboardPage() {
       <section className="kpi-grid">
         {kpiConfig.map((item) => {
           const Icon = item.icon;
-          const bars = activity.data?.length ? buildSeries(activity.data, item.activityKey) : [];
           const lineValues = activity.data?.length ? activity.data.map((point) => point[item.activityKey]) : [];
           return (
             <article className="kpi-card" key={item.key}>
               <div className="kpi-card__head">
                 <strong>{summary.data?.[item.key] ?? 0}</strong>
               </div>
-              {item.chartType === "line"
-                ? (lineValues.some((value) => value > 0) ? <MiniLine values={lineValues} /> : null)
-                : (bars.length ? <MiniBars values={bars} accentIndex={bars.length - 1} /> : null)}
+              {lineValues.some((value) => value > 0) ? <MiniLine values={lineValues} /> : null}
               <div className="kpi-card__label">
                 <Icon size={15} />
                 <div>

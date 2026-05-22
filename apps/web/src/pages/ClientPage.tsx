@@ -18,6 +18,8 @@ import {
 import { EmptyState } from "../widgets/EmptyState";
 import { StatusBadge } from "../widgets/StatusBadge";
 
+const missingPropertyDetail = "Не нашли данные. Подробнее на сайте застройщика.";
+
 function PropertyMedia({ property }: { property: Property }) {
   const image = hasRealPropertyImage(property) ? property.images?.[0] : undefined;
   if (image) {
@@ -96,6 +98,25 @@ function PropertyDrawer({
     ? property.rooms
     : null;
   const district = propertyDistrictLabel(property);
+  const apartmentDetails = [
+    ["Площадь", property.area ? `${property.area} м²` : null],
+    ["Комнат", safeRooms === 0 ? "Студия" : safeRooms],
+    ["Район", district],
+    ["Этаж", property.floor && property.floorsTotal ? `${property.floor}/${property.floorsTotal}` : null],
+    ["Срок сдачи", property.completionYear],
+    ["Отделка", property.finishing],
+    ["Источник", property.sourceName]
+  ] as const;
+  const houseDetails = [
+    ["Дом", property.houseArea ? `${property.houseArea} м²` : null],
+    ["Участок", property.landArea ? `${property.landArea} сот.` : null],
+    ["Район", district],
+    ["Этажей", property.houseFloors],
+    ["Спален", property.bedrooms],
+    ["Материал", property.houseMaterial],
+    ["Коммуникации", property.communications?.join(", ")]
+  ] as const;
+  const details = property.propertyType === "house" ? houseDetails : apartmentDetails;
   return (
     <div className="drawer-backdrop" onClick={onClose}>
       <aside className="property-drawer" onClick={(event) => event.stopPropagation()}>
@@ -119,30 +140,12 @@ function PropertyDrawer({
         </div>
 
         <div className="details-grid">
-          {(property.propertyType === "house"
-            ? [
-                ["Дом", property.houseArea ? `${property.houseArea} м²` : null],
-                ["Участок", property.landArea ? `${property.landArea} сот.` : null],
-                ["Район", district],
-                ["Этажей", property.houseFloors],
-                ["Спален", property.bedrooms],
-                ["Материал", property.houseMaterial],
-                ["Коммуникации", property.communications?.join(", ")]
-              ]
-            : [
-                ["Площадь", property.area ? `${property.area} м²` : null],
-                ["Комнат", safeRooms === 0 ? "Студия" : safeRooms],
-                ["Район", district],
-                ["Этаж", property.floor && property.floorsTotal ? `${property.floor}/${property.floorsTotal}` : null],
-                ["Срок сдачи", property.completionYear],
-                ["Отделка", property.finishing],
-                ["Источник", property.sourceName]
-              ]).map(([label, value]) => value ? (
-            <div key={String(label)}>
+          {details.map(([label, value]) => (
+            <div className={!value ? "is-missing" : undefined} key={String(label)}>
               <span>{label}</span>
-              <strong>{value}</strong>
+              <strong>{value || missingPropertyDetail}</strong>
             </div>
-          ) : null)}
+          ))}
         </div>
 
         {(match?.matchReasons?.length || match?.mismatchReasons?.length) ? (
