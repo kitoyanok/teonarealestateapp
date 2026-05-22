@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, BriefcaseBusiness, ChartColumnBig, ClipboardList, House } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { ActivityPoint, Client, DashboardSummary } from "../entities/types";
 import { api } from "../shared/api";
 import { profileSummary } from "../shared/format";
 import { StatusBadge } from "../widgets/StatusBadge";
 
 const kpiConfig = [
-  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness },
-  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House },
-  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList },
-  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig }
+  { key: "clientsInWork", title: "Клиенты в работе", subtitle: "активные заявки", icon: BriefcaseBusiness, activityKey: "clients" },
+  { key: "foundObjects", title: "Найдено объектов", subtitle: "по текущим клиентам", icon: House, activityKey: "found" },
+  { key: "shortlistItems", title: "В подборках", subtitle: "отобрано вручную", icon: ClipboardList, activityKey: "shortlisted" },
+  { key: "readyToSend", title: "Готово к отправке", subtitle: "можно отправить", icon: ChartColumnBig, activityKey: "sent" }
 ] as const;
 
 function MiniBars({ values, accentIndex }: { values: number[]; accentIndex: number }) {
@@ -28,9 +28,12 @@ function MiniBars({ values, accentIndex }: { values: number[]; accentIndex: numb
   );
 }
 
-function activityBars(points: ActivityPoint[]) {
-  const values = points.map((point) => point.found);
-  const max = Math.max(...values, 1);
+function buildSeries(points: ActivityPoint[], key: keyof Pick<ActivityPoint, "clients" | "found" | "shortlisted" | "sent" | "ready">) {
+  const values = points.map((point) => point[key]);
+  const max = Math.max(...values, 0);
+  if (max <= 0) {
+    return [];
+  }
   return values.map((value) => Math.max(2, Math.round((value / max) * 8)));
 }
 
@@ -38,10 +41,13 @@ function DashboardTooltip({ active, payload, label }: { active?: boolean; payloa
   if (!active || !payload?.length) {
     return null;
   }
+  const foundValue = payload.find((item, index) => index === 0)?.value ?? 0;
+  const shortlistValue = payload.find((item, index) => index === 1)?.value ?? 0;
   return (
     <div className="chart-tooltip">
       <strong>{label}</strong>
-      <span>Найдено объектов: {payload[0]?.value ?? 0}</span>
+      <span>Найдено объектов: {foundValue}</span>
+      <span>Добавлено в подборки: {shortlistValue}</span>
     </div>
   );
 }
@@ -69,13 +75,13 @@ export function DashboardPage() {
       <section className="kpi-grid">
         {kpiConfig.map((item, index) => {
           const Icon = item.icon;
-          const bars = activity.data?.length ? activityBars(activity.data) : Array.from({ length: 8 }, () => 4);
+          const bars = activity.data?.length ? buildSeries(activity.data, item.activityKey) : [];
           return (
             <article className="kpi-card" key={item.key}>
               <div className="kpi-card__head">
                 <strong>{summary.data?.[item.key] ?? 0}</strong>
               </div>
-              <MiniBars values={bars} accentIndex={bars.length - 1} />
+              {bars.length ? <MiniBars values={bars} accentIndex={bars.length - 1} /> : null}
               <div className="kpi-card__label">
                 <Icon size={15} />
                 <div>
@@ -96,16 +102,17 @@ export function DashboardPage() {
               <p>Найденные объекты по дням</p>
             </div>
           </div>
-          {activity.data?.some((point) => point.found > 0) ? (
+          {activity.data?.some((point) => point.found > 0 || point.shortlisted > 0 || point.sent > 0 || point.clients > 0) ? (
             <div className="chart-frame chart-frame--dashboard">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={activity.data} margin={{ top: 8, right: 10, left: -8, bottom: 0 }}>
+                <LineChart data={activity.data} margin={{ top: 8, right: 10, left: -8, bottom: 0 }}>
                   <CartesianGrid stroke="#F0F0F0" vertical={false} />
                   <XAxis dataKey="label" stroke="#8F8F8F" tickLine={false} axisLine={false} />
                   <YAxis stroke="#8F8F8F" tickLine={false} axisLine={false} allowDecimals={false} />
                   <Tooltip content={<DashboardTooltip />} cursor={{ fill: "rgba(253,96,0,0.06)" }} />
-                  <Bar dataKey="found" radius={[12, 12, 0, 0]} fill="#FD6000" />
-                </BarChart>
+                  <Line dataKey="found" type="monotone" stroke="#FD6000" strokeWidth={4} dot={{ r: 4, fill: "#FD6000" }} activeDot={{ r: 6 }} />
+                  <Bar dataKey="shortlisted" radius={[8, 8, 0, 0]} fill="#FFD6B8" barSize={20} />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           ) : (

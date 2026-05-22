@@ -416,10 +416,60 @@ export async function dashboardSummary(realtorId: string) {
 
 export async function dashboardActivity(realtorId: string) {
   const result = await query(
-    `SELECT started_at, total_found
-     FROM search_runs sr
-     JOIN clients c ON c.id = sr.client_id
-     WHERE c.realtor_id = $1 AND started_at >= NOW() - INTERVAL '6 days'`,
+    `WITH days AS (
+       SELECT generate_series(
+         date_trunc('day', NOW()) - INTERVAL '6 days',
+         date_trunc('day', NOW()),
+         INTERVAL '1 day'
+       ) AS day
+     ),
+     clients_daily AS (
+       SELECT date_trunc('day', created_at) AS day, COUNT(*)::int AS clients
+       FROM clients
+       WHERE realtor_id = $1 AND created_at >= NOW() - INTERVAL '6 days'
+       GROUP BY 1
+     ),
+     found_daily AS (
+       SELECT date_trunc('day', sr.started_at) AS day, COALESCE(SUM(sr.total_found), 0)::int AS found
+       FROM search_runs sr
+       JOIN clients c ON c.id = sr.client_id
+       WHERE c.realtor_id = $1 AND sr.started_at >= NOW() - INTERVAL '6 days'
+       GROUP BY 1
+     ),
+     shortlist_daily AS (
+       SELECT date_trunc('day', si.created_at) AS day, COUNT(*)::int AS shortlisted
+       FROM shortlist_items si
+       JOIN clients c ON c.id = si.client_id
+       WHERE c.realtor_id = $1 AND si.created_at >= NOW() - INTERVAL '6 days'
+       GROUP BY 1
+     ),
+     sent_daily AS (
+       SELECT date_trunc('day', sm.sent_marked_at) AS day, COUNT(*)::int AS sent
+       FROM share_messages sm
+       JOIN clients c ON c.id = sm.client_id
+       WHERE c.realtor_id = $1 AND sm.sent_marked_at IS NOT NULL AND sm.sent_marked_at >= NOW() - INTERVAL '6 days'
+       GROUP BY 1
+     ),
+     ready_daily AS (
+       SELECT date_trunc('day', c.updated_at) AS day, COUNT(*)::int AS ready
+       FROM clients c
+       WHERE c.realtor_id = $1 AND c.status = 'shortlist_ready' AND c.updated_at >= NOW() - INTERVAL '6 days'
+       GROUP BY 1
+     )
+     SELECT
+       days.day,
+       COALESCE(cd.clients, 0) AS clients,
+       COALESCE(fd.found, 0) AS found,
+       COALESCE(sd.shortlisted, 0) AS shortlisted,
+       COALESCE(sent.sent, 0) AS sent,
+       COALESCE(rd.ready, 0) AS ready
+     FROM days
+     LEFT JOIN clients_daily cd ON cd.day = days.day
+     LEFT JOIN found_daily fd ON fd.day = days.day
+     LEFT JOIN shortlist_daily sd ON sd.day = days.day
+     LEFT JOIN sent_daily sent ON sent.day = days.day
+     LEFT JOIN ready_daily rd ON rd.day = days.day
+     ORDER BY days.day`,
     [realtorId]
   );
   return result.rows;

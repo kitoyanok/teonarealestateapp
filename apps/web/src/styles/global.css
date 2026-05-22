@@ -959,15 +959,20 @@ tbody tr:hover {
   background: var(--color-bg);
 }
 
-.client-summary-card div {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
+.client-summary-card strong {
+  font-size: 28px;
+  line-height: 1;
 }
 
-.client-summary-card--inline {
-  margin: 16px 0 0;
+.client-summary-tiles {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.client-summary-tiles .client-summary-card {
+  margin: 0;
 }
 
 .panel--client-meta {
@@ -1032,6 +1037,7 @@ tbody tr:hover {
   border: 1px solid var(--color-border);
   border-radius: 10px;
   background: var(--color-white);
+  height: 100%;
 }
 
 .drawer-media {
@@ -1080,9 +1086,11 @@ tbody tr:hover {
 }
 
 .property-card__body {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   padding: 18px 20px;
+  min-height: 100%;
 }
 
 .property-card__body h3 {
@@ -1102,6 +1110,17 @@ tbody tr:hover {
   gap: 6px 14px;
   color: var(--color-muted);
   font-size: 12px;
+}
+
+.property-card__description {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
 }
 
 .price {
@@ -1138,6 +1157,8 @@ tbody tr:hover {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
 }
 
 .property-card__cta {

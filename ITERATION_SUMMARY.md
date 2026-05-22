@@ -2,157 +2,172 @@
 
 ## Current Version
 
-- Pending git version for this iteration: `v0.1.8`
+- Git version for this iteration: `v0.1.9`
 - Branch: `main`
 
-## Main Goal Of This Iteration
+## What Was Fixed In This Iteration
 
-Довести пояснительную записку до полноценного дипломного объема и структуры по образцу [67_Погосян_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Погосян_ПЗ.docx), а не оставлять ее как короткий черновик.
+Исправлены проблемы из клиентской карточки и главной страницы:
 
-## What Was Done
+- блок `В подборке / Найдено` на странице клиента разделен на две отдельные плашки
+- названия объектов приведены к короткому формату:
+  - квартира: количество комнат + площадь
+  - дом: площадь дома
+- кнопки в карточках объектов прижаты к нижнему краю карточки
+- описания объектов очищаются гораздо жестче
+- устранен дефект с ложной комнатностью вида `21`
+- KPI на главной переведены на реальные временные ряды без фальшивых процентов
+- в KPI и графиках проценты больше не рисуются как декоративный шум: показываются только реальные данные
 
-- сильно расширена итоговая ПЗ:
-  - [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx)
-- переработан генератор:
-  - [scripts/build_zubach_pz.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/scripts/build_zubach_pz.py)
-- в ПЗ добавлены:
-  - анализ предметной области
-  - функциональные и нефункциональные требования
-  - расширенные таблицы прецедентов
-  - сценарии успешного выполнения и исключения
-  - описание архитектуры
-  - описание физической модели данных
-  - описание frontend, backend, search-service
-  - подробное описание алгоритмов парсинга и расчета match score
-  - описание сохранения результатов поиска и shortlist в PostgreSQL
-  - описание production-развертывания через Docker Compose
-- добавлены новые визуальные материалы:
-  - wireframes
-  - диаграмма вариантов использования
-  - блок-схема подбора
-  - схема архитектуры
-  - схема БД
-  - mock-скриншоты экранов приложения
-  - mock-скриншот просмотра таблицы БД
-- добавлены большие приложения:
-  - полный SQL-скрипт БД
-  - листинги backend-модулей
-  - листинги search-service
-  - листинги ключевых frontend-страниц
-  - эксплуатационные markdown-документы проекта
+## Files Changed
 
-## PZ Structure Now
+- [apps/web/src/pages/ClientPage.tsx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/web/src/pages/ClientPage.tsx)
+- [apps/web/src/shared/format.ts](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/web/src/shared/format.ts)
+- [apps/web/src/pages/DashboardPage.tsx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/web/src/pages/DashboardPage.tsx)
+- [apps/web/src/entities/types.ts](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/web/src/entities/types.ts)
+- [apps/web/src/styles/global.css](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/web/src/styles/global.css)
+- [apps/api/src/routes/dashboard.ts](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/api/src/routes/dashboard.ts)
+- [apps/api/src/repositories/sql.ts](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/api/src/repositories/sql.ts)
+- [apps/search-service/app/adapters/base.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/adapters/base.py)
+- [apps/search-service/app/utils/text.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/utils/text.py)
+- [apps/search-service/tests/test_normalization.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/tests/test_normalization.py)
 
-В [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx) сейчас есть:
+## Client Page Changes
 
-- титульный лист
-- содержание
-- введение
-- `1 Назначение и цели разработки`
-- `1.1 Анализ предметной области`
-- `1.2 Требования к разрабатываемой системе`
-- `2 Разработка технического проекта`
-- `2.1 Определение спецификаций программного обеспечения`
-- `2.2 Проектирование модели данных`
-- `2.3 Проектирование интерфейса пользователя`
-- `3 Рабочий проект`
-- `3.1 Обоснование выбора средств разработки`
-- `3.2 Разработка физической модели данных`
-- `3.3 Программная реализация модулей`
-- `3.3.1 Реализация frontend-модуля`
-- `3.3.2 Реализация backend API`
-- `3.3.3 Реализация search-service и алгоритмов парсинга`
-- `3.3.4 Алгоритм сохранения результатов поиска в PostgreSQL`
-- `3.3.5 Формирование подборки и текста сообщения`
-- `3.4 Тестирование программных модулей`
-- `3.5 Разработка эксплуатационной документации`
-- `3.6 Развертывание через Docker Compose`
-- заключение
-- список источников
-- приложения А, Б, В, Г, Д, Е, Ж, И, К, Л, М, Н, П, Р
+### Summary tiles
 
-## Formatting Rules Applied
+Раньше счетчики `В подборке` и `Найдено` были объединены в один горизонтальный блок.
 
-По замечаниям преподавателя в документе закреплен единый стиль оформления шагов:
+Теперь:
 
-- не используется формат `1. текст шага`
-- используется формат `Действие №1. Текст действия.`
-- в конце действия ставится точка
-- тот же принцип использован в сценариях и тест-кейсах
+- каждый счетчик вынесен в отдельную плашку
+- блок выглядит как две отдельные карточки
+- это упрощает чтение и соответствует замечанию по UI
 
-## Visual Assets Added
+### Property card titles
 
-Файлы лежат в:
+Раньше заголовки тянули в себя:
 
-- [docs/assets/zubach_pz](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/docs/assets/zubach_pz)
+- названия ЖК
+- адреса
+- мусор из контактов
+- фрагменты маркетинговых блоков
 
-Добавлены:
+Теперь заголовки принудительно сокращены:
 
-- `01_use_case.png`
-- `02_activity.png`
-- `03_architecture.png`
-- `04_er_schema.png`
-- `05_wireframe_login.png`
-- `06_wireframe_dashboard.png`
-- `07_wireframe_clients.png`
-- `08_wireframe_client_card.png`
-- `09_screen_login.png`
-- `10_screen_dashboard.png`
-- `11_screen_clients.png`
-- `12_screen_client_card.png`
-- `13_screen_message_modal.png`
-- `14_screen_db_view.png`
+- `1-к квартира, 40.6 м²`
+- `2-к квартира, 53.8 м²`
+- `Дом 128 м²`
 
-## Volume Check
+Фронтенд тоже делает fallback в этот формат, поэтому даже старые грязные записи в БД не должны больше показывать длинные мусорные названия.
 
-- текстовый объем DOCX после расширения: около `14 000` слов
-- это уже не короткий черновик, а полноценный расширенный дипломный документ
+### Property card layout
 
-## Project State
+Раньше кнопки могли зависеть от высоты контента и визуально ехать вверх.
 
-- Frontend: React + Vite
-- Backend API: Node.js + Express
-- Search service: Python + FastAPI
-- Database: PostgreSQL via `pg`
-- Deploy: Docker Compose + Nginx
+Теперь:
 
-## PostgreSQL And Search State
+- карточка растягивается по высоте
+- body карточки сделан через flex column
+- блок кнопок уходит вниз через `margin-top: auto`
 
-- API сохраняет клиентов в PostgreSQL
-- результаты поиска сохраняются в:
-  - `properties`
-  - `client_found_properties`
-  - `search_runs`
-- подборки сохраняются в:
-  - `shortlist_items`
-- тексты сообщений сохраняются в:
-  - `share_messages`
-- parser описан в ПЗ на основе реальной логики из:
-  - [apps/search-service/app/adapters/base.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/adapters/base.py)
-  - [apps/search-service/app/services/search.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/services/search.py)
-  - [apps/search-service/app/services/matcher.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/services/matcher.py)
+### Property descriptions
 
-## Verification
+Раньше в модалке и карточках мог показываться мусорный текст:
 
-- генератор [scripts/build_zubach_pz.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/scripts/build_zubach_pz.py) выполняется успешно
-- новый [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx) собирается без ошибок
-- новые PNG-материалы сгенерированы
-- структура документа расширена и включает дополнительные приложения
+- SEO-обрывки
+- контакты
+- набор цен и счетчиков
+- служебные слова
 
-## Render QA Status
+Теперь:
 
-- автоматическая render-проверка `docx -> png` через documents renderer по-прежнему недоступна в этой среде
-- причина: отсутствует `soffice`
-- это ограничение окружения, а не ошибка сборки DOCX
+- search-service пытается использовать очищенное текстовое описание с сайта
+- описания с телефонами, `контакты`, `в продаже`, маркетинговыми блоками и цифровым шумом отбрасываются
+- если нормального описания нет, frontend собирает чистый fallback из:
+  - типа объекта
+  - площади
+  - района
+  - цены
+  - источника
 
-## Commands
+## Room Parsing Fix
 
-- пересобрать ПЗ:
-  - `/Users/like-shockpritotskaya-event/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/build_zubach_pz.py`
+Проблема `21 комната` возникала из-за слишком грубого regex для комнатности.
+
+Что изменено:
+
+- parser теперь ищет только реальные паттерны комнатности:
+  - `1-к`
+  - `2-комн`
+  - `3-комнатная`
+- значения больше `8` считаются невалидными и отбрасываются
+- frontend дополнительно страхует уже сохраненные данные и не показывает неадекватное число комнат в drawer и карточках
+
+## Dashboard Changes
+
+### KPI cards
+
+Раньше mini-bars были почти декоративными и не отражали отдельные реальные метрики.
+
+Теперь каждая карточка использует собственный реальный временной ряд за 7 дней:
+
+- `Клиенты в работе` -> количество созданных клиентов по дням
+- `Найдено объектов` -> сумма `search_runs.total_found`
+- `В подборках` -> число `shortlist_items` по дням
+- `Готово к отправке` -> количество `share_messages.sent_marked_at` по дням
+
+### Percentages
+
+Фальшивые проценты больше не используются.
+
+Если данных нет:
+
+- график в KPI-карточке просто не рисуется
+
+### Main chart
+
+Главный график активности на dashboard теперь тоже завязан на реальные данные из БД:
+
+- линия показывает найденные объекты
+- светлые бары показывают добавления в подборки
+- tooltip показывает реальные значения
+
+## Search Normalization Changes
+
+В search-service усилена очистка описаний:
+
+- отбрасываются телефоны
+- отбрасываются `контакты`, `подобрать`, `заказать звонок`, `в продаже`
+- вырезается часть цифрового мусора и повторяющихся ценовых фраз
+- сохраняются только достаточно длинные и внятные фразы
+
+Также заголовки в backend теперь тоже собираются в коротком формате без ЖК и адреса.
+
+## Tests And Verification
+
+Проверки этой итерации:
+
+- `npm run typecheck` — пройдено
+- `npm run build` — пройдено
+- `cd apps/search-service && .venv/bin/python -m unittest discover -s tests -v` — пройдено
+
+Добавлены/обновлены тесты:
+
+- плохой title квартиры нормализуется в короткий формат
+- дом нормализуется в формат `Дом N м²`
+- фраза `21 квартира` не считается комнатностью
+- описание с телефоном и словом `Контакты` отбрасывается
+
+## Important Note
+
+Для новых корректных описаний и названий лучше повторно запустить поиск по клиенту:
+
+- старые записи в PostgreSQL уже могли сохраниться с прошлой грязной нормализацией
+- frontend теперь их сильно маскирует и чистит
+- но полный эффект будет после нового search run и обновления записей в БД
 
 ## Remaining Work
 
-- открыть [67_Зубач_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Зубач_ПЗ.docx) в Word
-- обновить содержание
-- проверить титульный лист: группа, руководитель, кафедральные данные
-- после замечаний преподавателя внести уже точечные правки по формулировкам и составу приложений
+- при необходимости вручную проверить клиентскую карточку в браузере после повторного поиска
+- если захотите, следующей итерацией можно отдельно довести карточки объектов до еще более строгого одинакового визуального шаблона

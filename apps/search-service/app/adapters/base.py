@@ -23,6 +23,16 @@ BAD_DESCRIPTION_MARKERS = (
     "кабинет", "скидка", "ремонт в подарок", "старт продаж", "каталог", "фильтр", "подобрать"
 )
 BAD_IMAGE_MARKERS = BAD_IMAGE_MARKERS + ("telegram", "vk", "whatsapp")
+BAD_DESCRIPTION_PHRASES = (
+    "контакты",
+    "позвоните",
+    "звоните",
+    "заказать звонок",
+    "подробнее",
+    "смотреть все",
+    "политика конфиденциальности",
+    "в продаже",
+)
 
 DISTRICT_MARKERS = (
     "прикубанский",
@@ -132,6 +142,7 @@ class BaseAdapter:
             return None
 
         raw_title = clean_text(str(node.get("name") or node.get("headline") or ""))
+        raw_description = clean_text(str(node.get("description") or ""))
         offers = node.get("offers") if isinstance(node.get("offers"), dict) else {}
         raw_price = node.get("price") or offers.get("price") or offers.get("lowPrice")
         price = float(raw_price) if str(raw_price).replace(".", "", 1).isdigit() else parse_price(raw_title)
@@ -165,6 +176,8 @@ class BaseAdapter:
             request,
             self.config.name,
             title=title,
+            raw_description=raw_description,
+            raw_text=text,
             price=price,
             area=area,
             rooms=rooms,
@@ -221,6 +234,11 @@ class BaseAdapter:
             raw_title = clean_text(link.get_text(" ", strip=True)) or text[:120]
             image = card.select_one("img")
             image_url = image.get("src") or image.get("data-src") if image else None
+            description_parts = [
+                clean_text(node.get_text(" ", strip=True))
+                for node in card.select("p, li, .description, .text, .caption")
+            ]
+            raw_description = max(description_parts, key=len, default="")
             price = parse_price(text)
             area = parse_area(text)
             rooms = parse_rooms(text)
@@ -249,6 +267,8 @@ class BaseAdapter:
                 request,
                 self.config.name,
                 title=title,
+                raw_description=raw_description,
+                raw_text=text,
                 price=price,
                 area=area,
                 rooms=rooms,
@@ -318,33 +338,10 @@ class BaseAdapter:
         if property_type == "apartment":
             rooms_label = "Студия" if rooms == 0 else f"{rooms}-к квартира" if rooms is not None else "Квартира"
             area_label = f", {area} м²" if area else ""
-            location = (
-                self._prefixed_project_name(complex_name, "в ЖК")
-                or (f"на {address}" if address else None)
-                or (f"в районе {district}" if district else None)
-            )
-            if location:
-                return f"{rooms_label}{area_label} {location}".strip()
-            if title:
-                return title
-            if area:
-                return f"Квартира {area} м²"
-            return f"Квартира от {source_name}"
+            return f"{rooms_label}{area_label}".strip(", ")
 
         house_area = f"Дом {area} м²" if area else "Дом"
-        land_label = f", участок {land_area} сот." if land_area else ""
-        location = (
-            self._prefixed_project_name(settlement_name, "в КП")
-            or (f"в {address}" if address else None)
-            or (f"в районе {district}" if district else None)
-        )
-        if location:
-            return f"{house_area}{land_label} {location}".strip()
-        if title:
-            return title
-        if area:
-            return f"Дом {area} м²"
-        return f"Дом от {source_name}"
+        return house_area
 
     def _normalize_description(
         self,
@@ -352,6 +349,8 @@ class BaseAdapter:
         source_name: str,
         *,
         title: str,
+        raw_description: str | None,
+        raw_text: str | None,
         price: float | None,
         area: float | None,
         rooms: int | None,
@@ -362,6 +361,9 @@ class BaseAdapter:
     ) -> str:
         location = district or address or settlement_name
         price_text = self._format_price(price)
+        cleaned = self._clean_description(raw_description or raw_text or "", title=title)
+        if cleaned:
+            return cleaned
 
         if request.propertyType == "house":
             parts = [f"{title}."]
@@ -383,6 +385,54 @@ class BaseAdapter:
             parts.append(f"Цена {price_text}.")
         parts.append(f"Источник: {source_name}.")
         return " ".join(parts)
+
+    def _clean_description(self, value: str, *, title: str) -> str | None:
+        text = clean_text(value)
+        if not text:
+            return None
+        lowered = text.lower()
+        if any(marker in lowered for marker in BAD_DESCRIPTION_MARKERS):
+            return None
+        if any(phrase in lowered for phrase in BAD_DESCRIPTION_PHRASES):
+            return None
+        if re.search(r"\+?\d[\d\-\s()]{9,}", text):
+            return None
+
+        text = re.sub(r"\s+", " ", text)
+        text = re.sub(r"[•·|]+", ". ", text)
+        text = re.sub(r"\b\d+\s*от\s*\d+[,\d\s]*₽", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\bот\s*\d+[,\d\s]*₽", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\b\d+\s*(?:квартир|объектов|предложений)\b", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\s*[—–-]\s*", " — ", text)
+        text = re.sub(r"([.,!?]){2,}", r"\1", text)
+        text = re.sub(r"\s+([.,!?])", r"\1", text)
+
+        sentences = re.split(r"(?<=[.!?])\s+", text)
+        kept: list[str] = []
+        title_lower = title.lower()
+        for sentence in sentences:
+            clean_sentence = clean_text(sentence.strip(" ."))
+            lowered_sentence = clean_sentence.lower()
+            if len(clean_sentence) < 30:
+                continue
+            if len(re.findall(r"\d", clean_sentence)) > max(10, len(clean_sentence) // 3):
+                continue
+            if any(marker in lowered_sentence for marker in BAD_DESCRIPTION_MARKERS):
+                continue
+            if any(phrase in lowered_sentence for phrase in BAD_DESCRIPTION_PHRASES):
+                continue
+            if title_lower and lowered_sentence == title_lower:
+                continue
+            kept.append(clean_sentence)
+            if len(" ".join(kept)) >= 260:
+                break
+
+        description = " ".join(kept).strip()
+        if not description:
+            return None
+        if not description.endswith((".", "!", "?")):
+            description += "."
+        return description[:320]
 
     def _extract_complex_name(self, text: str, property_type: str) -> str | None:
         patterns = [

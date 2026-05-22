@@ -18,32 +18,19 @@ dashboardRouter.get("/summary", async (req, res, next) => {
 
 dashboardRouter.get("/activity", async (req, res, next) => {
   try {
-    const start = new Date();
-    start.setDate(start.getDate() - 6);
-    start.setHours(0, 0, 0, 0);
-
     const runs = await dashboardActivity(req.userId!);
-
-    const days = Array.from({ length: 7 }, (_, index) => {
-      const day = new Date(start);
-      day.setDate(start.getDate() + index);
+    const days = runs.map((run) => {
+      const date = new Date(String((run as { day: string }).day));
       return {
-        key: day.toISOString().slice(0, 10),
-        label: day.toLocaleDateString("ru-RU", { weekday: "short" }),
-        found: 0,
-        shortlisted: 0,
-        sent: 0
+        key: date.toISOString().slice(0, 10),
+        label: date.toLocaleDateString("ru-RU", { weekday: "short" }),
+        clients: Number((run as { clients: number }).clients ?? 0),
+        found: Number((run as { found: number }).found ?? 0),
+        shortlisted: Number((run as { shortlisted: number }).shortlisted ?? 0),
+        sent: Number((run as { sent: number }).sent ?? 0),
+        ready: Number((run as { ready: number }).ready ?? 0)
       };
     });
-
-    for (const run of runs) {
-      const date = new Date(String((run as { started_at: string }).started_at));
-      const key = date.toISOString().slice(0, 10);
-      const item = days.find((day) => day.key === key);
-      if (item) {
-        item.found += Number((run as { total_found: number }).total_found ?? 0);
-      }
-    }
 
     res.json(days);
   } catch (error) {

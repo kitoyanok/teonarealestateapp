@@ -52,6 +52,7 @@ function PropertyCard({
         <div className="property-card__meta">
           <span>{propertyMeta(property) || "Параметры уточняются"}</span>
         </div>
+        <p className="property-card__description">{propertyDescription(property)}</p>
         <div className="match-row">
           <span>Совпадение: {item.matchScore ?? 0}%</span>
           <div>
@@ -90,6 +91,9 @@ function PropertyDrawer({
   onAdd: () => void;
   onRemove: () => void;
 }) {
+  const safeRooms = property.rooms !== null && property.rooms !== undefined && property.rooms >= 0 && property.rooms <= 8
+    ? property.rooms
+    : null;
   return (
     <div className="drawer-backdrop" onClick={onClose}>
       <aside className="property-drawer" onClick={(event) => event.stopPropagation()}>
@@ -124,7 +128,7 @@ function PropertyDrawer({
               ]
             : [
                 ["Площадь", property.area ? `${property.area} м²` : null],
-                ["Комнат", property.rooms === 0 ? "Студия" : property.rooms],
+                ["Комнат", safeRooms === 0 ? "Студия" : safeRooms],
                 ["Этаж", property.floor && property.floorsTotal ? `${property.floor}/${property.floorsTotal}` : null],
                 ["Срок сдачи", property.completionYear],
                 ["Отделка", property.finishing],
@@ -326,9 +330,15 @@ export function ClientPage() {
               </>
             )}
           </div>
-          <div className="client-summary-card client-summary-card--inline">
-            <div><span>В подборке</span><strong>{shortlist.length} объекта</strong></div>
-            <div><span>Найдено</span><strong>{found.length} объекта</strong></div>
+          <div className="client-summary-tiles">
+            <div className="client-summary-card">
+              <span>В подборке</span>
+              <strong>{shortlist.length} объекта</strong>
+            </div>
+            <div className="client-summary-card">
+              <span>Найдено</span>
+              <strong>{found.length} объекта</strong>
+            </div>
           </div>
           {client.comment ? <p className="client-comment">{client.comment}</p> : null}
         </article>

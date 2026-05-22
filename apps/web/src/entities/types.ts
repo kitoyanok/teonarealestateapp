@@ -130,7 +130,9 @@ export type DashboardSummary = {
 export type ActivityPoint = {
   key: string;
   label: string;
+  clients: number;
   found: number;
   shortlisted: number;
   sent: number;
+  ready: number;
 };

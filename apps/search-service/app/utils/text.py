@@ -34,10 +34,17 @@ def parse_rooms(value: str) -> int | None:
     text = value.lower()
     if "студ" in text:
         return 0
-    match = re.search(r"(\d+)\s*[- ]?(?:комн|к\.|квартира)", text)
-    if not match:
-        return None
-    return int(match.group(1))
+    patterns = [
+        r"\b(\d)\s*[- ]?к\b",
+        r"\b(\d)\s*[- ]?комн",
+        r"\b(\d)\s*[- ]?комнат",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            rooms = int(match.group(1))
+            return rooms if 0 <= rooms <= 8 else None
+    return None
 
 
 def extract_year(value: str) -> int | None:
