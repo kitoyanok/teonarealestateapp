@@ -1,3 +1,6 @@
+// Этот файл собирает Express-приложение из middleware и маршрутов.
+// Проще говоря: здесь backend получает свои URL, обработку ошибок и правила работы с JSON и cookie.
+
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import cookieParser from "cookie-parser";

@@ -1,3 +1,6 @@
+"""Этот файл считает процент совпадения объекта с запросом клиента.
+Проще говоря: он сравнивает цену, площадь, район и другие параметры и выдает итоговую оценку."""
+
 from app.schemas.property import PropertyItem, SearchRequest
 
 
@@ -19,6 +22,8 @@ def _text_match(value: str | None, variants: list[str]) -> bool:
 
 
 def score_property(item: PropertyItem, request: SearchRequest) -> PropertyItem:
+    # Score - это оценка соответствия объекта запросу клиента.
+    # Чем выше число, тем выше шанс, что объект окажется полезным риелтору.
     score = 0
     reasons: list[str] = []
     mismatches: list[str] = []

@@ -1,3 +1,6 @@
+"""Этот файл автоматически собирает пояснительную записку в формате DOCX и готовит изображения для нее.
+Проще говоря: он превращает текст, таблицы и схемы проекта в один собранный документ для диплома."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -458,7 +461,7 @@ def build_screen_login() -> Path:
         top = 360 + idx * 150
         draw.text((1040, top - 36), label, font=FONT_20, fill=GRAY)
         draw.rounded_rectangle((1040, top, 1430, top + 70), radius=16, fill=WHITE, outline=MID, width=2)
-        draw.text((1070, top + 18), "test" if idx == 0 else "••••••", font=FONT_24, fill=BLACK)
+        draw.text((1070, top + 18), "ivan.nikitin" if idx == 0 else "••••••••••", font=FONT_24, fill=BLACK)
     draw.rounded_rectangle((1040, 690, 1430, 770), radius=18, fill=ORANGE, outline=ORANGE, width=2)
     draw.text((1170, 713), "Войти", font=FONT_24, fill=WHITE)
     return save(image, "09_screen_login.png")
@@ -928,10 +931,10 @@ def testcases() -> list[TestCase]:
             ident="Е.1",
             name="Успешная авторизация риелтора",
             goal="Проверить возможность входа в систему по корректным учетным данным.",
-            preconditions="Docker Compose запущен. В базе данных существует тестовый пользователь test / test.",
+            preconditions="Docker Compose запущен. В базе данных существует преднастроенная учетная запись риелтора.",
             actions=[
                 "Действие №1. Открыть страницу входа в приложение.",
-                "Действие №2. Ввести логин test и пароль test.",
+                "Действие №2. Ввести логин ivan.nikitin и пароль Teona2026!.",
                 "Действие №3. Нажать кнопку «Войти».",
             ],
             expected="Система открывает главную страницу, устанавливает сессионную cookie и отображает данные пользователя.",

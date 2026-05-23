@@ -1,3 +1,6 @@
+"""Этот файл запускает HTTP-сервис поиска на FastAPI.
+Проще говоря: он принимает запрос от backend, вызывает поиск и возвращает найденные объявления."""
+
 from fastapi import FastAPI
 
 from app.schemas.property import SearchRequest, SearchResponse

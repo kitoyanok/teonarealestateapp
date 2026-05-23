@@ -1,3 +1,6 @@
+// Этот файл запускает поиск по внешним источникам и сохраняет его результат.
+// Проще говоря: он связывает карточку клиента, Python-сервис поиска и базу данных PostgreSQL.
+
 import {
   createSearchRun,
   failSearchRun,
@@ -158,6 +161,7 @@ export async function runClientSearch(clientId: string, realtorId: string) {
       throw new Error(`Search service returned ${response.status}`);
     }
 
+    // Payload - это просто пакет данных, который вернул Python-сервис поиска.
     const payload = (await response.json()) as SearchResponse;
     if (payload.status !== "ok") {
       throw new Error(payload.error ?? "Search service error");

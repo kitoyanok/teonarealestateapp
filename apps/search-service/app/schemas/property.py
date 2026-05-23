@@ -1,3 +1,6 @@
+"""Этот файл описывает форму входных и выходных данных search-service.
+Проще говоря: он задает, как должен выглядеть запрос на поиск и как выглядит одно нормализованное объявление."""
+
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field

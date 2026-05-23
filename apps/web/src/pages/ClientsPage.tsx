@@ -1,3 +1,6 @@
+// Эта страница показывает всех клиентов риелтора.
+// Проще говоря: здесь можно найти нужную карточку, отфильтровать список и перейти в детали клиента.
+
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useMemo } from "react";

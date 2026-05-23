@@ -6,13 +6,13 @@
 
 Источники поиска не ищутся автоматически. Они заранее описаны в коде как список стартовых URL в:
 
-- [apps/search-service/app/adapters/sources.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/adapters/sources.py)
+- `apps/search-service/app/adapters/sources.py`
 
 Сейчас нет отдельного индивидуального парсера под каждый сайт. Все источники проходят через общий `BaseAdapter`: он читает JSON-LD, видимые карточки HTML и приводит данные к единому формату `PropertyItem`.
 
 Основная базовая логика парсинга находится в:
 
-- [apps/search-service/app/adapters/base.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/app/adapters/base.py)
+- `apps/search-service/app/adapters/base.py`
 
 ## Что происходит при поиске
 

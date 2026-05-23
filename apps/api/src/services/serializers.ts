@@ -1,3 +1,6 @@
+// Этот файл делает данные удобными для отправки в браузер.
+// Проще говоря: он превращает даты и вложенные структуры в чистый JSON без неожиданностей для frontend.
+
 function normalizeValue(value: unknown): unknown {
   if (value instanceof Date) {
     return value.toISOString();

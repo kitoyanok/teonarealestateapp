@@ -1,3 +1,6 @@
+// Этот файл отдает подробные данные по одному объекту недвижимости.
+// Проще говоря: он нужен, когда фронтенду надо открыть карточку конкретного объявления.
+
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { getPropertyById } from "../repositories/sql.js";

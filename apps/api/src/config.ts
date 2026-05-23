@@ -1,3 +1,6 @@
+// Этот файл собирает настройки приложения из переменных окружения.
+// Проще говоря: здесь backend узнает, на каком порту запускаться,
+// как подключаться к базе и где искать сервис поиска.
 import dotenv from "dotenv";
 
 dotenv.config({ path: ".env" });
@@ -8,7 +11,5 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET ?? "estateflow-dev-secret",
   searchServiceUrl: process.env.SEARCH_SERVICE_URL ?? "http://localhost:8002",
   isProduction: process.env.NODE_ENV === "production",
-  databaseUrl: process.env.DATABASE_URL ?? "postgres://estateflow:estateflow_password@localhost:5432/estateflow",
-  demoLogin: process.env.DEMO_LOGIN ?? "test",
-  demoPassword: process.env.DEMO_PASSWORD ?? "test"
+  databaseUrl: process.env.DATABASE_URL ?? "postgres://estateflow:estateflow_password@localhost:5432/estateflow"
 };

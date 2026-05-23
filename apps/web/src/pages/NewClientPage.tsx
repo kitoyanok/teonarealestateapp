@@ -1,3 +1,6 @@
+// Эта страница нужна для создания нового клиента.
+// Проще говоря: здесь риелтор вводит контактные данные и параметры поиска недвижимости.
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { ArrowLeft, Check, Loader2 } from "lucide-react";

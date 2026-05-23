@@ -1,10 +1,12 @@
+// Этот файл запускает backend-сервер.
+// Проще говоря: сначала он убеждается, что стартовые риелторы есть в базе, потом поднимает API и корректно завершает его при остановке.
 import { config } from "./config.js";
 import { createApp } from "./app.js";
 import { pool } from "./db/pool.js";
-import { ensureSeedUser } from "./repositories/db.js";
+import { ensureSeedRealtors } from "./repositories/db.js";
 
 async function bootstrap() {
-  await ensureSeedUser();
+  await ensureSeedRealtors();
   const app = await createApp();
 
   const server = app.listen(config.port, () => {

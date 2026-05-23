@@ -1,3 +1,6 @@
+// Этот файл защищает закрытые разделы API.
+// Проще говоря: он проверяет, вошел ли пользователь в систему, и только после этого пускает его к данным.
+
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { config } from "../config.js";

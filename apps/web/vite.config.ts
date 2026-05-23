@@ -1,3 +1,6 @@
+// Этот файл настраивает сборщик Vite для frontend.
+// Проще говоря: здесь указаны порт, proxy до backend и правила production-сборки.
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 

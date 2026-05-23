@@ -1,3 +1,6 @@
+// Эта страница показывает профиль текущего риелтора.
+// Проще говоря: здесь собраны базовые данные сотрудника, который вошел в систему.
+
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "../entities/types";
 import { api } from "../shared/api";

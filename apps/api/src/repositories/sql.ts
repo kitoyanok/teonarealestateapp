@@ -1,6 +1,9 @@
+// Это главный файл работы с PostgreSQL.
+// Простыми словами: здесь лежат запросы, которые создают, читают, обновляют и удаляют данные приложения.
 import bcrypt from "bcryptjs";
 import type { PoolClient } from "pg";
 import { pool, query } from "../db/pool.js";
+import type { SeedRealtor } from "../data/realtors.js";
 
 type ClientPayload = {
   name: string;
@@ -40,6 +43,8 @@ const profileColumns = [
 ] as const;
 
 function camelize<T>(value: T): T {
+  // База данных любит стиль snake_case, а frontend и TypeScript чаще работают в camelCase.
+  // Эта функция переводит названия полей из одного вида в другой.
   if (Array.isArray(value)) {
     return value.map(camelize) as T;
   }
@@ -63,20 +68,27 @@ async function withClient<T>(callback: (client: PoolClient) => Promise<T>) {
   }
 }
 
-export async function ensureSeedUser(login: string, password: string) {
-  const existing = await query<{ id: string }>("SELECT id FROM users WHERE login = $1 LIMIT 1", [login]);
-  if (existing.rowCount) {
-    return existing.rows[0];
+export async function ensureSeedRealtors(realtors: SeedRealtor[]) {
+  const created: { login: string; id: string }[] = [];
+
+  for (const realtor of realtors) {
+    const existing = await query<{ id: string }>("SELECT id FROM users WHERE login = $1 LIMIT 1", [realtor.login]);
+    if (existing.rowCount) {
+      created.push({ login: realtor.login, id: existing.rows[0].id });
+      continue;
+    }
+
+    const passwordHash = await bcrypt.hash(realtor.password, 10);
+    const inserted = await query<{ id: string }>(
+      `INSERT INTO users (login, password_hash, name, email, phone)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id`,
+      [realtor.login, passwordHash, realtor.name, realtor.email, realtor.phone]
+    );
+    created.push({ login: realtor.login, id: inserted.rows[0].id });
   }
 
-  const passwordHash = await bcrypt.hash(password, 10);
-  const created = await query<{ id: string }>(
-    `INSERT INTO users (login, password_hash, name, email, phone)
-     VALUES ($1, $2, $3, $4, $5)
-     RETURNING id`,
-    [login, passwordHash, "Риелтор EstateFlow", "realtor@example.com", "+7 (999) 123-45-67"]
-  );
-  return created.rows[0];
+  return created;
 }
 
 export async function findUserByLogin(login: string) {
@@ -335,6 +347,7 @@ export async function getShortlist(clientId: string) {
 }
 
 export async function addToShortlist(clientId: string, propertyId: string) {
+  // Shortlist - это рабочая подборка риелтора: туда попадают объекты, которые стоит показать клиенту.
   await query(
     `INSERT INTO shortlist_items (client_id, property_id)
      VALUES ($1, $2)
@@ -522,6 +535,8 @@ export async function updateClientStatus(clientId: string, status: string) {
 }
 
 export async function upsertProperty(item: Record<string, unknown>) {
+  // Upsert означает: если объект с такой ссылкой уже был, обновить его;
+  // если его еще не было, создать новую запись.
   const result = await query(
     `INSERT INTO properties (
        external_id, source_name, source_url, property_type, title, complex_name, developer_name,

@@ -1,3 +1,6 @@
+// Этот файл приводит данные к удобному человеческому виду.
+// Проще говоря: здесь из сырых полей собираются нормальные названия объектов, цены, подписи и описания.
+
 import type { Client, Property, SearchProfile, SendChannel } from "../entities/types";
 
 const BAD_PROPERTY_TITLES = [
@@ -258,6 +261,8 @@ export function propertyDescription(property: Property) {
     return description;
   }
 
+  // Fallback - это запасной вариант описания.
+  // Если на сайте не удалось вытащить внятный текст, мы собираем короткое описание из тех полей, которые уже есть.
   if (property.propertyType === "house") {
     return [
       propertyTitle(property) ? `${propertyTitle(property)}.` : null,

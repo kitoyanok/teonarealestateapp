@@ -1377,6 +1377,8 @@ tbody tr:hover {
   color: var(--color-accent);
 }
 
+/* Этот файл задает внешний вид всего интерфейса.
+   Проще говоря: здесь описано, как выглядят страницы, кнопки, карточки, формы и таблицы. */
 .login-page {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(380px, 0.9fr);
@@ -1471,6 +1473,33 @@ tbody tr:hover {
 .auth-card label span {
   font-size: 12px;
   color: var(--color-muted);
+}
+
+.login-hint {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #fff8f3;
+}
+
+.login-hint strong {
+  font-size: 13px;
+}
+
+.login-hint ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--color-muted);
+  display: grid;
+  gap: 4px;
+}
+
+.login-hint p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.45;
 }
 
 .help-panel {

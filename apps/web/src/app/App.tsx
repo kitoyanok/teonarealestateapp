@@ -1,3 +1,6 @@
+// Это корневой файл frontend.
+// Проще говоря: он задает маршруты приложения, проверяет авторизацию и решает, какую страницу показывать пользователю.
+
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AppShell } from "../widgets/AppShell";

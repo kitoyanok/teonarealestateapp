@@ -1,3 +1,6 @@
+// Это точка входа frontend-приложения.
+// Проще говоря: именно отсюда React начинает рисовать интерфейс в браузере.
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./app/App";

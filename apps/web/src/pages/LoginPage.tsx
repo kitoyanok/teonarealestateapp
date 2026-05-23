@@ -1,3 +1,5 @@
+// Это экран входа для риелтора.
+// Простыми словами: человек вводит свой логин и пароль, а страница отправляет их на backend и открывает рабочую часть приложения.
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Building2, CopyCheck, Radar, Send } from "lucide-react";
 import { FormEvent, useState } from "react";
@@ -6,11 +8,19 @@ import { api, ApiError } from "../shared/api";
 import { loginPhoto, logoImage } from "../shared/assets";
 import type { User } from "../entities/types";
 
+const availableAccounts = [
+  "ivan.nikitin",
+  "kirill.nabiev",
+  "ilya.berezin",
+  "marina.nikiforova",
+  "nikita.zubach"
+];
+
 export function LoginPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [login, setLogin] = useState("test");
-  const [password, setPassword] = useState("test");
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
   const mutation = useMutation({
     mutationFn: () => api.post<{ user: User }>("/api/auth/login", { login, password }),
@@ -54,7 +64,17 @@ export function LoginPage() {
         <form className="auth-card login-card" onSubmit={onSubmit}>
           <div>
             <h2>Вход в аккаунт</h2>
-            <p>Демо-доступ: test / test</p>
+            <p>Доступ открыт для преднастроенных сотрудников агентства.</p>
+          </div>
+
+          <div className="login-hint">
+            <strong>Рабочие логины</strong>
+            <ul>
+              {availableAccounts.map((account) => (
+                <li key={account}>{account}</li>
+              ))}
+            </ul>
+            <p>Общий пароль для этих учетных записей: <strong>Teona2026!</strong></p>
           </div>
 
           <label>

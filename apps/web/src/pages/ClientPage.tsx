@@ -1,3 +1,6 @@
+// Это главный рабочий экран риелтора по конкретному клиенту.
+// Проще говоря: здесь видны найденные объекты, подборка, история поиска и кнопки для основных действий.
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Copy, ExternalLink, Loader2, Phone, RefreshCw, Send, Trash2, X } from "lucide-react";
 import { useMemo, useState } from "react";

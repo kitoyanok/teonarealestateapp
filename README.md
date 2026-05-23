@@ -1,132 +1,78 @@
-# EstateFlow
+# Тэона
 
-EstateFlow - CRM для риелтора с live-поиском недвижимости, подборками и подготовкой текста для ручной отправки клиенту.
+CRM-система для риелтора с автоматизированным поиском недвижимости по внешним источникам Краснодара, хранением клиентов в PostgreSQL и ручной подготовкой подборки для отправки клиенту.
 
-## Финальный стек
+## Что умеет система
 
-- Frontend: React + Vite
-- Backend API: Node.js + Express
-- Search service: Python + FastAPI
-- Парсинг: `httpx` + `BeautifulSoup4` + `lxml`
-- Database: PostgreSQL
-- Deploy: Docker Compose + Nginx
+- вход под преднастроенными риелторами;
+- создание карточки клиента;
+- сохранение параметров поиска;
+- запуск поиска квартир и домов;
+- сохранение найденных объектов в PostgreSQL;
+- ручное добавление объектов в подборку;
+- формирование текста сообщения для клиента;
+- просмотр сводки по клиентам и поискам.
 
-Исходники frontend и backend сейчас написаны на TypeScript, но архитектурно стек остается простым: React на клиенте, Express на API, FastAPI для парсинга, PostgreSQL как единственная база данных.
+## Стек
 
-## Что работает
+- frontend: `React + TypeScript + Vite`
+- backend API: `Node.js + Express + TypeScript`
+- search-service: `Python + FastAPI`
+- парсинг: `httpx + BeautifulSoup4 + lxml`
+- база данных: `PostgreSQL`
+- развертывание: `Docker Compose + Nginx`
 
-- логин
-- dashboard
-- список клиентов
-- карточка клиента
-- live-поиск объектов
-- shortlist
-- копирование телефона
-- копирование текста подборки
-- модальное окно просмотра объекта
-- профиль, помощь, аналитика, настройки
+## Архитектура простыми словами
 
-## Быстрый сценарий для диплома
+Система состоит из трех частей:
 
-Для вашей обычной работы можно использовать только Docker Compose и не трогать `dev`-режим.
+1. `apps/web` - интерфейс риелтора в браузере.
+2. `apps/api` - основной сервер, который хранит клиентов, работает с базой и запускает поиск.
+3. `apps/search-service` - отдельный Python-сервис, который ходит по сайтам и возвращает нормализованные объявления.
 
-Смотрите:
+Поток работы такой:
 
-- [PROD_COMMANDS.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/PROD_COMMANDS.md)
+1. Риелтор входит в систему.
+2. Создает клиента и задает параметры покупки.
+3. API сохраняет клиента в PostgreSQL.
+4. API отправляет профиль поиска в Python-сервис.
+5. Python-сервис собирает объявления, фильтрует их по Краснодару, считает процент совпадения и возвращает результат.
+6. API сохраняет найденные объекты и показывает их в интерфейсе.
+7. Риелтор вручную собирает подборку и формирует текст для клиента.
 
-Минимально нужно:
+## Рабочие учетные записи
 
-```bash
-cp .env.example .env
-npm run prod:up
-```
+В системе заранее создаются несколько риелторов:
 
-## Локальный запуск
+- `ivan.nikitin`
+- `kirill.nabiev`
+- `ilya.berezin`
+- `marina.nikiforova`
+- `nikita.zubach`
 
-1. Установить зависимости:
-
-```bash
-npm install
-```
-
-2. Поднять PostgreSQL и создать БД `estateflow`.
-
-3. Скопировать переменные:
-
-```bash
-cp .env.example .env
-```
-
-4. Применить SQL-схему:
-
-```bash
-psql postgres://estateflow:estateflow_password@localhost:5432/estateflow -f database/init.sql
-```
-
-5. Запустить приложение:
-
-```bash
-npm run dev
-```
-
-Открывать:
-
-- frontend: [http://localhost:5002](http://localhost:5002)
-- api health: [http://localhost:5003/api/health](http://localhost:5003/api/health)
-- search-service docs: [http://localhost:8002/docs](http://localhost:8002/docs)
-
-Демо-доступ:
+Общий пароль для этих учетных записей:
 
 ```text
-test / test
+Teona2026!
 ```
 
-## Docker Compose
+Новые пользователи через интерфейс пока не создаются.
+
+## Быстрый production-запуск
 
 ```bash
 cp .env.example .env
+npm install
 npm run prod:up
 ```
 
 После запуска:
 
 - приложение: [http://localhost:5002](http://localhost:5002)
-- API внутри Docker: `http://api:5003`
-- search-service внутри Docker: `http://search-service:8002`
-- PostgreSQL внутри Docker: `postgres://estateflow:estateflow_password@postgres:5432/estateflow`
+- API health: [http://localhost:5003/api/health](http://localhost:5003/api/health)
+- search-service docs: [http://localhost:8002/docs](http://localhost:8002/docs)
 
-### Что именно сохраняется в PostgreSQL
-
-- пользователи
-- клиенты
-- параметры поиска клиента
-- найденные объекты
-- результаты поиска по клиенту
-- shortlist
-- тексты подборок
-- история запусков поиска
-
-### Почему данные не пропадают после перезапуска
-
-В `docker-compose.yml` PostgreSQL использует named volume:
-
-```yaml
-volumes:
-  - estateflow-postgres:/var/lib/postgresql/data
-```
-
-Это значит:
-
-- `docker compose down` не удаляет данные
-- `docker compose up` поднимает контейнер снова с тем же содержимым БД
-
-Если нужно удалить БД полностью и начать заново:
-
-```bash
-npm run prod:reset-db
-```
-
-Если нужно просто остановить контейнеры без удаления данных:
+Остановить:
 
 ```bash
 npm run prod:down
@@ -138,42 +84,84 @@ npm run prod:down
 npm run prod:logs
 ```
 
-## Переменные окружения
+Полный сброс базы:
 
-```env
-WEB_PORT=5002
-API_PORT=5003
-PYTHON_SEARCH_PORT=8002
-POSTGRES_PORT=5432
-JWT_SECRET=change-me-in-production
-SEARCH_SERVICE_URL=http://localhost:8002
-NODE_ENV=development
-DATABASE_URL=postgres://estateflow:estateflow_password@localhost:5432/estateflow
-DEMO_LOGIN=test
-DEMO_PASSWORD=test
+```bash
+npm run prod:reset-db
 ```
 
-## Структура
+## Локальный dev-запуск
 
-```text
-apps/
-  web/              React/Vite frontend
-  api/              Express API + pg
-  search-service/   FastAPI live search
-database/
-  init.sql          PostgreSQL schema
-deploy/
-  nginx.conf        production reverse proxy
-docker-compose.yml
-ARCHITECTURE.md
+```bash
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-## Как устроен поток
+Скрипт `scripts/dev.mjs` сам проверяет, что порты не заняты.
 
-1. Риелтор входит в систему.
-2. Создает клиента и параметры поиска.
-3. Node API сохраняет клиента в PostgreSQL.
-4. Node API вызывает Python search-service.
-5. Python собирает live-объекты с источников и возвращает очищенные данные.
-6. Node API сохраняет найденные объекты, shortlist и историю поиска в PostgreSQL.
-7. Во frontend риелтор выбирает объекты и копирует готовый текст подборки клиенту.
+## Тесты и проверки
+
+TypeScript:
+
+```bash
+npm run typecheck
+```
+
+Сборка:
+
+```bash
+npm run build
+```
+
+Тесты Python-сервиса:
+
+```bash
+cd apps/search-service
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+## База данных
+
+Схема БД лежит в:
+
+- `database/init.sql`
+
+Главные таблицы:
+
+- `users` - риелторы;
+- `clients` - карточки клиентов;
+- `client_search_profiles` - параметры поиска;
+- `properties` - найденные объекты;
+- `client_found_properties` - результаты поиска для конкретного клиента;
+- `shortlist_items` - подборка;
+- `share_messages` - подготовленные тексты отправки;
+- `search_runs` - история запусков поиска.
+
+Данные не пропадают после перезапуска, потому что PostgreSQL работает через docker volume `estateflow-postgres`.
+
+## Где искать важный код
+
+- `apps/api/src/routes/clients.ts` - жизненный цикл клиента;
+- `apps/api/src/services/searchService.ts` - запуск поиска и сохранение результатов;
+- `apps/search-service/app/adapters/base.py` - нормализация объявлений;
+- `apps/search-service/app/services/search.py` - общий процесс поиска;
+- `apps/search-service/app/services/matcher.py` - расчет процента совпадения;
+- `apps/web/src/pages/NewClientPage.tsx` - создание клиента;
+- `apps/web/src/pages/ClientPage.tsx` - найденные объекты и подборка;
+- `apps/web/src/shared/format.ts` - нормальные названия, описание и формат данных.
+
+## Документы в корне проекта
+
+- `ITERATION_SUMMARY.md` - краткое состояние проекта на текущей итерации;
+- `Диплом_структура_ПЗ.md` - подробный план пояснительной записки по твоему заданию;
+- `67_Зубач_ПЗ.docx` - рабочая версия пояснительной записки;
+- `67_Погосян_ПЗ.docx` - референс;
+- `Диплом ПЗ — копия — копия.docx` - референс по структуре и стилю.
+
+## Что важно помнить
+
+- поиск работает только по заранее подключенным источникам;
+- система жестко фильтрует объявления и должна оставлять только Краснодар;
+- подборка собирается вручную риелтором;
+- отправка клиенту сейчас делается через копирование текста, без прямой интеграции с мессенджерами.

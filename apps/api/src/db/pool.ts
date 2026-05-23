@@ -1,3 +1,6 @@
+// Этот файл создает общее подключение к PostgreSQL.
+// Проще говоря: все части backend берут доступ к базе именно отсюда, а не создают его заново.
+
 import pg, { type QueryResultRow } from "pg";
 import { config } from "../config.js";
 

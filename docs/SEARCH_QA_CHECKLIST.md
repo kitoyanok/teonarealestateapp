@@ -8,8 +8,8 @@
 
 Добавлены unit-тесты:
 
-- [apps/search-service/tests/test_matcher.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/tests/test_matcher.py)
-- [apps/search-service/tests/test_normalization.py](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/apps/search-service/tests/test_normalization.py)
+- `apps/search-service/tests/test_matcher.py`
+- `apps/search-service/tests/test_normalization.py`
 
 Они проверяют:
 
@@ -58,7 +58,7 @@ python3 -m unittest discover -s tests -v
 npm run prod:up
 ```
 
-2. Создать тестового клиента.
+2. Создать клиента для проверки.
 3. Заполнить конкретные параметры из таблиц выше.
 4. Запустить поиск.
 5. Проверить:
@@ -78,9 +78,9 @@ npm run prod:up
 
 Список источников описан в:
 
-- [docs/PARSING_SOURCES.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/docs/PARSING_SOURCES.md)
+- `docs/PARSING_SOURCES.md`
 
 ## Ограничение этой итерации
 
-Из текущей среды Codex live-поиск по внешним сайтам не прогонялся, потому что внешняя сеть ограничена.  
+Из текущей локальной среды live-поиск по внешним сайтам не прогонялся, потому что внешняя сеть ограничена.  
 Автоматические unit-тесты добавлены, а ручной чеклист подготовлен для локальной проверки на вашей машине.

@@ -1,3 +1,5 @@
+// Этот файл отвечает за вход в систему, выход из нее и проверку "кто сейчас вошел".
+// Проще говоря: здесь backend проверяет логин и пароль и выдает браузеру безопасную сессию.
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { requireAuth, signSession } from "../middleware/auth.js";

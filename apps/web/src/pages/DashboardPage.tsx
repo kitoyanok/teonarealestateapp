@@ -1,3 +1,6 @@
+// Эта страница показывает общую сводку по работе.
+// Проще говоря: здесь собраны ключевые цифры, график активности и список клиентов, которым нужно внимание.
+
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, BriefcaseBusiness, ChartColumnBig, ClipboardList, House } from "lucide-react";
 import { Link } from "react-router-dom";

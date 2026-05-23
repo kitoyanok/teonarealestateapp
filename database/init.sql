@@ -1,3 +1,6 @@
+-- Этот файл создает структуру базы данных PostgreSQL.
+-- Проще говоря: здесь перечислены таблицы, связи между ними и базовые ограничения на данные.
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE IF NOT EXISTS users (

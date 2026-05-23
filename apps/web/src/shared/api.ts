@@ -1,3 +1,6 @@
+// Этот файл делает все запросы frontend к backend единообразными.
+// Проще говоря: он отправляет HTTP-запросы, читает ответы и превращает ошибки сервера в понятный вид.
+
 export class ApiError extends Error {
   status: number;
 
@@ -18,6 +21,7 @@ export async function apiRequest<T>(path: string, init: RequestInit = {}): Promi
   });
 
   const contentType = response.headers.get("content-type") ?? "";
+  // Payload - это содержимое ответа сервера: то, что backend отправил в браузер.
   const payload = contentType.includes("application/json") ? await response.json() : null;
 
   if (!response.ok) {

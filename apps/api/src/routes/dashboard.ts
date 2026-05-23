@@ -1,3 +1,6 @@
+// Этот файл готовит данные для главной страницы.
+// Проще говоря: здесь backend считает сводку по клиентам, найденным объектам и подборкам.
+
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { attentionClients, dashboardActivity, dashboardSummary } from "../repositories/sql.js";

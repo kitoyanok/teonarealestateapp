@@ -1,3 +1,6 @@
+// Эта страница содержит базовые настройки и выход из системы.
+// Проще говоря: здесь пользователь видит свои данные и может завершить работу с аккаунтом.
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut, Save } from "lucide-react";
 import { useNavigate } from "react-router-dom";

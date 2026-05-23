@@ -1,3 +1,6 @@
+// Это внешний каркас защищенной части приложения.
+// Проще говоря: здесь живут меню, верхняя панель, кнопки навигации и общая оболочка рабочих страниц.
+
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
