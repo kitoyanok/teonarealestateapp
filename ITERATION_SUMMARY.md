@@ -2,10 +2,46 @@
 
 ## Current Version
 
-- Git version for this iteration: `v0.1.16`
+- Git version for this iteration: `v0.1.17`
 - Branch: `main`
 
 ## What Was Done In This Iteration
+
+В корне проекта добавлен полный технический markdown-конспект по системе:
+
+- создан файл `full_readme.md`
+- в одном месте собраны:
+  - назначение проекта
+  - архитектура
+  - стек
+  - user flow
+  - описание таблиц PostgreSQL
+  - описание production и dev запуска
+  - команды тестирования
+  - описание ENV-переменных
+  - полный разбор backend, frontend и search-service по файлам
+  - описание логики парсинга, фильтрации по Краснодару и расчета `matchScore`
+  - пояснения, какие файлы важнее всего для ПЗ и устной защиты
+- файл сделан как рабочая техническая опора для написания пояснительной записки и повторения проекта перед защитой
+
+## Files Changed In This Iteration
+
+- [full_readme.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/full_readme.md)
+- [ITERATION_SUMMARY.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/ITERATION_SUMMARY.md)
+
+## Verification In This Iteration
+
+- проверено, что `full_readme.md` создан в корне проекта
+- проверено, что документ охватывает:
+  - root-инфраструктуру
+  - backend API
+  - frontend
+  - search-service
+  - тесты
+  - пользовательские сценарии
+  - БД и запуск проекта
+
+## Previous Iteration v0.1.16
 
 Пояснительная записка упрощена и приведена ближе к структуре референса Петруновского:
 
