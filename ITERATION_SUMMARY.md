@@ -2,10 +2,32 @@
 
 ## Current Version
 
-- Git version for this iteration: `v0.1.17`
+- Git version for this iteration: `v0.1.18`
 - Branch: `main`
 
 ## What Was Done In This Iteration
+
+В репозиторий добавлены все содержательные неотслеживаемые исходные документы и рабочие markdown-файлы, которые использовались в проекте и при подготовке ПЗ:
+
+- добавлен референсный файл `67_Погосян_ПЗ.docx`
+- добавлен референсный файл `Диплом ПЗ — копия — копия.docx`
+- добавлен рабочий файл `teona_next_iteration_codex.md`
+- сохранены в git все нужные `.docx`, чтобы не потерять локальные источники и промежуточные материалы
+- временный lock-файл Word вида `~$...docx` в репозиторий не добавляется, потому что это служебный файл редактора, а не документ проекта
+
+## Files Changed In This Iteration
+
+- [67_Погосян_ПЗ.docx](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/67_Погосян_ПЗ.docx)
+- [Диплом ПЗ — копия — копия.docx](</Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/Диплом ПЗ — копия — копия.docx>)
+- [teona_next_iteration_codex.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/teona_next_iteration_codex.md)
+- [ITERATION_SUMMARY.md](/Users/like-shockpritotskaya-event/Documents/Зубач/Codex/realestate/ITERATION_SUMMARY.md)
+
+## Verification In This Iteration
+
+- проверено, что в `git status` остались только содержательные untracked-файлы и один временный lock-файл Word
+- подтверждено, что lock-файл Word не является частью проекта и не должен попадать в репозиторий
+
+## Previous Iteration v0.1.17
 
 В корне проекта добавлен полный технический markdown-конспект по системе:
 
