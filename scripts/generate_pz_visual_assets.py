@@ -322,176 +322,268 @@ def build_use_case_module(path: Path, caption: str, title_value: str, items: lis
 
 
 def build_activity(path: Path) -> None:
-    width, height = 1280, 1560
+    width, height = 1660, 1760
     body: list[str] = []
-    body.append(text(80, 70, "Диаграмма деятельности подбора объектов по профилю клиента", size=28, weight="700"))
-    steps = [
-        ("Начало", "start"),
-        ("Открытие формы создания клиента", "box"),
-        ("Ввод данных клиента", "box"),
-        ("Сохранение карточки клиента", "box"),
-        ("Сохранение профиля поиска", "box"),
-        ("Создание search_run", "box"),
-        ("Запуск search-service", "box"),
-        ("Выбор источников", "box"),
-        ("Загрузка страниц", "box"),
-        ("Извлечение карточек объектов", "box"),
-        ("Объект извлечен корректно?", "diamond"),
-        ("Проверка принадлежности к Краснодару", "box"),
-        ("Объект относится к Краснодару?", "diamond"),
-        ("Нормализация характеристик", "box"),
-        ("Расчет процента совпадения", "box"),
-        ("Сохранение properties", "box"),
-        ("Сохранение client_found_properties", "box"),
-        ("Обновление статуса клиента", "box"),
-        ("Отображение найденных объектов", "box"),
-        ("Конец", "end"),
+    body.append(text(80, 70, "Диаграмма деятельности подбора объектов недвижимости по профилю клиента", size=28, weight="700"))
+    lane_x = [40, 420, 800, 1180]
+    lane_w = 340
+    lane_titles = ["Риелтор", "API Server", "Search Service", "PostgreSQL"]
+    for idx, title_value in enumerate(lane_titles):
+        x = lane_x[idx]
+        body.append(rect(x, 110, lane_w, 1460, "#ffffff", stroke=COLORS["light"], rx=18))
+        body.append(rect(x, 110, lane_w, 56, COLORS["panel"], stroke=COLORS["light"], rx=18))
+        body.append(text(x + lane_w // 2, 146, title_value, size=20, weight="700", anchor="middle"))
+
+    nodes = [
+        ("start", 170, 205, 210, 50, "Начало"),
+        ("box", 90, 250, 240, 68, "Открыть форму нового клиента"),
+        ("box", 90, 360, 240, 86, "Заполнить данные клиента и критерии поиска"),
+        ("box", 470, 360, 240, 86, "Проверить обязательные поля и тип недвижимости"),
+        ("diamond", 470, 500, 240, 110, "Данные формы\nкорректны?"),
+        ("box", 470, 660, 240, 84, "Сохранить clients и client_search_profiles"),
+        ("box", 1230, 660, 240, 84, "Подтвердить запись клиента и профиля"),
+        ("box", 470, 790, 240, 84, "Создать search_run и статус searching"),
+        ("box", 850, 790, 240, 84, "Принять запрос поиска по профилю клиента"),
+        ("box", 850, 920, 240, 84, "Выбрать SourceConfig и стартовые URL"),
+        ("box", 850, 1050, 240, 84, "Загрузить HTML, JSON-LD и карточки объявлений"),
+        ("diamond", 850, 1180, 240, 110, "Есть price,\nsourceUrl и тип\nобъекта?"),
+        ("diamond", 850, 1320, 240, 110, "Объект относится\nк Краснодару или\nрайону города?"),
+        ("box", 850, 1460, 240, 84, "Нормализовать, рассчитать matchScore и причины"),
+        ("box", 470, 1460, 240, 84, "Сохранить property и client_found_property"),
+        ("box", 1230, 1460, 240, 84, "Зафиксировать total_found, total_saved и завершение"),
+        ("start", 1330, 1605, 120, 50, "Конец"),
     ]
-    x = 470
-    y = 110
-    prev_center = None
-    yes_left = 200
-    for label, kind in steps:
-        if kind in {"start", "end"}:
-            body.append(f'<circle cx="{x+150}" cy="{y+20}" r="20" fill="{COLORS["accent_soft"]}" stroke="{COLORS["accent"]}" stroke-width="2"/>')
-            body.append(text(x + 150, y + 26, label, size=14, anchor="middle"))
-            center = (x + 150, y + 20)
-            y += 70
+    centers: dict[str, tuple[int, int, int, int]] = {}
+    for kind, x, y, w, h, label in nodes:
+        if kind == "start":
+            body.append(f'<circle cx="{x+w//2}" cy="{y+h//2}" r="22" fill="{COLORS["accent_soft"]}" stroke="{COLORS["accent"]}" stroke-width="2"/>')
+            body.append(text(x + w // 2, y + h // 2 + 6, label, size=15, anchor="middle"))
         elif kind == "diamond":
-            points = f"{x+150},{y} {x+300},{y+45} {x+150},{y+90} {x},{y+45}"
+            points = f"{x+w//2},{y} {x+w},{y+h//2} {x+w//2},{y+h} {x},{y+h//2}"
             body.append(f'<polygon points="{points}" fill="#fff7ed" stroke="{COLORS["accent"]}" stroke-width="2"/>')
-            body.extend(multiline_text(x + 58, y + 42, label, width_chars=18, size=14, line_height=18))
-            center = (x + 150, y + 45)
-            if "корректно" in label:
-                body.append(arrow(x, y + 45, yes_left, y + 45, accent=True))
-                body.append(text(yes_left - 24, y + 38, "нет", size=14, fill=COLORS["accent"]))
-                body.append(rect(60, y + 15, 120, 60, "#fef2f2", stroke=COLORS["danger"], rx=12))
-                body.append(text(120, y + 52, "Пропуск", size=18, weight="700", fill=COLORS["danger"], anchor="middle"))
-            if "Краснодару" in label:
-                body.append(arrow(x, y + 45, yes_left, y + 45, accent=True))
-                body.append(text(yes_left - 24, y + 38, "нет", size=14, fill=COLORS["accent"]))
-                body.append(rect(60, y + 15, 120, 60, "#fef2f2", stroke=COLORS["danger"], rx=12))
-                body.append(text(120, y + 52, "Отклонить", size=18, weight="700", fill=COLORS["danger"], anchor="middle"))
-            y += 135
+            body.extend(multiline_text(x + 46, y + 44, label, width_chars=16, size=15, line_height=18))
         else:
-            body.append(rect(x, y, 300, 64, "#ffffff", stroke=COLORS["line"], rx=14))
-            body.extend(multiline_text(x + 26, y + 38, label, width_chars=28, size=16, line_height=20))
-            center = (x + 150, y + 32)
-            y += 94
-        if prev_center:
-            body.append(arrow(prev_center[0], prev_center[1] + 22, center[0], center[1] - 34))
-        prev_center = center
+            body.append(rect(x, y, w, h, "#ffffff", stroke=COLORS["line"], rx=14))
+            body.extend(multiline_text(x + 20, y + 38, label, width_chars=22, size=16, line_height=19))
+        centers[label] = (x, y, w, h)
+
+    def mid(label: str) -> tuple[int, int]:
+        x, y, w, h = centers[label]
+        return x + w // 2, y + h // 2
+
+    body.append(arrow(*mid("Начало"), 210, 250))
+    body.append(arrow(210, 318, 210, 360))
+    body.append(arrow(330, 403, 470, 403))
+    body.append(arrow(590, 446, 590, 500))
+    body.append(arrow(590, 610, 590, 660))
+    body.append(text(612, 640, "да", size=14, fill=COLORS["accent"]))
+    body.append(arrow(710, 702, 1230, 702))
+    body.append(arrow(1350, 744, 1350, 790))
+    body.append(arrow(710, 832, 850, 832))
+    body.append(arrow(970, 874, 970, 920))
+    body.append(arrow(970, 1004, 970, 1050))
+    body.append(arrow(970, 1134, 970, 1180))
+    body.append(arrow(970, 1290, 970, 1320))
+    body.append(text(994, 1308, "да", size=14, fill=COLORS["accent"]))
+    body.append(arrow(970, 1430, 970, 1460))
+    body.append(text(994, 1448, "да", size=14, fill=COLORS["accent"]))
+    body.append(arrow(850, 1502, 710, 1502))
+    body.append(arrow(470 + 240, 1502, 1230, 1502))
+    body.append(arrow(1350, 1544, 1350, 1605))
+
+    body.append(arrow(470, 555, 170, 555, accent=True))
+    body.append(text(300, 538, "нет", size=14, fill=COLORS["accent"]))
+    body.append(rect(70, 518, 190, 72, "#fef2f2", stroke=COLORS["danger"], rx=12))
+    body.extend(multiline_text(92, 554, "Показать ошибку и вернуть к форме", width_chars=18, size=15, line_height=18, fill=COLORS["danger"], weight="700"))
+
+    body.append(arrow(850, 1235, 640, 1235, accent=True))
+    body.append(text(740, 1218, "нет", size=14, fill=COLORS["accent"]))
+    body.append(rect(430, 1198, 180, 72, "#fef2f2", stroke=COLORS["danger"], rx=12))
+    body.extend(multiline_text(452, 1234, "Пропустить карточку", width_chars=15, size=15, line_height=18, fill=COLORS["danger"], weight="700"))
+
+    body.append(arrow(850, 1375, 640, 1375, accent=True))
+    body.append(text(740, 1358, "нет", size=14, fill=COLORS["accent"]))
+    body.append(rect(430, 1338, 180, 72, "#fef2f2", stroke=COLORS["danger"], rx=12))
+    body.extend(multiline_text(446, 1374, "Отклонить объект по географии", width_chars=17, size=15, line_height=18, fill=COLORS["danger"], weight="700"))
+
+    body.append(rect(1200, 930, 270, 120, "#f8fafc", stroke=COLORS["light"], rx=14))
+    body.append(text(1220, 968, "Параллельно внутри сервиса:", size=16, weight="700"))
+    body.extend(multiline_text(1220, 998, "поиск картинок, очистка описания, выделение района, цены, площади, этажа, отделки", width_chars=27, size=14, line_height=18, fill=COLORS["muted"]))
+
+    body.append(rect(1200, 1188, 270, 112, "#f8fafc", stroke=COLORS["light"], rx=14))
+    body.append(text(1220, 1226, "Исключения поиска:", size=16, weight="700"))
+    body.extend(multiline_text(1220, 1256, "таймаут источника, пустая выдача, ошибка адаптера, некорректный JSON-LD", width_chars=27, size=14, line_height=18, fill=COLORS["muted"]))
+
+    body.append(rect(470, 1188, 240, 108, "#f8fafc", stroke=COLORS["light"], rx=14))
+    body.append(text(490, 1226, "Итог по заявке:", size=16, weight="700"))
+    body.extend(multiline_text(490, 1256, "found, no_results или error в зависимости от total_saved и результата вызова сервиса", width_chars=22, size=14, line_height=18, fill=COLORS["muted"]))
+
     body.extend(footer_caption(width, height, "Рисунок 6 – Диаграмма деятельности подбора объектов недвижимости по профилю клиента"))
     save_svg(path, width, height, body)
 
 
 def build_state(path: Path) -> None:
-    width, height = 1400, 820
+    width, height = 1560, 980
     body = [text(80, 70, "Диаграмма состояний клиентской заявки", size=28, weight="700")]
-    states = [
-        ("new", 120, 220),
-        ("searching", 360, 220),
-        ("found", 650, 220),
-        ("no_results", 930, 120),
-        ("error", 930, 320),
-        ("shortlist_ready", 930, 520),
-        ("sent", 1240, 520),
-    ]
+    states = {
+        "new": (160, 250, 180),
+        "searching": (430, 250, 220),
+        "found": (760, 140, 180),
+        "no_results": (760, 340, 220),
+        "error": (760, 560, 180),
+        "shortlist_ready": (1090, 250, 260),
+        "sent": (1390, 250, 140),
+    }
+    body.append(f'<circle cx="110" cy="287" r="20" fill="{COLORS["accent_soft"]}" stroke="{COLORS["accent"]}" stroke-width="2"/>')
+    body.append(text(110, 293, "start", size=13, anchor="middle"))
     centers = {}
-    for label, x, y in states:
-        w = 180 if label != "shortlist_ready" else 240
-        body.append(rect(x, y, w, 74, "#ffffff", stroke=COLORS["line"], rx=20))
-        body.append(text(x + w // 2, y + 44, label, size=20, weight="700", anchor="middle"))
-        centers[label] = (x + w // 2, y + 37, w)
+    for label, (x, y, w) in states.items():
+        body.append(rect(x, y, w, 82, "#ffffff", stroke=COLORS["line"], rx=22))
+        body.append(text(x + w // 2, y + 48, label, size=21, weight="700", anchor="middle"))
+        centers[label] = (x + w // 2, y + 41, w)
+    body.append(arrow(130, 287, 160, 287))
+
     transitions = [
-        ("new", "searching", "сохранение клиента"),
-        ("searching", "found", "объекты найдены"),
-        ("searching", "no_results", "результаты не найдены"),
-        ("searching", "error", "ошибка поиска"),
-        ("found", "shortlist_ready", "добавлен объект"),
-        ("shortlist_ready", "found", "подборка очищена"),
-        ("shortlist_ready", "sent", "отметка отправки"),
+        ("new", "searching", "создание клиента и запуск поиска"),
+        ("searching", "found", "saved > 0"),
+        ("searching", "no_results", "saved = 0"),
+        ("searching", "error", "ошибка сервиса или таймаут"),
+        ("found", "shortlist_ready", "объект добавлен в подборку"),
+        ("shortlist_ready", "found", "последний объект удален из подборки"),
+        ("shortlist_ready", "sent", "выполнена mark-sent"),
+        ("found", "searching", "повторный запуск поиска"),
+        ("no_results", "searching", "изменены параметры и поиск запущен повторно"),
+        ("error", "searching", "повторный запуск после сбоя"),
+        ("sent", "searching", "повторный поиск по той же карточке"),
     ]
     for a, b, label in transitions:
         x1, y1, w1 = centers[a]
         x2, y2, w2 = centers[b]
-        body.append(arrow(x1 + w1 // 2 - 90, y1 + 40, x2 - w2 // 2 + 22, y2))
-        body.append(text((x1 + x2) // 2, (y1 + y2) // 2 - 14, label, size=14, fill=COLORS["muted"], anchor="middle"))
+        if a == "found" and b == "searching":
+            body.append(arrow(x1 - w1 // 2 + 20, y1, x2 + w2 // 2 - 20, y2 - 80, accent=True))
+            body.append(text(590, 116, label, size=14, fill=COLORS["accent"], anchor="middle"))
+        elif a == "no_results" and b == "searching":
+            body.append(arrow(x1 - 40, y1 - 10, x2 + 40, y2 + 40, accent=True, dash="6,4"))
+            body.append(text(560, 346, label, size=14, fill=COLORS["accent"], anchor="middle"))
+        elif a == "error" and b == "searching":
+            body.append(arrow(x1 - 30, y1 - 24, x2 + 20, y2 + 66, accent=True, dash="6,4"))
+            body.append(text(560, 548, label, size=14, fill=COLORS["accent"], anchor="middle"))
+        elif a == "sent" and b == "searching":
+            body.append(arrow(x1 - 50, y1 + 84, x2 + 70, y2 + 84, accent=True, dash="6,4"))
+            body.append(text(1020, 420, label, size=14, fill=COLORS["accent"], anchor="middle"))
+        else:
+            body.append(arrow(x1 + w1 // 2 - 90, y1 + 40, x2 - w2 // 2 + 22, y2))
+            body.append(text((x1 + x2) // 2, (y1 + y2) // 2 - 14, label, size=14, fill=COLORS["muted"], anchor="middle"))
+
+    body.append(rect(1050, 520, 430, 180, "#f8fafc", stroke=COLORS["light"], rx=16))
+    body.append(text(1070, 560, "Пояснение по состояниям", size=18, weight="700"))
+    body.extend(multiline_text(1070, 595, "new — карточка создана, поиск еще не завершен.\nfound — есть хотя бы один сохраненный объект.\nno_results — поиск завершен без сохраненных объектов.\nerror — search-service завершился ошибкой.\nshortlist_ready — в подборке есть хотя бы один объект.\nsent — риелтор отметил отправку подборки.", width_chars=42, size=15, line_height=22, fill=COLORS["muted"]))
+
     body.extend(footer_caption(width, height, "Рисунок 7 – Диаграмма состояний клиентской заявки"))
     save_svg(path, width, height, body)
 
 
 def build_components(path: Path) -> None:
-    width, height = 1520, 980
+    width, height = 1660, 1080
     body = [text(80, 70, "Диаграмма компонентов программной системы «Тэона»", size=28, weight="700")]
     comps = [
-        (90, 180, 280, 280, "Web Client", ["Login", "Dashboard", "Clients", "Client Card", "Property Drawer", "Shortlist"]),
-        (500, 180, 310, 320, "API Server", ["Auth", "Clients", "Dashboard", "Search Launch", "Shortlist", "Message Builder"]),
-        (930, 180, 300, 280, "Search Service", ["Sources", "Base Adapter", "Normalizer", "Matcher"]),
-        (1230, 560, 220, 240, "PostgreSQL", ["users", "clients", "profiles", "properties", "shortlist", "runs"]),
-        (930, 560, 240, 180, "External Websites", ["ЖК сайты", "Каталоги", "JSON-LD", "HTML-карточки"]),
+        (70, 170, 270, 330, "Web Client", ["React pages", "LoginPage", "DashboardPage", "ClientsPage", "ClientPage", "StatusBadge / Cards"]),
+        (410, 120, 320, 420, "API Server", ["Express app", "auth routes", "clients routes", "dashboard routes", "properties routes", "validation / serializers"]),
+        (800, 120, 300, 220, "SQL Repository", ["listClients", "createClientWithProfile", "upsertProperty", "upsertClientFoundProperty", "markSent"]),
+        (800, 390, 300, 250, "Search Service", ["FastAPI entrypoint", "SourceConfig", "BaseAdapter", "Normalizer", "Matcher"]),
+        (1190, 120, 340, 260, "PostgreSQL", ["users", "clients", "client_search_profiles", "properties", "client_found_properties", "shortlist_items", "share_messages", "search_runs"]),
+        (1190, 460, 340, 220, "External Websites", ["сайты застройщиков", "агрегаторы новостроек", "HTML-карточки", "JSON-LD блоки"]),
+        (410, 620, 320, 180, "Session Layer", ["cookie-session", "requireAuth", "userId в запросе"]),
     ]
-    centers = {}
     for x, y, w, h, name, items in comps:
         body.append(rect(x, y, w, h, "#ffffff", stroke=COLORS["line"], rx=18))
-        body.append(rect(x, y, w, 42, COLORS["accent_soft"], stroke=COLORS["line"], rx=18))
-        body.append(text(x + 16, y + 28, name, size=20, weight="700"))
-        yy = y + 74
+        body.append(rect(x, y, w, 44, COLORS["accent_soft"], stroke=COLORS["line"], rx=18))
+        body.append(text(x + 16, y + 30, name, size=20, weight="700"))
+        yy = y + 76
         for item in items:
             body.append(text(x + 18, yy, f"• {item}", size=16))
             yy += 28
-        centers[name] = (x + w // 2, y + h // 2, w, h)
-    body.append(arrow(370, 320, 500, 320))
-    body.append(arrow(810, 320, 930, 320))
-    body.append(arrow(710, 500, 1230, 640))
-    body.append(arrow(1080, 460, 1050, 560))
-    body.append(text(432, 302, "HTTP / JSON", size=14, fill=COLORS["muted"]))
-    body.append(text(850, 302, "REST", size=14, fill=COLORS["muted"]))
-    body.append(text(1140, 530, "HTML / JSON-LD", size=14, fill=COLORS["muted"], anchor="middle"))
-    body.append(text(975, 520, "результаты поиска", size=14, fill=COLORS["muted"], anchor="middle"))
+
+    body.append(arrow(340, 310, 410, 310))
+    body.append(text(360, 292, "HTTP / JSON", size=14, fill=COLORS["muted"]))
+    body.append(arrow(730, 250, 800, 250))
+    body.append(text(748, 232, "SQL access", size=14, fill=COLORS["muted"]))
+    body.append(arrow(730, 430, 800, 430))
+    body.append(text(742, 412, "REST / search", size=14, fill=COLORS["muted"]))
+    body.append(arrow(1100, 250, 1190, 250))
+    body.append(text(1128, 232, "pg", size=14, fill=COLORS["muted"]))
+    body.append(arrow(1100, 510, 1190, 560))
+    body.append(text(1136, 520, "HTTP / HTML / JSON-LD", size=14, fill=COLORS["muted"]))
+    body.append(arrow(570, 540, 570, 620))
+    body.append(text(590, 590, "auth", size=14, fill=COLORS["muted"]))
+    body.append(arrow(570, 620, 570, 540, accent=True, dash="6,4"))
+    body.append(text(594, 646, "user context", size=14, fill=COLORS["accent"]))
+    body.append(arrow(340, 420, 410, 700, accent=True, dash="6,4"))
+    body.append(text(318, 560, "cookie", size=14, fill=COLORS["accent"]))
+
+    body.append(rect(70, 560, 270, 200, "#f8fafc", stroke=COLORS["light"], rx=16))
+    body.append(text(90, 598, "Пользовательские сценарии", size=18, weight="700"))
+    body.extend(multiline_text(90, 630, "авторизация,\nсоздание клиента,\nповторный поиск,\nформирование подборки,\nподготовка сообщения", width_chars=18, size=16, line_height=24, fill=COLORS["muted"]))
+
     body.extend(footer_caption(width, height, "Рисунок 8 – Диаграмма компонентов программной системы «Тэона»"))
     save_svg(path, width, height, body)
 
 
 def build_er_fragment1(path: Path) -> None:
-    width, height = 1360, 900
-    body = [text(80, 70, "ER-диаграмма: пользователи, клиенты и профили поиска", size=28, weight="700")]
-    body.extend(db_box(100, 180, "users", ["PK id", "login", "password_hash", "name", "email", "phone", "created_at", "updated_at"], 300))
-    body.extend(db_box(520, 160, "clients", ["PK id", "FK realtor_id", "name", "phone", "email", "send_channel", "send_contact", "status", "property_type", "comment"], 340))
-    body.extend(db_box(960, 140, "client_search_profiles", ["PK id", "UQ FK client_id", "budget_min / budget_max", "rooms_min / rooms_max", "area_min / area_max", "districts[]", "settlement_names[]", "completion_year_min / max", "communications[]"], 320))
-    body.append(arrow(400, 340, 520, 340))
-    body.append(text(458, 324, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
-    body.append(arrow(860, 320, 960, 320))
-    body.append(text(905, 304, "1 : 1", size=16, weight="700", fill=COLORS["accent"]))
-    body.extend(footer_caption(width, height, "Рисунок 9 – Фрагмент ER-диаграммы базы данных: пользователи системы, карточки клиентов и профили поиска"))
+    width, height = 1560, 1100
+    body = [text(80, 70, "ER-диаграмма: пользователи, клиенты, профили поиска и история запусков", size=28, weight="700")]
+    body.extend(db_box(80, 190, "users", ["PK id", "login", "password_hash", "name", "email", "phone", "created_at", "updated_at"], 280))
+    body.extend(db_box(430, 170, "clients", ["PK id", "FK realtor_id", "name", "phone", "email", "send_channel", "send_contact", "status", "property_type", "comment", "created_at", "updated_at"], 320))
+    body.extend(db_box(820, 120, "client_search_profiles", ["PK id", "UQ FK client_id", "budget_min / budget_max", "rooms_min / rooms_max", "area_min / area_max", "districts[]", "settlement_names[]", "completion_year_min / max", "finishing", "floor_min / floor_max", "house_area_min / max", "land_area_min / max", "bedrooms_min / max", "communications[]"], 340))
+    body.extend(db_box(1180, 520, "search_runs", ["PK id", "FK client_id", "status", "property_type", "total_found", "total_saved", "error_message", "started_at", "finished_at"], 280))
+    body.append(arrow(360, 320, 430, 320))
+    body.append(text(392, 302, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(arrow(750, 300, 820, 300))
+    body.append(text(782, 282, "1 : 1", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(arrow(590, 420, 1180, 600))
+    body.append(text(860, 530, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(rect(80, 640, 520, 230, "#f8fafc", stroke=COLORS["light"], rx=16))
+    body.append(text(100, 680, "Что важно подчеркнуть на схеме", size=18, weight="700"))
+    body.extend(multiline_text(100, 716, "таблица clients является центром пользовательского контура;\nclient_search_profiles хранит один актуальный профиль поиска;\nsearch_runs фиксирует каждую попытку запуска поиска и ее результат;\nusers связана с клиентами через realtor_id.", width_chars=40, size=15, line_height=22, fill=COLORS["muted"]))
+    body.extend(footer_caption(width, height, "Рисунок 9 – Фрагмент ER-диаграммы базы данных: пользователи системы, карточки клиентов, профили поиска и история запусков"))
     save_svg(path, width, height, body)
 
 
 def build_er_fragment2(path: Path) -> None:
-    width, height = 1560, 1040
+    width, height = 1760, 1160
     body = [text(80, 70, "ER-диаграмма: объекты, результаты поиска, подборки и сообщения", size=28, weight="700")]
-    body.extend(db_box(80, 200, "clients", ["PK id", "status", "property_type"], 240))
-    body.extend(db_box(420, 120, "properties", ["PK id", "source_url", "title", "district", "price", "area", "rooms", "images[]"], 320))
-    body.extend(db_box(830, 120, "client_found_properties", ["PK id", "FK client_id", "FK property_id", "match_score", "match_reasons[]", "mismatch_reasons[]", "is_hidden"], 340))
-    body.extend(db_box(1260, 120, "shortlist_items", ["PK id", "FK client_id", "FK property_id", "note", "created_at"], 240))
-    body.extend(db_box(830, 520, "share_messages", ["PK id", "FK client_id", "channel", "contact", "message_text", "copied_at", "sent_marked_at"], 320))
-    body.extend(db_box(1180, 520, "search_runs", ["PK id", "FK client_id", "status", "property_type", "total_found", "total_saved", "error_message"], 280))
-    body.append(arrow(320, 250, 420, 250))
-    body.append(text(370, 234, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
-    body.append(arrow(740, 250, 830, 250))
-    body.append(text(785, 234, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
-    body.append(arrow(740, 330, 1260, 250))
-    body.append(text(1010, 284, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
-    body.append(arrow(200, 360, 910, 520))
-    body.append(text(540, 450, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
-    body.append(arrow(220, 360, 1210, 520))
-    body.append(text(700, 470, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
-    body.extend(footer_caption(width, height, "Рисунок 10 – Фрагмент ER-диаграммы базы данных: объекты недвижимости, подборки, сообщения и история поиска"))
+    body.extend(db_box(70, 180, "clients", ["PK id", "status", "property_type"], 220))
+    body.extend(db_box(350, 100, "properties", ["PK id", "external_id", "source_name", "source_url", "title", "complex_name", "developer_name", "description", "city", "district", "address", "settlement_name", "price", "price_per_meter", "area", "rooms", "floor", "floors_total", "house_area", "land_area", "bedrooms", "house_floors", "house_material", "communications[]", "completion_year", "finishing", "images[]"], 340))
+    body.extend(db_box(800, 100, "client_found_properties", ["PK id", "FK client_id", "FK property_id", "match_score", "match_reasons[]", "mismatch_reasons[]", "is_hidden", "created_at"], 300))
+    body.extend(db_box(1190, 100, "shortlist_items", ["PK id", "FK client_id", "FK property_id", "note", "created_at"], 250))
+    body.extend(db_box(800, 700, "share_messages", ["PK id", "FK client_id", "channel", "contact", "message_text", "copied_at", "sent_marked_at", "created_at"], 310))
+    body.append(arrow(290, 290, 350, 290))
+    body.append(text(316, 272, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(arrow(690, 270, 800, 270))
+    body.append(text(742, 252, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(arrow(690, 350, 1190, 270))
+    body.append(text(952, 302, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(arrow(180, 360, 890, 700))
+    body.append(text(510, 520, "1 : M", size=16, weight="700", fill=COLORS["accent"]))
+    body.append(rect(1190, 470, 420, 220, "#f8fafc", stroke=COLORS["light"], rx=16))
+    body.append(text(1210, 510, "Смысл второго фрагмента", size=18, weight="700"))
+    body.extend(multiline_text(1210, 546, "properties хранит нормализованный общий каталог объектов;\nclient_found_properties связывает найденный объект с конкретным клиентом и хранит matchScore;\nshortlist_items отражает ручной выбор риелтора;\nshare_messages фиксирует подготовленный текст подборки.", width_chars=34, size=15, line_height=22, fill=COLORS["muted"]))
+    body.extend(footer_caption(width, height, "Рисунок 10 – Фрагмент ER-диаграммы базы данных: объекты недвижимости, результаты поиска, подборки и сообщения"))
     save_svg(path, width, height, body)
 
 
-def build_algorithm(path: Path, title_value: str, caption: str, blocks: list[str]) -> None:
-    width, height = 1280, 1400
+def build_algorithm(path: Path, title_value: str, caption: str, blocks: list[str], branches: dict[int, tuple[str, str]] | None = None) -> None:
+    width = 1360
+    branches = branches or {}
+    height = 180
+    for idx, label in enumerate(blocks):
+        if idx == 0 or idx == len(blocks) - 1:
+            height += 82
+        elif label.endswith("?"):
+            height += 148
+        else:
+            height += 104
+    height += 90
     body = [text(80, 70, title_value, size=28, weight="700")]
     x = 430
     y = 130
@@ -508,6 +600,16 @@ def build_algorithm(path: Path, title_value: str, caption: str, blocks: list[str
             body.append(f'<polygon points="{points}" fill="#fff7ed" stroke="{COLORS["accent"]}" stroke-width="2"/>')
             body.extend(multiline_text(x + 70, y + 48, label, width_chars=22, size=15, line_height=18))
             center = (x + 180, y + 52)
+            branch = branches.get(idx)
+            if branch:
+                branch_label, branch_action = branch
+                bx = 80
+                by = y + 18
+                body.append(arrow(x, y + 52, bx + 180, y + 52, accent=True))
+                body.append(text(250, y + 36, branch_label, size=14, fill=COLORS["accent"]))
+                body.append(rect(bx, by, 180, 70, "#fef2f2", stroke=COLORS["danger"], rx=12))
+                body.extend(multiline_text(bx + 16, by + 38, branch_action, width_chars=16, size=15, line_height=18, fill=COLORS["danger"], weight="700"))
+                body.append(text(x + 202, y + 124, "да", size=14, fill=COLORS["accent"]))
             y += 148
         else:
             body.append(rect(x, y, 360, 72, "#ffffff", stroke=COLORS["line"], rx=14))
@@ -926,31 +1028,122 @@ def generate_all() -> None:
         dirs["algorithms"] / "Рисунок 11 - Алгоритм поиска объектов.svg",
         "Блок-схема алгоритма поиска объектов недвижимости по профилю клиента",
         "Рисунок 11 – Блок-схема алгоритма поиска объектов недвижимости по профилю клиента",
-        ["Старт", "Получение параметров клиента", "Выбор источников по типу недвижимости", "Загрузка страниц источников", "Извлечение карточек объектов", "Объект извлечен корректно?", "Фильтрация по Краснодару", "Нормализация характеристик", "Расчет процента совпадения", "Сохранение результатов", "Конец"],
+        [
+            "Старт",
+            "Получение client_id, propertyType и searchProfile",
+            "Загрузка актуального профиля клиента из БД",
+            "Профиль найден?",
+            "Определение списка SourceConfig по типу недвижимости",
+            "Формирование набора стартовых URL",
+            "HTTP-загрузка страниц источников",
+            "Разбор JSON-LD и HTML-карточек",
+            "Есть обязательные поля и sourceUrl?",
+            "Проверка города, района и локации объекта",
+            "Объект относится к Краснодару?",
+            "Нормализация заголовка, описания и характеристик",
+            "Проверка бюджета и типа объекта",
+            "Расчет matchScore, matchReasons и mismatchReasons",
+            "Upsert записи в properties",
+            "Сохранение связи в client_found_properties",
+            "Обновление total_found, total_saved и статуса клиента",
+            "Конец",
+        ],
+        {
+            3: ("нет", "Вернуть ошибку поиска профиля"),
+            8: ("нет", "Пропустить карточку объекта"),
+            10: ("нет", "Отклонить объект по географии"),
+        },
     )
     build_algorithm(
         dirs["algorithms"] / "Рисунок 12 - Алгоритм нормализации объявления.svg",
         "Блок-схема алгоритма нормализации объявления недвижимости",
         "Рисунок 12 – Блок-схема алгоритма нормализации объявления недвижимости",
-        ["Старт", "Получение сырых данных объявления", "Извлечение цены и площади", "Извлечение комнатности и района", "Проверка качества заголовка", "Формирование корректного заголовка", "Проверка качества описания", "Формирование запасного описания", "Фильтрация изображений", "Формирование нормализованного объекта", "Конец"],
+        [
+            "Старт",
+            "Получение rawData, title, description, address и images",
+            "Очистка строк и HTML-маркеров",
+            "Извлечение цены и площади",
+            "Извлечение комнатности, района, этажа и отделки",
+            "Заголовок выглядит как маркетинговый мусор?",
+            "Собрать структурированный заголовок вида 1-к квартира, 40.6 м²",
+            "Описание содержит шум, телефон или служебные фразы?",
+            "Собрать запасное описание из нормализованных характеристик",
+            "Отфильтровать логотипы, иконки и технические изображения",
+            "Рассчитать price_per_meter при наличии цены и площади",
+            "Сформировать единый объект SearchItem",
+            "Конец",
+        ],
+        {
+            5: ("да", "Заменить исходный title"),
+            7: ("да", "Заменить описание запасным текстом"),
+        },
     )
     build_algorithm(
         dirs["algorithms"] / "Рисунок 13 - Алгоритм фильтрации по Краснодару.svg",
         "Блок-схема алгоритма фильтрации объектов по городу Краснодару",
         "Рисунок 13 – Блок-схема алгоритма фильтрации объектов по городу Краснодару",
-        ["Старт", "Получение текста объявления и URL", "Поиск прямого указания на Краснодар", "Найден Краснодар?", "Поиск названий районов Краснодара", "Найден район Краснодара?", "Поиск названий других городов края", "Обнаружен другой город?", "Допустить объект", "Конец"],
+        [
+            "Старт",
+            "Объединение title, description, address, district и sourceUrl",
+            "Нормализация регистра и удаление мусорных символов",
+            "Поиск прямого указания на город Краснодар",
+            "Найдено упоминание Краснодара?",
+            "Поиск названий районов и микрорайонов города",
+            "Найден район Краснодара?",
+            "Поиск названий других городов Краснодарского края",
+            "Обнаружен другой город края?",
+            "Допустить объект к дальнейшей обработке",
+            "Конец",
+        ],
+        {
+            8: ("да", "Отклонить как нерелевантный объект"),
+        },
     )
     build_algorithm(
         dirs["algorithms"] / "Рисунок 14 - Алгоритм расчета процента совпадения.svg",
         "Блок-схема алгоритма расчета процента совпадения",
         "Рисунок 14 – Блок-схема алгоритма расчета процента совпадения объекта требованиям клиента",
-        ["Старт", "Выбор режима оценки: квартира или дом", "Сравнение по бюджету", "Сравнение по площади и комнатности", "Сравнение по району / локации", "Сравнение по дополнительным критериям", "Начисление баллов", "Формирование причин совпадения", "Ограничение результата в диапазоне 0–100", "Конец"],
+        [
+            "Старт",
+            "Выбор режима оценки: apartment или house",
+            "Инициализация весов критериев",
+            "Сравнение по бюджету",
+            "Сравнение по площади и комнатности / площади дома",
+            "Сравнение по району, поселку или локации",
+            "Сравнение по отделке, этажу, сроку сдачи или коммуникациям",
+            "Есть частично совпадающие критерии?",
+            "Начисление баллов и частичных коэффициентов",
+            "Формирование matchReasons и mismatchReasons",
+            "Расчет итоговой формулы M = sum(w_i*k_i)/sum(w_i)",
+            "Ограничение результата в диапазоне 0–100",
+            "Вернуть matchScore и причины",
+            "Конец",
+        ],
+        {
+            7: ("нет", "Причина уходит в mismatchReasons"),
+        },
     )
     build_algorithm(
         dirs["algorithms"] / "Рисунок 15 - Алгоритм формирования подборки и сообщения.svg",
         "Блок-схема алгоритма формирования подборки и текста сообщения",
         "Рисунок 15 – Блок-схема алгоритма формирования подборки объектов и текста сообщения",
-        ["Старт", "Открытие карточки клиента", "Просмотр найденных объектов", "Добавление объектов в подборку", "Подборка не пуста?", "Формирование текста сообщения", "Сохранение share_message", "Отметка факта отправки", "Конец"],
+        [
+            "Старт",
+            "Открытие карточки клиента",
+            "Просмотр foundProperties и matchScore",
+            "Ручной выбор подходящих объектов",
+            "Добавление записей в shortlist_items",
+            "Подборка не пуста?",
+            "Проверка sendChannel и sendContact",
+            "Построение краткого текста по каждому объекту",
+            "Сборка общего сообщения для клиента",
+            "Сохранение записи в share_messages",
+            "Отметка факта отправки и статус sent",
+            "Конец",
+        ],
+        {
+            5: ("нет", "Показать сообщение «Подборка пока пустая»"),
+        },
     )
 
     build_login_wireframe(dirs["screens"] / "Рисунок 16 - Страница входа.svg")

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1400" viewBox="0 0 1280 1400">
-<rect x="0" y="0" width="1280" height="1400" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1502" viewBox="0 0 1360 1502">
+<rect x="0" y="0" width="1360" height="1502" fill="#ffffff"/>
 
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -14,38 +14,52 @@
 <circle cx="610" cy="154" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
 <text x="610" y="160" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Старт</text>
 <rect x="430" y="212" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Получение текста объявления и</text>
-<text x="454" y="274" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">URL</text>
+<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Объединение title,</text>
+<text x="454" y="274" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">description, address, district</text>
+<text x="454" y="294" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">и sourceUrl</text>
 <line x1="610" y1="180" x2="610" y2="210" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="316" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Поиск прямого указания на</text>
-<text x="454" y="378" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Краснодар</text>
+<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Нормализация регистра и</text>
+<text x="454" y="378" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">удаление мусорных символов</text>
 <line x1="610" y1="274" x2="610" y2="314" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<polygon points="610,420 790,472 610,524 430,472" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
-<text x="500" y="468" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Найден Краснодар?</text>
-<line x1="610" y1="378" x2="610" y2="434" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="568" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="610" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Поиск названий районов</text>
-<text x="454" y="630" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Краснодара</text>
-<line x1="610" y1="498" x2="610" y2="566" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<polygon points="610,672 790,724 610,776 430,724" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
-<text x="500" y="720" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Найден район</text>
-<text x="500" y="738" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Краснодара?</text>
-<line x1="610" y1="630" x2="610" y2="686" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="820" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="862" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Поиск названий других городов</text>
-<text x="454" y="882" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">края</text>
-<line x1="610" y1="750" x2="610" y2="818" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<polygon points="610,924 790,976 610,1028 430,976" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
-<text x="500" y="972" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Обнаружен другой</text>
-<text x="500" y="990" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">город?</text>
-<line x1="610" y1="882" x2="610" y2="938" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="1072" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="1114" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Допустить объект</text>
-<line x1="610" y1="1002" x2="610" y2="1070" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<circle cx="610" cy="1200" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
-<text x="610" y="1206" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
-<line x1="610" y1="1134" x2="610" y2="1162" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<line x1="40" y1="1358" x2="1240" y2="1358" stroke="#d1d5db" stroke-width="1"/>
-<text x="640" y="1386" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 13 – Блок-схема алгоритма фильтрации объектов по городу Краснодару</text>
+<rect x="430" y="420" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Поиск прямого указания на</text>
+<text x="454" y="482" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">город Краснодар</text>
+<line x1="610" y1="378" x2="610" y2="418" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="610,524 790,576 610,628 430,576" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="572" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Найдено упоминание</text>
+<text x="500" y="590" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Краснодара?</text>
+<line x1="610" y1="482" x2="610" y2="538" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="672" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="714" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Поиск названий районов и</text>
+<text x="454" y="734" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">микрорайонов города</text>
+<line x1="610" y1="602" x2="610" y2="670" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="610,776 790,828 610,880 430,828" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="824" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Найден район</text>
+<text x="500" y="842" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Краснодара?</text>
+<line x1="610" y1="734" x2="610" y2="790" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="924" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="966" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Поиск названий других городов</text>
+<text x="454" y="986" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Краснодарского края</text>
+<line x1="610" y1="854" x2="610" y2="922" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="610,1028 790,1080 610,1132 430,1080" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="1076" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Обнаружен другой город</text>
+<text x="500" y="1094" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">края?</text>
+<line x1="430" y1="1080" x2="260" y2="1080" stroke="#fd6000" stroke-width="2" marker-end="url(#arrowAccent)"/>
+<text x="250" y="1064" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<rect x="80" y="1046" width="180" height="70" rx="12" ry="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+<text x="96" y="1084" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">Отклонить как</text>
+<text x="96" y="1102" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">нерелевантный</text>
+<text x="96" y="1120" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">объект</text>
+<text x="632" y="1152" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<line x1="610" y1="986" x2="610" y2="1042" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1176" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1218" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Допустить объект к дальнейшей</text>
+<text x="454" y="1238" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">обработке</text>
+<line x1="610" y1="1106" x2="610" y2="1174" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="610" cy="1304" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="610" y="1310" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
+<line x1="610" y1="1238" x2="610" y2="1266" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="40" y1="1460" x2="1320" y2="1460" stroke="#d1d5db" stroke-width="1"/>
+<text x="680" y="1488" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 13 – Блок-схема алгоритма фильтрации объектов по городу Краснодару</text>
 </svg>

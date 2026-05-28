@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1400" viewBox="0 0 1280 1400">
-<rect x="0" y="0" width="1280" height="1400" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1726" viewBox="0 0 1360 1726">
+<rect x="0" y="0" width="1360" height="1726" fill="#ffffff"/>
 
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -14,36 +14,59 @@
 <circle cx="610" cy="154" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
 <text x="610" y="160" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Старт</text>
 <rect x="430" y="212" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Выбор режима оценки: квартира</text>
-<text x="454" y="274" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">или дом</text>
+<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Выбор режима оценки: apartment</text>
+<text x="454" y="274" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">или house</text>
 <line x1="610" y1="180" x2="610" y2="210" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="316" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по бюджету</text>
+<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Инициализация весов критериев</text>
 <line x1="610" y1="274" x2="610" y2="314" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="420" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по площади и</text>
-<text x="454" y="482" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">комнатности</text>
+<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по бюджету</text>
 <line x1="610" y1="378" x2="610" y2="418" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="524" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="566" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по району / локации</text>
+<text x="454" y="566" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по площади и</text>
+<text x="454" y="586" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">комнатности / площади дома</text>
 <line x1="610" y1="482" x2="610" y2="522" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="628" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="670" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по дополнительным</text>
-<text x="454" y="690" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">критериям</text>
+<text x="454" y="670" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по району, поселку</text>
+<text x="454" y="690" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">или локации</text>
 <line x1="610" y1="586" x2="610" y2="626" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="732" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="774" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Начисление баллов</text>
+<text x="454" y="774" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сравнение по отделке, этажу,</text>
+<text x="454" y="794" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">сроку сдачи или коммуникациям</text>
 <line x1="610" y1="690" x2="610" y2="730" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="836" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="878" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование причин совпадения</text>
-<line x1="610" y1="794" x2="610" y2="834" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="940" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="982" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Ограничение результата в</text>
-<text x="454" y="1002" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">диапазоне 0–100</text>
-<line x1="610" y1="898" x2="610" y2="938" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<circle cx="610" cy="1068" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
-<text x="610" y="1074" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
-<line x1="610" y1="1002" x2="610" y2="1030" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<line x1="40" y1="1358" x2="1240" y2="1358" stroke="#d1d5db" stroke-width="1"/>
-<text x="640" y="1386" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 14 – Блок-схема алгоритма расчета процента совпадения объекта требованиям клиента</text>
+<polygon points="610,836 790,888 610,940 430,888" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="884" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Есть частично</text>
+<text x="500" y="902" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">совпадающие критерии?</text>
+<line x1="430" y1="888" x2="260" y2="888" stroke="#fd6000" stroke-width="2" marker-end="url(#arrowAccent)"/>
+<text x="250" y="872" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">нет</text>
+<rect x="80" y="854" width="180" height="70" rx="12" ry="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+<text x="96" y="892" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">Причина уходит в</text>
+<text x="96" y="910" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">mismatchReasons</text>
+<text x="632" y="960" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<line x1="610" y1="794" x2="610" y2="850" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="984" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1026" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Начисление баллов и частичных</text>
+<text x="454" y="1046" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">коэффициентов</text>
+<line x1="610" y1="914" x2="610" y2="982" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1088" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1130" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование matchReasons и</text>
+<text x="454" y="1150" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">mismatchReasons</text>
+<line x1="610" y1="1046" x2="610" y2="1086" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1192" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1234" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Расчет итоговой формулы M =</text>
+<text x="454" y="1254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">sum(w_i*k_i)/sum(w_i)</text>
+<line x1="610" y1="1150" x2="610" y2="1190" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1296" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1338" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Ограничение результата в</text>
+<text x="454" y="1358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">диапазоне 0–100</text>
+<line x1="610" y1="1254" x2="610" y2="1294" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1400" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1442" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Вернуть matchScore и причины</text>
+<line x1="610" y1="1358" x2="610" y2="1398" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="610" cy="1528" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="610" y="1534" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
+<line x1="610" y1="1462" x2="610" y2="1490" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="40" y1="1684" x2="1320" y2="1684" stroke="#d1d5db" stroke-width="1"/>
+<text x="680" y="1712" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 14 – Блок-схема алгоритма расчета процента совпадения объекта требованиям клиента</text>
 </svg>

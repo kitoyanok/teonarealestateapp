@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1400" viewBox="0 0 1280 1400">
-<rect x="0" y="0" width="1280" height="1400" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1666" viewBox="0 0 1360 1666">
+<rect x="0" y="0" width="1360" height="1666" fill="#ffffff"/>
 
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -14,40 +14,65 @@
 <circle cx="610" cy="154" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
 <text x="610" y="160" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Старт</text>
 <rect x="430" y="212" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Получение сырых данных</text>
-<text x="454" y="274" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">объявления</text>
+<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Получение rawData, title,</text>
+<text x="454" y="274" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">description, address и images</text>
 <line x1="610" y1="180" x2="610" y2="210" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="316" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Извлечение цены и площади</text>
+<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Очистка строк и HTML-маркеров</text>
 <line x1="610" y1="274" x2="610" y2="314" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="420" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Извлечение комнатности и</text>
-<text x="454" y="482" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">района</text>
+<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Извлечение цены и площади</text>
 <line x1="610" y1="378" x2="610" y2="418" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="524" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="566" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Проверка качества заголовка</text>
+<text x="454" y="566" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Извлечение комнатности,</text>
+<text x="454" y="586" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">района, этажа и отделки</text>
 <line x1="610" y1="482" x2="610" y2="522" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="628" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="670" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование корректного</text>
-<text x="454" y="690" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">заголовка</text>
-<line x1="610" y1="586" x2="610" y2="626" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="732" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="774" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Проверка качества описания</text>
-<line x1="610" y1="690" x2="610" y2="730" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="836" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="878" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование запасного</text>
-<text x="454" y="898" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">описания</text>
-<line x1="610" y1="794" x2="610" y2="834" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="940" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="982" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Фильтрация изображений</text>
-<line x1="610" y1="898" x2="610" y2="938" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="1044" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="1086" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование нормализованного</text>
-<text x="454" y="1106" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">объекта</text>
-<line x1="610" y1="1002" x2="610" y2="1042" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<circle cx="610" cy="1172" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
-<text x="610" y="1178" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
-<line x1="610" y1="1106" x2="610" y2="1134" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<line x1="40" y1="1358" x2="1240" y2="1358" stroke="#d1d5db" stroke-width="1"/>
-<text x="640" y="1386" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 12 – Блок-схема алгоритма нормализации объявления недвижимости</text>
+<polygon points="610,628 790,680 610,732 430,680" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="676" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Заголовок выглядит как</text>
+<text x="500" y="694" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">маркетинговый мусор?</text>
+<line x1="430" y1="680" x2="260" y2="680" stroke="#fd6000" stroke-width="2" marker-end="url(#arrowAccent)"/>
+<text x="250" y="664" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<rect x="80" y="646" width="180" height="70" rx="12" ry="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+<text x="96" y="684" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">Заменить</text>
+<text x="96" y="702" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">исходный title</text>
+<text x="632" y="752" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<line x1="610" y1="586" x2="610" y2="642" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="776" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="818" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Собрать структурированный</text>
+<text x="454" y="838" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">заголовок вида 1-к квартира,</text>
+<text x="454" y="858" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">40.6 м²</text>
+<line x1="610" y1="706" x2="610" y2="774" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="610,880 790,932 610,984 430,932" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="928" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Описание содержит шум,</text>
+<text x="500" y="946" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">телефон или служебные</text>
+<text x="500" y="964" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">фразы?</text>
+<line x1="430" y1="932" x2="260" y2="932" stroke="#fd6000" stroke-width="2" marker-end="url(#arrowAccent)"/>
+<text x="250" y="916" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<rect x="80" y="898" width="180" height="70" rx="12" ry="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+<text x="96" y="936" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">Заменить</text>
+<text x="96" y="954" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">описание</text>
+<text x="96" y="972" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">запасным текстом</text>
+<text x="632" y="1004" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<line x1="610" y1="838" x2="610" y2="894" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1028" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1070" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Собрать запасное описание из</text>
+<text x="454" y="1090" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">нормализованных характеристик</text>
+<line x1="610" y1="958" x2="610" y2="1026" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1132" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1174" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Отфильтровать логотипы, иконки</text>
+<text x="454" y="1194" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">и технические изображения</text>
+<line x1="610" y1="1090" x2="610" y2="1130" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1236" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1278" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Рассчитать price_per_meter при</text>
+<text x="454" y="1298" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">наличии цены и площади</text>
+<line x1="610" y1="1194" x2="610" y2="1234" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1340" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1382" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сформировать единый объект</text>
+<text x="454" y="1402" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">SearchItem</text>
+<line x1="610" y1="1298" x2="610" y2="1338" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="610" cy="1468" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="610" y="1474" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
+<line x1="610" y1="1402" x2="610" y2="1430" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="40" y1="1624" x2="1320" y2="1624" stroke="#d1d5db" stroke-width="1"/>
+<text x="680" y="1652" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 12 – Блок-схема алгоритма нормализации объявления недвижимости</text>
 </svg>

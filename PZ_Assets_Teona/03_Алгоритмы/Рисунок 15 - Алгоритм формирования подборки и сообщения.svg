@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1400" viewBox="0 0 1280 1400">
-<rect x="0" y="0" width="1280" height="1400" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1518" viewBox="0 0 1360 1518">
+<rect x="0" y="0" width="1360" height="1518" fill="#ffffff"/>
 
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -17,26 +17,51 @@
 <text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Открытие карточки клиента</text>
 <line x1="610" y1="180" x2="610" y2="210" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="316" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Просмотр найденных объектов</text>
+<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Просмотр foundProperties и</text>
+<text x="454" y="378" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">matchScore</text>
 <line x1="610" y1="274" x2="610" y2="314" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="420" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Добавление объектов в подборку</text>
+<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Ручной выбор подходящих</text>
+<text x="454" y="482" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">объектов</text>
 <line x1="610" y1="378" x2="610" y2="418" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<polygon points="610,524 790,576 610,628 430,576" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
-<text x="500" y="572" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Подборка не пуста?</text>
-<line x1="610" y1="482" x2="610" y2="538" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="430" y="672" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="714" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование текста сообщения</text>
-<line x1="610" y1="602" x2="610" y2="670" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="524" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="566" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Добавление записей в</text>
+<text x="454" y="586" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">shortlist_items</text>
+<line x1="610" y1="482" x2="610" y2="522" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="610,628 790,680 610,732 430,680" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="676" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Подборка не пуста?</text>
+<line x1="430" y1="680" x2="260" y2="680" stroke="#fd6000" stroke-width="2" marker-end="url(#arrowAccent)"/>
+<text x="250" y="664" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">нет</text>
+<rect x="80" y="646" width="180" height="70" rx="12" ry="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+<text x="96" y="684" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">Показать</text>
+<text x="96" y="702" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">сообщение</text>
+<text x="96" y="720" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">«Подборка пока</text>
+<text x="96" y="738" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#dc2626" text-anchor="start">пустая»</text>
+<text x="632" y="752" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">да</text>
+<line x1="610" y1="586" x2="610" y2="642" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="776" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="818" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сохранение share_message</text>
-<line x1="610" y1="734" x2="610" y2="774" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="454" y="818" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Проверка sendChannel и</text>
+<text x="454" y="838" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">sendContact</text>
+<line x1="610" y1="706" x2="610" y2="774" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="430" y="880" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
-<text x="454" y="922" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Отметка факта отправки</text>
+<text x="454" y="922" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Построение краткого текста по</text>
+<text x="454" y="942" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">каждому объекту</text>
 <line x1="610" y1="838" x2="610" y2="878" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<circle cx="610" cy="1008" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
-<text x="610" y="1014" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
-<line x1="610" y1="942" x2="610" y2="970" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
-<line x1="40" y1="1358" x2="1240" y2="1358" stroke="#d1d5db" stroke-width="1"/>
-<text x="640" y="1386" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 15 – Блок-схема алгоритма формирования подборки объектов и текста сообщения</text>
+<rect x="430" y="984" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1026" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сборка общего сообщения для</text>
+<text x="454" y="1046" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">клиента</text>
+<line x1="610" y1="942" x2="610" y2="982" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1088" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1130" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сохранение записи в</text>
+<text x="454" y="1150" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">share_messages</text>
+<line x1="610" y1="1046" x2="610" y2="1086" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="1192" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="1234" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Отметка факта отправки и</text>
+<text x="454" y="1254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">статус sent</text>
+<line x1="610" y1="1150" x2="610" y2="1190" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="610" cy="1320" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="610" y="1326" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
+<line x1="610" y1="1254" x2="610" y2="1282" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="40" y1="1476" x2="1320" y2="1476" stroke="#d1d5db" stroke-width="1"/>
+<text x="680" y="1504" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 15 – Блок-схема алгоритма формирования подборки объектов и текста сообщения</text>
 </svg>
