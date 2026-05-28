@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="980" viewBox="0 0 1520 980">
+<rect x="0" y="0" width="1520" height="980" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#202124" text-anchor="start">Диаграмма компонентов программной системы «Тэона»</text>
+<rect x="90" y="180" width="280" height="280" rx="18" ry="18" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="90" y="180" width="280" height="42" rx="18" ry="18" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="106" y="208" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Web Client</text>
+<text x="108" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Login</text>
+<text x="108" y="282" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Dashboard</text>
+<text x="108" y="310" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Clients</text>
+<text x="108" y="338" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Client Card</text>
+<text x="108" y="366" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Property Drawer</text>
+<text x="108" y="394" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Shortlist</text>
+<rect x="500" y="180" width="310" height="320" rx="18" ry="18" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="500" y="180" width="310" height="42" rx="18" ry="18" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="516" y="208" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">API Server</text>
+<text x="518" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Auth</text>
+<text x="518" y="282" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Clients</text>
+<text x="518" y="310" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Dashboard</text>
+<text x="518" y="338" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Search Launch</text>
+<text x="518" y="366" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Shortlist</text>
+<text x="518" y="394" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Message Builder</text>
+<rect x="930" y="180" width="300" height="280" rx="18" ry="18" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="930" y="180" width="300" height="42" rx="18" ry="18" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="946" y="208" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Search Service</text>
+<text x="948" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Sources</text>
+<text x="948" y="282" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Base Adapter</text>
+<text x="948" y="310" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Normalizer</text>
+<text x="948" y="338" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Matcher</text>
+<rect x="1230" y="560" width="220" height="240" rx="18" ry="18" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="1230" y="560" width="220" height="42" rx="18" ry="18" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="1246" y="588" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">PostgreSQL</text>
+<text x="1248" y="634" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• users</text>
+<text x="1248" y="662" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• clients</text>
+<text x="1248" y="690" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• profiles</text>
+<text x="1248" y="718" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• properties</text>
+<text x="1248" y="746" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• shortlist</text>
+<text x="1248" y="774" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• runs</text>
+<rect x="930" y="560" width="240" height="180" rx="18" ry="18" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="930" y="560" width="240" height="42" rx="18" ry="18" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="946" y="588" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">External Websites</text>
+<text x="948" y="634" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• ЖК сайты</text>
+<text x="948" y="662" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• Каталоги</text>
+<text x="948" y="690" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• JSON-LD</text>
+<text x="948" y="718" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">• HTML-карточки</text>
+<line x1="370" y1="320" x2="500" y2="320" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="810" y1="320" x2="930" y2="320" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="710" y1="500" x2="1230" y2="640" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="1080" y1="460" x2="1050" y2="560" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="432" y="302" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="start">HTTP / JSON</text>
+<text x="850" y="302" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="start">REST</text>
+<text x="1140" y="530" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">HTML / JSON-LD</text>
+<text x="975" y="520" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">результаты поиска</text>
+<line x1="40" y1="938" x2="1480" y2="938" stroke="#d1d5db" stroke-width="1"/>
+<text x="760" y="966" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 8 – Диаграмма компонентов программной системы «Тэона»</text>
+</svg>

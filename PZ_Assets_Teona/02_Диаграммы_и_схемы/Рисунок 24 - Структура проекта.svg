@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="980" viewBox="0 0 1400 980">
+<rect x="0" y="0" width="1400" height="980" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#202124" text-anchor="start">Структура проекта</text>
+<rect x="80" y="120" width="1240" height="760" rx="20" ry="20" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="120" y="180" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">realestate</text>
+<text x="120" y="212" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">├── apps</text>
+<text x="120" y="244" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   ├── web</text>
+<text x="120" y="276" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   ├── src/app</text>
+<text x="120" y="308" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   ├── src/pages</text>
+<text x="120" y="340" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   ├── src/components</text>
+<text x="120" y="372" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   └── src/services</text>
+<text x="120" y="404" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   ├── api</text>
+<text x="120" y="436" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   ├── src/routes</text>
+<text x="120" y="468" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   ├── src/services</text>
+<text x="120" y="500" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   ├── src/repositories</text>
+<text x="120" y="532" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   │   └── src/data</text>
+<text x="120" y="564" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   └── search-service</text>
+<text x="120" y="596" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│       ├── app/adapters</text>
+<text x="120" y="628" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│       ├── app/services</text>
+<text x="120" y="660" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│       ├── app/schemas</text>
+<text x="120" y="692" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│       └── tests</text>
+<text x="120" y="724" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">├── database</text>
+<text x="120" y="756" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">│   └── init.sql</text>
+<text x="120" y="788" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">├── scripts</text>
+<text x="120" y="820" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">├── docker-compose.yml</text>
+<text x="120" y="852" font-family="Menlo, Consolas, monospace" font-size="20" fill="#202124">└── package.json</text>
+<line x1="40" y1="938" x2="1360" y2="938" stroke="#d1d5db" stroke-width="1"/>
+<text x="700" y="966" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 24 – Структура проекта</text>
+</svg>

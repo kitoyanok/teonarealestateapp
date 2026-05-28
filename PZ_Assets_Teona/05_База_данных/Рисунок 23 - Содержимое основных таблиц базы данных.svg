@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+<rect x="0" y="0" width="1600" height="980" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="18" y="18" width="1564" height="894" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="18" y="18" width="1564" height="58" rx="18" ry="18" fill="#f8fafc" stroke="#d1d5db" stroke-width="2"/>
+<text x="48" y="54" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#202124" text-anchor="start">Содержимое основных таблиц базы данных</text>
+<rect x="40" y="120" width="720" height="700" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="70" y="156" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">users</text>
+<text x="70" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">login</text>
+<text x="240" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">name</text>
+<text x="420" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">email</text>
+<text x="610" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">phone</text>
+<line x1="60" y1="232" x2="730" y2="232" stroke="#d1d5db" stroke-width="1"/>
+<text x="70" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">ivan.nikitin</text>
+<text x="240" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Иван Никитин</text>
+<text x="420" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">ivan.nikitin@teona.local</text>
+<text x="610" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">+7 (918) 111-11-01</text>
+<line x1="60" y1="278" x2="730" y2="278" stroke="#d1d5db" stroke-width="1"/>
+<text x="70" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">kirill.nabiev</text>
+<text x="240" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Кирилл Набиев</text>
+<text x="420" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">kirill.nabiev@teona.local</text>
+<text x="610" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">+7 (918) 111-11-02</text>
+<text x="70" y="390" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">clients</text>
+<text x="70" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">name</text>
+<text x="250" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">phone</text>
+<text x="460" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">property_type</text>
+<text x="620" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">status</text>
+<line x1="60" y1="462" x2="730" y2="462" stroke="#d1d5db" stroke-width="1"/>
+<text x="70" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Иван Иванов</text>
+<text x="250" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">+79180000000</text>
+<text x="460" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">apartment</text>
+<text x="620" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">found</text>
+<line x1="60" y1="508" x2="730" y2="508" stroke="#d1d5db" stroke-width="1"/>
+<text x="70" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Марина Соколова</text>
+<text x="250" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">+79180000001</text>
+<text x="460" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">house</text>
+<text x="620" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">shortlist_ready</text>
+<rect x="800" y="120" width="760" height="700" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="830" y="156" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">properties</text>
+<text x="830" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">title</text>
+<text x="1140" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">district</text>
+<text x="1310" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">price</text>
+<text x="1460" y="210" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">area</text>
+<line x1="820" y1="232" x2="1540" y2="232" stroke="#d1d5db" stroke-width="1"/>
+<text x="830" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">1-к квартира, 40.6 м²</text>
+<text x="1140" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Прикубанский</text>
+<text x="1310" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">5275000</text>
+<text x="1460" y="250" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">40.6</text>
+<line x1="820" y1="278" x2="1540" y2="278" stroke="#d1d5db" stroke-width="1"/>
+<text x="830" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Дом 128 м²</text>
+<text x="1140" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Западный</text>
+<text x="1310" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">9350000</text>
+<text x="1460" y="296" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">128</text>
+<text x="830" y="390" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">client_found_properties</text>
+<text x="830" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">client_id</text>
+<text x="1040" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">property_id</text>
+<text x="1270" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">match_score</text>
+<text x="1440" y="440" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b7280" text-anchor="start">is_hidden</text>
+<line x1="820" y1="462" x2="1540" y2="462" stroke="#d1d5db" stroke-width="1"/>
+<text x="830" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">...</text>
+<text x="1040" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">...</text>
+<text x="1270" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">68</text>
+<text x="1440" y="480" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">false</text>
+<line x1="820" y1="508" x2="1540" y2="508" stroke="#d1d5db" stroke-width="1"/>
+<text x="830" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">...</text>
+<text x="1040" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">...</text>
+<text x="1270" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">54</text>
+<text x="1440" y="526" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">false</text>
+<line x1="40" y1="938" x2="1560" y2="938" stroke="#d1d5db" stroke-width="1"/>
+<text x="800" y="966" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 23 – Содержимое основных таблиц базы данных</text>
+</svg>

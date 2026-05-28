@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2042" viewBox="0 0 1600 2042">
+<rect x="0" y="0" width="1600" height="2042" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="24" y="28" width="1552" height="1702" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="28" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="56" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/api/src/services/searchService.ts</text>
+<text x="50" y="90" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/api/src/services/searchService.ts</text>
+<text x="50" y="110" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/api/src/services/searchService.ts:77-105 ---</text>
+<text x="50" y="130" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  77  function buildSearchRequest(client: SearchClient, profile: Record&lt;string, unknown&gt;) {</text>
+<text x="50" y="150" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  78    return {</text>
+<text x="50" y="170" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  79      clientId: client.id,</text>
+<text x="50" y="190" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  80      propertyType: client.propertyType,</text>
+<text x="50" y="210" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  81      budgetMin: numeric(profile.budgetMin),</text>
+<text x="50" y="230" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  82      budgetMax: numeric(profile.budgetMax),</text>
+<text x="50" y="250" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  83      roomsMin: profile.roomsMin ?? undefined,</text>
+<text x="50" y="270" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  84      roomsMax: profile.roomsMax ?? undefined,</text>
+<text x="50" y="290" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  85      areaMin: numeric(profile.areaMin),</text>
+<text x="50" y="310" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  86      areaMax: numeric(profile.areaMax),</text>
+<text x="50" y="330" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  87      districts: profile.districts ?? [],</text>
+<text x="50" y="350" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  88      settlementNames: profile.settlementNames ?? [],</text>
+<text x="50" y="370" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  89      completionYearMin: profile.completionYearMin ?? undefined,</text>
+<text x="50" y="390" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  90      completionYearMax: profile.completionYearMax ?? undefined,</text>
+<text x="50" y="410" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  91      finishing: profile.finishing ?? undefined,</text>
+<text x="50" y="430" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  92      floorMin: profile.floorMin ?? undefined,</text>
+<text x="50" y="450" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  93      floorMax: profile.floorMax ?? undefined,</text>
+<text x="50" y="470" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  94      houseAreaMin: numeric(profile.houseAreaMin),</text>
+<text x="50" y="490" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  95      houseAreaMax: numeric(profile.houseAreaMax),</text>
+<text x="50" y="510" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  96      landAreaMin: numeric(profile.landAreaMin),</text>
+<text x="50" y="530" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  97      landAreaMax: numeric(profile.landAreaMax),</text>
+<text x="50" y="550" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  98      floorsCountMin: profile.floorsCountMin ?? undefined,</text>
+<text x="50" y="570" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  99      floorsCountMax: profile.floorsCountMax ?? undefined,</text>
+<text x="50" y="590" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 100      bedroomsMin: profile.bedroomsMin ?? undefined,</text>
+<text x="50" y="610" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 101      bedroomsMax: profile.bedroomsMax ?? undefined,</text>
+<text x="50" y="630" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 102      houseMaterial: profile.houseMaterial ?? undefined,</text>
+<text x="50" y="650" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 103      communications: profile.communications ?? []</text>
+<text x="50" y="670" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 104    };</text>
+<text x="50" y="690" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 105  }</text>
+<text x="50" y="710" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<text x="50" y="730" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/api/src/services/searchService.ts:140-187 ---</text>
+<text x="50" y="750" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 140  export async function runClientSearch(clientId: string, realtorId: string) {</text>
+<text x="50" y="770" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 141    const client = (await getClientForSearch(clientId, realtorId)) as SearchClient | null;</text>
+<text x="50" y="790" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 142    if (!client || !client.searchProfile) {</text>
+<text x="50" y="810" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 143      throw new Error(&quot;Client search profile not found&quot;);</text>
+<text x="50" y="830" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 144    }</text>
+<text x="50" y="850" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 145  </text>
+<text x="50" y="870" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 146    const searchRun = (await createSearchRun(client.id, client.propertyType)) as SearchRunRef;</text>
+<text x="50" y="890" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 147    await updateClientStatus(client.id, &quot;searching&quot;);</text>
+<text x="50" y="910" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 148  </text>
+<text x="50" y="930" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 149    try {</text>
+<text x="50" y="950" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 150      const controller = new AbortController();</text>
+<text x="50" y="970" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 151      const timeout = setTimeout(() =&gt; controller.abort(), 20000);</text>
+<text x="50" y="990" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 152      const response = await fetch(`${config.searchServiceUrl}/search`, {</text>
+<text x="50" y="1010" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 153        method: &quot;POST&quot;,</text>
+<text x="50" y="1030" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 154        headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },</text>
+<text x="50" y="1050" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 155        body: JSON.stringify(buildSearchRequest(client, client.searchProfile)),</text>
+<text x="50" y="1070" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 156        signal: controller.signal</text>
+<text x="50" y="1090" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 157      });</text>
+<text x="50" y="1110" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 158      clearTimeout(timeout);</text>
+<text x="50" y="1130" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 159  </text>
+<text x="50" y="1150" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 160      if (!response.ok) {</text>
+<text x="50" y="1170" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 161        throw new Error(`Search service returned ${response.status}`);</text>
+<text x="50" y="1190" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 162      }</text>
+<text x="50" y="1210" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 163  </text>
+<text x="50" y="1230" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 164      // Payload - это просто пакет данных, который вернул Python-сервис поиска.</text>
+<text x="50" y="1250" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 165      const payload = (await response.json()) as SearchResponse;</text>
+<text x="50" y="1270" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 166      if (payload.status !== &quot;ok&quot;) {</text>
+<text x="50" y="1290" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 167        throw new Error(payload.error ?? &quot;Search service error&quot;);</text>
+<text x="50" y="1310" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 168      }</text>
+<text x="50" y="1330" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 169  </text>
+<text x="50" y="1350" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 170      let saved = 0;</text>
+<text x="50" y="1370" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 171      for (const item of payload.items.filter((property) =&gt; property.sourceUrl)) {</text>
+<text x="50" y="1390" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 172        const property = (await upsertProperty(cleanItem(item))) as PropertyRef;</text>
+<text x="50" y="1410" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 173        await upsertClientFoundProperty(client.id, property.id, item);</text>
+<text x="50" y="1430" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 174        saved += 1;</text>
+<text x="50" y="1450" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 175      }</text>
+<text x="50" y="1470" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 176  </text>
+<text x="50" y="1490" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 177      const status = saved &gt; 0 ? &quot;found&quot; : &quot;no_results&quot;;</text>
+<text x="50" y="1510" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 178      await finishSearchRun(searchRun.id, payload.totalFound, saved);</text>
+<text x="50" y="1530" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 179      await updateClientStatus(client.id, status);</text>
+<text x="50" y="1550" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 180  </text>
+<text x="50" y="1570" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 181      return { totalFound: payload.totalFound, totalSaved: saved, status };</text>
+<text x="50" y="1590" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 182    } catch (error) {</text>
+<text x="50" y="1610" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 183      const message = error instanceof Error ? error.message : &quot;Unknown search error&quot;;</text>
+<text x="50" y="1630" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 184      await failSearchRun(searchRun.id, message);</text>
+<text x="50" y="1650" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 185      await updateClientStatus(client.id, &quot;error&quot;);</text>
+<text x="50" y="1670" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 186      return { totalFound: 0, totalSaved: 0, status: &quot;error&quot;, error: message };</text>
+<text x="50" y="1690" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 187    }</text>
+<text x="50" y="1710" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<rect x="24" y="1756" width="1552" height="262" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="1756" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="1784" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/api/src/routes/clients.ts</text>
+<text x="50" y="1818" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/api/src/routes/clients.ts</text>
+<text x="50" y="1838" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/api/src/routes/clients.ts:157-163 ---</text>
+<text x="50" y="1858" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 157  clientsRouter.post(&quot;/:id/search&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="1878" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 158    try {</text>
+<text x="50" y="1898" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 159      await assertClientAccess(req.params.id, req.userId!);</text>
+<text x="50" y="1918" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 160      const result = await runClientSearch(req.params.id, req.userId!);</text>
+<text x="50" y="1938" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 161      const client = (await getClientDetails(req.params.id, req.userId!)) as ClientDetails | null;</text>
+<text x="50" y="1958" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 162      res.json(serialize({ client, result }));</text>
+<text x="50" y="1978" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 163    } catch (error) {</text>
+<text x="50" y="1998" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<line x1="40" y1="2000" x2="1560" y2="2000" stroke="#d1d5db" stroke-width="1"/>
+<text x="800" y="2028" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок В.2 – Запуск поиска и сохранение результатов поиска</text>
+</svg>

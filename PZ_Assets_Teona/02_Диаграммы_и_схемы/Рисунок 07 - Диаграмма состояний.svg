@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+<rect x="0" y="0" width="1400" height="820" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#202124" text-anchor="start">Диаграмма состояний клиентской заявки</text>
+<rect x="120" y="220" width="180" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="210" y="264" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">new</text>
+<rect x="360" y="220" width="180" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="450" y="264" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">searching</text>
+<rect x="650" y="220" width="180" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="740" y="264" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">found</text>
+<rect x="930" y="120" width="180" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="1020" y="164" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">no_results</text>
+<rect x="930" y="320" width="180" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="1020" y="364" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">error</text>
+<rect x="930" y="520" width="240" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="1050" y="564" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">shortlist_ready</text>
+<rect x="1240" y="520" width="180" height="74" rx="20" ry="20" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="1330" y="564" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="middle">sent</text>
+<line x1="210" y1="297" x2="382" y2="257" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="330" y="243" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">сохранение клиента</text>
+<line x1="450" y1="297" x2="672" y2="257" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="595" y="243" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">объекты найдены</text>
+<line x1="450" y1="297" x2="952" y2="157" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="735" y="193" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">результаты не найдены</text>
+<line x1="450" y1="297" x2="952" y2="357" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="735" y="293" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">ошибка поиска</text>
+<line x1="740" y1="297" x2="952" y2="557" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="895" y="393" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">добавлен объект</text>
+<line x1="1080" y1="597" x2="672" y2="257" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="895" y="393" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">подборка очищена</text>
+<line x1="1080" y1="597" x2="1262" y2="557" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1190" y="543" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#6b7280" text-anchor="middle">отметка отправки</text>
+<line x1="40" y1="778" x2="1360" y2="778" stroke="#d1d5db" stroke-width="1"/>
+<text x="700" y="806" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 7 – Диаграмма состояний клиентской заявки</text>
+</svg>

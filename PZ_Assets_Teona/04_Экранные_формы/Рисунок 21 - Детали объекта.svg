@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="980" viewBox="0 0 1440 980">
+<rect x="0" y="0" width="1440" height="980" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="18" y="18" width="1404" height="894" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="18" y="18" width="1404" height="58" rx="18" ry="18" fill="#f8fafc" stroke="#d1d5db" stroke-width="2"/>
+<text x="48" y="54" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#202124" text-anchor="start">Экранная форма просмотра детальной информации об объекте недвижимости</text>
+<rect x="50" y="110" width="620" height="380" rx="20" ry="20" fill="#f3f4f6" stroke="#d1d5db" stroke-width="2"/>
+<text x="360" y="310" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="400" fill="#6b7280" text-anchor="middle">Фото объекта</text>
+<text x="720" y="140" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#202124" text-anchor="start">1-к квартира, 40.6 м²</text>
+<text x="720" y="182" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#fd6000" text-anchor="start">5 275 000 ₽</text>
+<rect x="720" y="240" width="280" height="86" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="740" y="270" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280" text-anchor="start">Район</text>
+<text x="740" y="302" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">Прикубанский</text>
+<rect x="1030" y="240" width="280" height="86" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="1050" y="270" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280" text-anchor="start">Источник</text>
+<text x="1050" y="302" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">Домострой Краснодар</text>
+<rect x="720" y="350" width="280" height="86" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="740" y="380" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280" text-anchor="start">Совпадение</text>
+<text x="740" y="412" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">68%</text>
+<rect x="1030" y="350" width="280" height="86" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="1050" y="380" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280" text-anchor="start">Комнат</text>
+<text x="1050" y="412" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">1</text>
+<rect x="720" y="460" width="280" height="86" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="740" y="490" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280" text-anchor="start">Площадь</text>
+<text x="740" y="522" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">40.6 м²</text>
+<rect x="1030" y="460" width="280" height="86" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="1050" y="490" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280" text-anchor="start">Ссылка</text>
+<text x="1050" y="522" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">source_url</text>
+<rect x="50" y="530" width="1330" height="220" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="68" y="558" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Описание</text>
+<text x="80" y="590" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#202124" text-anchor="start">Краткое нормализованное описание объекта, сформированное после обработки внешнего объявления.</text>
+<text x="80" y="618" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#202124" text-anchor="start">Здесь должны быть отражены основные характеристики, район, площадь и ссылка на источник.</text>
+<rect x="50" y="780" width="1330" height="110" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="68" y="808" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Причины совпадения</text>
+<rect x="80" y="826" width="230" height="34" rx="18" ry="18" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="195" y="849" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#fd6000" text-anchor="middle">Цена подходит</text>
+<rect x="330" y="826" width="230" height="34" rx="18" ry="18" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="445" y="849" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#fd6000" text-anchor="middle">Комнатность подходит</text>
+<rect x="580" y="826" width="230" height="34" rx="18" ry="18" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="695" y="849" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#fd6000" text-anchor="middle">Площадь подходит</text>
+<rect x="830" y="826" width="230" height="34" rx="18" ry="18" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="945" y="849" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#fd6000" text-anchor="middle">Район подходит</text>
+<line x1="40" y1="938" x2="1400" y2="938" stroke="#d1d5db" stroke-width="1"/>
+<text x="720" y="966" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 21 – Экранная форма просмотра детальной информации об объекте недвижимости</text>
+</svg>

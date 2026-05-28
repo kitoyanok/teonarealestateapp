@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1400" viewBox="0 0 1280 1400">
+<rect x="0" y="0" width="1280" height="1400" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#202124" text-anchor="start">Блок-схема алгоритма формирования подборки и текста сообщения</text>
+<circle cx="610" cy="154" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="610" y="160" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Старт</text>
+<rect x="430" y="212" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="254" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Открытие карточки клиента</text>
+<line x1="610" y1="180" x2="610" y2="210" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="316" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="358" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Просмотр найденных объектов</text>
+<line x1="610" y1="274" x2="610" y2="314" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="420" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Добавление объектов в подборку</text>
+<line x1="610" y1="378" x2="610" y2="418" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="610,524 790,576 610,628 430,576" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="500" y="572" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="start">Подборка не пуста?</text>
+<line x1="610" y1="482" x2="610" y2="538" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="672" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="714" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Формирование текста сообщения</text>
+<line x1="610" y1="602" x2="610" y2="670" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="776" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="818" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Сохранение share_message</text>
+<line x1="610" y1="734" x2="610" y2="774" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="880" width="360" height="72" rx="14" ry="14" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="454" y="922" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#202124" text-anchor="start">Отметка факта отправки</text>
+<line x1="610" y1="838" x2="610" y2="878" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="610" cy="1008" r="24" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="610" y="1014" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Конец</text>
+<line x1="610" y1="942" x2="610" y2="970" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="40" y1="1358" x2="1240" y2="1358" stroke="#d1d5db" stroke-width="1"/>
+<text x="640" y="1386" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 15 – Блок-схема алгоритма формирования подборки объектов и текста сообщения</text>
+</svg>

@@ -1,0 +1,244 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="4628" viewBox="0 0 1600 4628">
+<rect x="0" y="0" width="1600" height="4628" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="24" y="28" width="1552" height="2062" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="28" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="56" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/search-service/app/adapters/base.py</text>
+<text x="50" y="90" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/search-service/app/adapters/base.py</text>
+<text x="50" y="110" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/search-service/app/adapters/base.py:115-127 ---</text>
+<text x="50" y="130" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 115      def _parse_html(self, url: str, html: str, request: SearchRequest) -&gt; list[PropertyItem]:</text>
+<text x="50" y="150" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 116          soup = BeautifulSoup(html, &quot;lxml&quot;)</text>
+<text x="50" y="170" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 117          items = self._parse_json_ld(url, soup, request)</text>
+<text x="50" y="190" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 118          items.extend(self._parse_visible_cards(url, soup, request))</text>
+<text x="50" y="210" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 119  </text>
+<text x="50" y="230" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 120          unique: dict[str, PropertyItem] = {}</text>
+<text x="50" y="250" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 121          for item in items:</text>
+<text x="50" y="270" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 122              if item.price is None:</text>
+<text x="50" y="290" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 123                  continue</text>
+<text x="50" y="310" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 124              if item.city != &quot;Краснодар&quot;:</text>
+<text x="50" y="330" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 125                  continue</text>
+<text x="50" y="350" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 126              unique[item.sourceUrl] = item</text>
+<text x="50" y="370" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 127          return list(unique.values())[:40]</text>
+<text x="50" y="390" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<text x="50" y="410" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/search-service/app/adapters/base.py:158-239 ---</text>
+<text x="50" y="430" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 158      def _item_from_json_ld(self, url: str, node: dict, request: SearchRequest) -&gt; PropertyItem | None:</text>
+<text x="50" y="450" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 159          node_type = str(node.get(&quot;@type&quot;, &quot;&quot;)).lower()</text>
+<text x="50" y="470" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 160          if not any(kind in node_type for kind in [&quot;product&quot;, &quot;offer&quot;, &quot;apartment&quot;, &quot;house&quot;, &quot;residence&quot;, &quot;realestate&quot;]):</text>
+<text x="50" y="490" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 161              return None</text>
+<text x="50" y="510" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 162  </text>
+<text x="50" y="530" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 163          raw_title = clean_text(str(node.get(&quot;name&quot;) or node.get(&quot;headline&quot;) or &quot;&quot;))</text>
+<text x="50" y="550" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 164          raw_description = clean_text(str(node.get(&quot;description&quot;) or &quot;&quot;))</text>
+<text x="50" y="570" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 165          offers = node.get(&quot;offers&quot;) if isinstance(node.get(&quot;offers&quot;), dict) else {}</text>
+<text x="50" y="590" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 166          raw_price = node.get(&quot;price&quot;) or offers.get(&quot;price&quot;) or offers.get(&quot;lowPrice&quot;)</text>
+<text x="50" y="610" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 167          price = float(raw_price) if str(raw_price).replace(&quot;.&quot;, &quot;&quot;, 1).isdigit() else parse_price(raw_title)</text>
+<text x="50" y="630" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 168          item_url = str(node.get(&quot;url&quot;) or offers.get(&quot;url&quot;) or url)</text>
+<text x="50" y="650" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 169          image = node.get(&quot;image&quot;)</text>
+<text x="50" y="670" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 170          raw_images = [image] if isinstance(image, str) else image if isinstance(image, list) else []</text>
+<text x="50" y="690" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 171          brand = node.get(&quot;brand&quot;)</text>
+<text x="50" y="710" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 172          developer_name = clean_text(brand.get(&quot;name&quot;)) if isinstance(brand, dict) else clean_text(str(brand or &quot;&quot;)) or None</text>
+<text x="50" y="730" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 173          text = clean_text(f&quot;{raw_title} {node.get(&#x27;description&#x27;) or &#x27;&#x27;}&quot;)</text>
+<text x="50" y="750" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 174          if not self._is_krasnodar_city(text, urljoin(url, item_url)):</text>
+<text x="50" y="770" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 175              return None</text>
+<text x="50" y="790" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 176          area = parse_area(text)</text>
+<text x="50" y="810" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 177          rooms = parse_rooms(text)</text>
+<text x="50" y="830" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 178          land_area = self._parse_land_area(text)</text>
+<text x="50" y="850" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 179          complex_name = self._extract_complex_name(text, request.propertyType)</text>
+<text x="50" y="870" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 180          district = self._extract_district(text)</text>
+<text x="50" y="890" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 181          address = self._extract_address(text)</text>
+<text x="50" y="910" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 182          settlement_name = self._extract_settlement_name(text, request.propertyType)</text>
+<text x="50" y="930" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 183          title = self._normalize_title(</text>
+<text x="50" y="950" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 184              raw_title,</text>
+<text x="50" y="970" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 185              request.propertyType,</text>
+<text x="50" y="990" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 186              self.config.name,</text>
+<text x="50" y="1010" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 187              area=area,</text>
+<text x="50" y="1030" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 188              rooms=rooms,</text>
+<text x="50" y="1050" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 189              complex_name=complex_name,</text>
+<text x="50" y="1070" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 190              district=district,</text>
+<text x="50" y="1090" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 191              address=address,</text>
+<text x="50" y="1110" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 192              settlement_name=settlement_name,</text>
+<text x="50" y="1130" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 193              land_area=land_area</text>
+<text x="50" y="1150" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 194          )</text>
+<text x="50" y="1170" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 195          images = [normalized for item in raw_images[:6] if (normalized := self._normalize_image_url(url, str(item)))]</text>
+<text x="50" y="1190" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 196          description = self._normalize_description(</text>
+<text x="50" y="1210" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 197              request,</text>
+<text x="50" y="1230" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 198              self.config.name,</text>
+<text x="50" y="1250" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 199              title=title,</text>
+<text x="50" y="1270" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 200              raw_description=raw_description,</text>
+<text x="50" y="1290" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 201              raw_text=text,</text>
+<text x="50" y="1310" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 202              price=price,</text>
+<text x="50" y="1330" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 203              area=area,</text>
+<text x="50" y="1350" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 204              rooms=rooms,</text>
+<text x="50" y="1370" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 205              district=district,</text>
+<text x="50" y="1390" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 206              address=address,</text>
+<text x="50" y="1410" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 207              settlement_name=settlement_name,</text>
+<text x="50" y="1430" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 208              land_area=land_area</text>
+<text x="50" y="1450" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 209          )</text>
+<text x="50" y="1470" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 210  </text>
+<text x="50" y="1490" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 211          return PropertyItem(</text>
+<text x="50" y="1510" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 212              externalId=self._external_id(item_url),</text>
+<text x="50" y="1530" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 213              sourceName=self.config.name,</text>
+<text x="50" y="1550" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 214              sourceUrl=urljoin(url, item_url),</text>
+<text x="50" y="1570" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 215              propertyType=request.propertyType,</text>
+<text x="50" y="1590" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 216              title=title,</text>
+<text x="50" y="1610" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 217              complexName=complex_name,</text>
+<text x="50" y="1630" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 218              developerName=developer_name,</text>
+<text x="50" y="1650" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 219              description=description,</text>
+<text x="50" y="1670" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 220              district=district,</text>
+<text x="50" y="1690" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 221              address=address,</text>
+<text x="50" y="1710" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 222              settlementName=settlement_name,</text>
+<text x="50" y="1730" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 223              price=price,</text>
+<text x="50" y="1750" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 224              pricePerMeter=round(price / area, 2) if price and area else None,</text>
+<text x="50" y="1770" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 225              area=area,</text>
+<text x="50" y="1790" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 226              rooms=rooms,</text>
+<text x="50" y="1810" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 227              houseArea=area if request.propertyType == &quot;house&quot; else None,</text>
+<text x="50" y="1830" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 228              landArea=land_area if request.propertyType == &quot;house&quot; else None,</text>
+<text x="50" y="1850" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 229              floor=self._parse_floor(text)[0],</text>
+<text x="50" y="1870" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 230              floorsTotal=self._parse_floor(text)[1],</text>
+<text x="50" y="1890" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 231              bedrooms=self._parse_bedrooms(text),</text>
+<text x="50" y="1910" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 232              houseFloors=self._parse_house_floors(text),</text>
+<text x="50" y="1930" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 233              houseMaterial=self._parse_house_material(text),</text>
+<text x="50" y="1950" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 234              communications=self._parse_communications(text),</text>
+<text x="50" y="1970" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 235              completionYear=extract_year(text),</text>
+<text x="50" y="1990" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 236              finishing=self._parse_finishing(text),</text>
+<text x="50" y="2010" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 237              images=images,</text>
+<text x="50" y="2030" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 238              rawData={&quot;sourceType&quot;: &quot;json-ld&quot;, &quot;adapter&quot;: self.config.adapter_key}</text>
+<text x="50" y="2050" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 239          )</text>
+<text x="50" y="2070" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<rect x="24" y="2116" width="1552" height="862" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="2116" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="2144" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/search-service/app/adapters/base.py</text>
+<text x="50" y="2178" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/search-service/app/adapters/base.py</text>
+<text x="50" y="2198" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/search-service/app/adapters/base.py:357-381 ---</text>
+<text x="50" y="2218" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 357      def _normalize_title(</text>
+<text x="50" y="2238" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 358          self,</text>
+<text x="50" y="2258" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 359          value: str,</text>
+<text x="50" y="2278" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 360          property_type: str,</text>
+<text x="50" y="2298" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 361          source_name: str,</text>
+<text x="50" y="2318" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 362          *,</text>
+<text x="50" y="2338" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 363          area: float | None = None,</text>
+<text x="50" y="2358" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 364          rooms: int | None = None,</text>
+<text x="50" y="2378" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 365          complex_name: str | None = None,</text>
+<text x="50" y="2398" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 366          district: str | None = None,</text>
+<text x="50" y="2418" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 367          address: str | None = None,</text>
+<text x="50" y="2438" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 368          settlement_name: str | None = None,</text>
+<text x="50" y="2458" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 369          land_area: float | None = None</text>
+<text x="50" y="2478" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 370      ) -&gt; str:</text>
+<text x="50" y="2498" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 371          title = clean_text(value)[:180]</text>
+<text x="50" y="2518" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 372          if not title or any(marker in title.lower() for marker in BAD_TITLE_MARKERS):</text>
+<text x="50" y="2538" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 373              title = &quot;&quot;</text>
+<text x="50" y="2558" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 374  </text>
+<text x="50" y="2578" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 375          if property_type == &quot;apartment&quot;:</text>
+<text x="50" y="2598" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 376              rooms_label = &quot;Студия&quot; if rooms == 0 else f&quot;{rooms}-к квартира&quot; if rooms is not None else &quot;Квартира&quot;</text>
+<text x="50" y="2618" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 377              area_label = f&quot;, {area} м²&quot; if area else &quot;&quot;</text>
+<text x="50" y="2638" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 378              return f&quot;{rooms_label}{area_label}&quot;.strip(&quot;, &quot;)</text>
+<text x="50" y="2658" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 379  </text>
+<text x="50" y="2678" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 380          house_area = f&quot;Дом {area} м²&quot; if area else &quot;Дом&quot;</text>
+<text x="50" y="2698" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 381          return house_area</text>
+<text x="50" y="2718" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<text x="50" y="2738" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/search-service/app/adapters/base.py:520-529 ---</text>
+<text x="50" y="2758" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 520      def _is_krasnodar_city(self, text: str, url: str) -&gt; bool:</text>
+<text x="50" y="2778" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 521          lowered = clean_text(text).lower()</text>
+<text x="50" y="2798" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 522          lowered_url = url.lower()</text>
+<text x="50" y="2818" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 523          if any(locality in lowered for locality in EXCLUDED_KRAI_LOCALITIES):</text>
+<text x="50" y="2838" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 524              return False</text>
+<text x="50" y="2858" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 525          if any(re.search(pattern, lowered) for pattern in KRASNODAR_CITY_PATTERNS):</text>
+<text x="50" y="2878" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 526              return True</text>
+<text x="50" y="2898" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 527          if self._extract_district(text):</text>
+<text x="50" y="2918" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 528              return True</text>
+<text x="50" y="2938" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 529          return any(marker in lowered_url for marker in KRASNODAR_URL_MARKERS)</text>
+<text x="50" y="2958" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<rect x="24" y="3004" width="1552" height="1662" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="3004" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="3032" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/search-service/app/services/matcher.py</text>
+<text x="50" y="3066" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/search-service/app/services/matcher.py</text>
+<text x="50" y="3086" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/search-service/app/services/matcher.py:24-100 ---</text>
+<text x="50" y="3106" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  24  def score_property(item: PropertyItem, request: SearchRequest) -&gt; PropertyItem:</text>
+<text x="50" y="3126" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  25      # Score - это оценка соответствия объекта запросу клиента.</text>
+<text x="50" y="3146" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  26      # Чем выше число, тем выше шанс, что объект окажется полезным риелтору.</text>
+<text x="50" y="3166" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  27      score = 0</text>
+<text x="50" y="3186" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  28      reasons: list[str] = []</text>
+<text x="50" y="3206" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  29      mismatches: list[str] = []</text>
+<text x="50" y="3226" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  30  </text>
+<text x="50" y="3246" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  31      if item.propertyType == &quot;apartment&quot;:</text>
+<text x="50" y="3266" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  32          if _inside_min_max(item.price, request.budgetMin, request.budgetMax):</text>
+<text x="50" y="3286" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  33              score += 30</text>
+<text x="50" y="3306" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  34              reasons.append(&quot;Цена подходит&quot;)</text>
+<text x="50" y="3326" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  35          elif item.price and request.budgetMax and item.price &gt; request.budgetMax:</text>
+<text x="50" y="3346" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  36              mismatches.append(f&quot;Цена выше бюджета на {int(item.price - request.budgetMax):,} ₽&quot;.replace(&quot;,&quot;, &quot; &quot;))</text>
+<text x="50" y="3366" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  37  </text>
+<text x="50" y="3386" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  38          if _inside_min_max(item.rooms, request.roomsMin, request.roomsMax):</text>
+<text x="50" y="3406" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  39              score += 20</text>
+<text x="50" y="3426" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  40              reasons.append(&quot;Комнатность подходит&quot;)</text>
+<text x="50" y="3446" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  41  </text>
+<text x="50" y="3466" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  42          if _inside_min_max(item.area, request.areaMin, request.areaMax):</text>
+<text x="50" y="3486" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  43              score += 15</text>
+<text x="50" y="3506" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  44              reasons.append(&quot;Площадь подходит&quot;)</text>
+<text x="50" y="3526" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  45  </text>
+<text x="50" y="3546" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  46          if _text_match(item.district, request.districts) or _text_match(item.address, request.districts):</text>
+<text x="50" y="3566" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  47              score += 20</text>
+<text x="50" y="3586" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  48              reasons.append(&quot;Район подходит&quot;)</text>
+<text x="50" y="3606" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  49          elif not request.districts:</text>
+<text x="50" y="3626" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  50              score += 12</text>
+<text x="50" y="3646" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  51  </text>
+<text x="50" y="3666" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  52          if _inside_min_max(item.completionYear, request.completionYearMin, request.completionYearMax):</text>
+<text x="50" y="3686" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  53              score += 10</text>
+<text x="50" y="3706" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  54              reasons.append(&quot;Срок сдачи подходит&quot;)</text>
+<text x="50" y="3726" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  55          elif request.completionYearMin is None and request.completionYearMax is None:</text>
+<text x="50" y="3746" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  56              score += 6</text>
+<text x="50" y="3766" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  57  </text>
+<text x="50" y="3786" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  58          if request.finishing and item.finishing and request.finishing.lower() in item.finishing.lower():</text>
+<text x="50" y="3806" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  59              score += 5</text>
+<text x="50" y="3826" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  60              reasons.append(&quot;Отделка подходит&quot;)</text>
+<text x="50" y="3846" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  61          elif not request.finishing:</text>
+<text x="50" y="3866" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  62              score += 3</text>
+<text x="50" y="3886" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  63      else:</text>
+<text x="50" y="3906" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  64          if _inside_min_max(item.price, request.budgetMin, request.budgetMax):</text>
+<text x="50" y="3926" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  65              score += 30</text>
+<text x="50" y="3946" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  66              reasons.append(&quot;Цена подходит&quot;)</text>
+<text x="50" y="3966" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  67          elif item.price and request.budgetMax and item.price &gt; request.budgetMax:</text>
+<text x="50" y="3986" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  68              mismatches.append(f&quot;Цена выше бюджета на {int(item.price - request.budgetMax):,} ₽&quot;.replace(&quot;,&quot;, &quot; &quot;))</text>
+<text x="50" y="4006" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  69  </text>
+<text x="50" y="4026" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  70          if _inside_min_max(item.houseArea, request.houseAreaMin, request.houseAreaMax):</text>
+<text x="50" y="4046" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  71              score += 15</text>
+<text x="50" y="4066" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  72              reasons.append(&quot;Площадь дома подходит&quot;)</text>
+<text x="50" y="4086" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  73  </text>
+<text x="50" y="4106" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  74          if _inside_min_max(item.landArea, request.landAreaMin, request.landAreaMax):</text>
+<text x="50" y="4126" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  75              score += 15</text>
+<text x="50" y="4146" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  76              reasons.append(&quot;Участок подходит&quot;)</text>
+<text x="50" y="4166" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  77  </text>
+<text x="50" y="4186" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  78          location_variants = request.settlementNames or request.districts</text>
+<text x="50" y="4206" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  79          if _text_match(item.settlementName, location_variants) or _text_match(item.address, location_variants):</text>
+<text x="50" y="4226" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  80              score += 20</text>
+<text x="50" y="4246" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  81              reasons.append(&quot;Локация подходит&quot;)</text>
+<text x="50" y="4266" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  82          elif not location_variants:</text>
+<text x="50" y="4286" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  83              score += 12</text>
+<text x="50" y="4306" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  84  </text>
+<text x="50" y="4326" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  85          matched_communications = [name for name in request.communications if name.lower() in &quot; &quot;.join(item.communications).lower()]</text>
+<text x="50" y="4346" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  86          if request.communications and matched_communications:</text>
+<text x="50" y="4366" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  87              score += min(10, int(10 * len(matched_communications) / len(request.communications)))</text>
+<text x="50" y="4386" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  88              reasons.append(&quot;Коммуникации подходят&quot;)</text>
+<text x="50" y="4406" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  89          elif not request.communications:</text>
+<text x="50" y="4426" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  90              score += 6</text>
+<text x="50" y="4446" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  91  </text>
+<text x="50" y="4466" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  92          floors_ok = _inside_min_max(item.houseFloors, request.floorsCountMin, request.floorsCountMax)</text>
+<text x="50" y="4486" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  93          bedrooms_ok = _inside_min_max(item.bedrooms, request.bedroomsMin, request.bedroomsMax)</text>
+<text x="50" y="4506" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  94          if floors_ok or bedrooms_ok:</text>
+<text x="50" y="4526" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  95              score += 10</text>
+<text x="50" y="4546" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  96              reasons.append(&quot;Этажность или спальни подходят&quot;)</text>
+<text x="50" y="4566" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  97  </text>
+<text x="50" y="4586" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  98      item.matchScore = max(0, min(100, score))</text>
+<text x="50" y="4606" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  99      item.matchReasons = reasons</text>
+<text x="50" y="4626" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 100      item.mismatchReasons = mismatches</text>
+<text x="50" y="4646" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<line x1="40" y1="4586" x2="1560" y2="4586" stroke="#d1d5db" stroke-width="1"/>
+<text x="800" y="4614" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок В.3 – Нормализация объявления и расчет процента совпадения</text>
+</svg>

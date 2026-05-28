@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="900" viewBox="0 0 1360 900">
+<rect x="0" y="0" width="1360" height="900" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#202124" text-anchor="start">ER-диаграмма: пользователи, клиенты и профили поиска</text>
+<rect x="100" y="180" width="300" height="228" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="100" y="180" width="300" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="114" y="204" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">users</text>
+<text x="116" y="234" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">PK id</text>
+<line x1="110" y1="242" x2="390" y2="242" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="256" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">login</text>
+<line x1="110" y1="264" x2="390" y2="264" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="278" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">password_hash</text>
+<line x1="110" y1="286" x2="390" y2="286" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="300" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">name</text>
+<line x1="110" y1="308" x2="390" y2="308" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="322" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">email</text>
+<line x1="110" y1="330" x2="390" y2="330" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="344" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">phone</text>
+<line x1="110" y1="352" x2="390" y2="352" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="366" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">created_at</text>
+<line x1="110" y1="374" x2="390" y2="374" stroke="#d1d5db" stroke-width="1"/>
+<text x="116" y="388" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">updated_at</text>
+<rect x="520" y="160" width="340" height="272" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="520" y="160" width="340" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="534" y="184" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">clients</text>
+<text x="536" y="214" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">PK id</text>
+<line x1="530" y1="222" x2="850" y2="222" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="236" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">FK realtor_id</text>
+<line x1="530" y1="244" x2="850" y2="244" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="258" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">name</text>
+<line x1="530" y1="266" x2="850" y2="266" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="280" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">phone</text>
+<line x1="530" y1="288" x2="850" y2="288" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="302" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">email</text>
+<line x1="530" y1="310" x2="850" y2="310" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="324" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">send_channel</text>
+<line x1="530" y1="332" x2="850" y2="332" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="346" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">send_contact</text>
+<line x1="530" y1="354" x2="850" y2="354" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="368" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">status</text>
+<line x1="530" y1="376" x2="850" y2="376" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="390" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">property_type</text>
+<line x1="530" y1="398" x2="850" y2="398" stroke="#d1d5db" stroke-width="1"/>
+<text x="536" y="412" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">comment</text>
+<rect x="960" y="140" width="320" height="250" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="960" y="140" width="320" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="974" y="164" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">client_search_profiles</text>
+<text x="976" y="194" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">PK id</text>
+<line x1="970" y1="202" x2="1270" y2="202" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="216" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">UQ FK client_id</text>
+<line x1="970" y1="224" x2="1270" y2="224" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="238" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">budget_min / budget_max</text>
+<line x1="970" y1="246" x2="1270" y2="246" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="260" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">rooms_min / rooms_max</text>
+<line x1="970" y1="268" x2="1270" y2="268" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="282" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">area_min / area_max</text>
+<line x1="970" y1="290" x2="1270" y2="290" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="304" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">districts[]</text>
+<line x1="970" y1="312" x2="1270" y2="312" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="326" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">settlement_names[]</text>
+<line x1="970" y1="334" x2="1270" y2="334" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="348" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">completion_year_min / max</text>
+<line x1="970" y1="356" x2="1270" y2="356" stroke="#d1d5db" stroke-width="1"/>
+<text x="976" y="370" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">communications[]</text>
+<line x1="400" y1="340" x2="520" y2="340" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="458" y="324" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1 : M</text>
+<line x1="860" y1="320" x2="960" y2="320" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="905" y="304" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1 : 1</text>
+<line x1="40" y1="858" x2="1320" y2="858" stroke="#d1d5db" stroke-width="1"/>
+<text x="680" y="886" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 9 – Фрагмент ER-диаграммы базы данных: пользователи системы, карточки клиентов и профили поиска</text>
+</svg>

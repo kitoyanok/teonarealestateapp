@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+<rect x="0" y="0" width="1400" height="900" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<circle cx="110" cy="170" r="18" fill="#fff" stroke="#374151" stroke-width="2"/>
+<line x1="110" y1="188" x2="110" y2="240" stroke="#374151" stroke-width="2"/>
+<line x1="86" y1="208" x2="134" y2="208" stroke="#374151" stroke-width="2"/>
+<line x1="110" y1="240" x2="88" y2="270" stroke="#374151" stroke-width="2"/>
+<line x1="110" y1="240" x2="132" y2="270" stroke="#374151" stroke-width="2"/>
+<text x="110" y="298" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="400" fill="#202124" text-anchor="middle">Риелтор</text>
+<rect x="250" y="70" width="1080" height="720" rx="24" ry="24" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<text x="280" y="110" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#202124" text-anchor="start">Модуль аналитики и контроля состояний</text>
+<ellipse cx="470" cy="219" rx="120" ry="39" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="470" y="209" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Просмотреть</text>
+<text x="470" y="229" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">dashboard</text>
+<line x1="134" y1="190" x2="350" y2="219" stroke="#d1d5db" stroke-width="2"/>
+<ellipse cx="880" cy="219" rx="120" ry="39" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="880" y="209" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Просмотреть число</text>
+<text x="880" y="229" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">клиентов</text>
+<line x1="134" y1="190" x2="760" y2="219" stroke="#d1d5db" stroke-width="2"/>
+<ellipse cx="1280" cy="219" rx="120" ry="39" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="1280" y="209" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Просмотреть число</text>
+<text x="1280" y="229" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">найденных объектов</text>
+<ellipse cx="470" cy="429" rx="120" ry="39" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="470" y="419" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Просмотреть число</text>
+<text x="470" y="439" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">объектов в подборках</text>
+<line x1="134" y1="190" x2="350" y2="429" stroke="#d1d5db" stroke-width="2"/>
+<ellipse cx="880" cy="429" rx="120" ry="39" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="880" y="419" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Просмотреть число</text>
+<text x="880" y="439" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">готово к отправке</text>
+<line x1="134" y1="190" x2="760" y2="429" stroke="#d1d5db" stroke-width="2"/>
+<ellipse cx="1280" cy="429" rx="120" ry="39" fill="#fff7ed" stroke="#fd6000" stroke-width="2"/>
+<text x="1280" y="419" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">Перейти к заявкам</text>
+<text x="1280" y="439" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="400" fill="#202124" text-anchor="middle">требующим внимания</text>
+<line x1="470" y1="263" x2="880" y2="175" stroke="#fd6000" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowAccent)"/>
+<text x="687" y="219" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">&lt;&lt;include&gt;&gt;</text>
+<line x1="470" y1="263" x2="1280" y2="175" stroke="#fd6000" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowAccent)"/>
+<text x="887" y="219" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">&lt;&lt;include&gt;&gt;</text>
+<line x1="470" y1="263" x2="470" y2="385" stroke="#fd6000" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowAccent)"/>
+<text x="482" y="324" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">&lt;&lt;include&gt;&gt;</text>
+<line x1="470" y1="263" x2="880" y2="385" stroke="#fd6000" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowAccent)"/>
+<text x="687" y="324" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">&lt;&lt;include&gt;&gt;</text>
+<line x1="470" y1="263" x2="1280" y2="385" stroke="#fd6000" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowAccent)"/>
+<text x="887" y="324" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#fd6000" text-anchor="start">&lt;&lt;extend&gt;&gt;</text>
+<line x1="40" y1="858" x2="1360" y2="858" stroke="#d1d5db" stroke-width="1"/>
+<text x="700" y="886" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 5 – Диаграмма вариантов использования модуля аналитики и контроля состояния заявок</text>
+</svg>

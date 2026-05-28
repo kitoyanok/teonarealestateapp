@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200">
+<rect x="0" y="0" width="1800" height="1200" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#202124" text-anchor="start">Справочно – Полная схема базы данных проекта «Тэона»</text>
+<rect x="60" y="160" width="260" height="184" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="60" y="160" width="260" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="74" y="184" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">users</text>
+<text x="76" y="214" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="70" y1="222" x2="310" y2="222" stroke="#d1d5db" stroke-width="1"/>
+<text x="76" y="236" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">login</text>
+<line x1="70" y1="244" x2="310" y2="244" stroke="#d1d5db" stroke-width="1"/>
+<text x="76" y="258" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">password_hash</text>
+<line x1="70" y1="266" x2="310" y2="266" stroke="#d1d5db" stroke-width="1"/>
+<text x="76" y="280" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">name</text>
+<line x1="70" y1="288" x2="310" y2="288" stroke="#d1d5db" stroke-width="1"/>
+<text x="76" y="302" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">email</text>
+<line x1="70" y1="310" x2="310" y2="310" stroke="#d1d5db" stroke-width="1"/>
+<text x="76" y="324" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">phone</text>
+<rect x="380" y="150" width="280" height="206" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="380" y="150" width="280" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="394" y="174" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">clients</text>
+<text x="396" y="204" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="390" y1="212" x2="650" y2="212" stroke="#d1d5db" stroke-width="1"/>
+<text x="396" y="226" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">realtor_id</text>
+<line x1="390" y1="234" x2="650" y2="234" stroke="#d1d5db" stroke-width="1"/>
+<text x="396" y="248" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">name</text>
+<line x1="390" y1="256" x2="650" y2="256" stroke="#d1d5db" stroke-width="1"/>
+<text x="396" y="270" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">phone</text>
+<line x1="390" y1="278" x2="650" y2="278" stroke="#d1d5db" stroke-width="1"/>
+<text x="396" y="292" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">send_channel</text>
+<line x1="390" y1="300" x2="650" y2="300" stroke="#d1d5db" stroke-width="1"/>
+<text x="396" y="314" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">status</text>
+<line x1="390" y1="322" x2="650" y2="322" stroke="#d1d5db" stroke-width="1"/>
+<text x="396" y="336" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">property_type</text>
+<rect x="720" y="120" width="300" height="228" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="720" y="120" width="300" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="734" y="144" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">client_search_profiles</text>
+<text x="736" y="174" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="730" y1="182" x2="1010" y2="182" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="196" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">client_id</text>
+<line x1="730" y1="204" x2="1010" y2="204" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="218" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">budget_min / max</text>
+<line x1="730" y1="226" x2="1010" y2="226" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="240" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">rooms_min / max</text>
+<line x1="730" y1="248" x2="1010" y2="248" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="262" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">area_min / max</text>
+<line x1="730" y1="270" x2="1010" y2="270" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="284" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">districts[]</text>
+<line x1="730" y1="292" x2="1010" y2="292" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="306" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">settlement_names[]</text>
+<line x1="730" y1="314" x2="1010" y2="314" stroke="#d1d5db" stroke-width="1"/>
+<text x="736" y="328" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">communications[]</text>
+<rect x="1120" y="120" width="300" height="272" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="1120" y="120" width="300" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="1134" y="144" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">properties</text>
+<text x="1136" y="174" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="1130" y1="182" x2="1410" y2="182" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="196" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">source_url</text>
+<line x1="1130" y1="204" x2="1410" y2="204" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="218" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">title</text>
+<line x1="1130" y1="226" x2="1410" y2="226" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="240" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">district</text>
+<line x1="1130" y1="248" x2="1410" y2="248" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="262" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">price</text>
+<line x1="1130" y1="270" x2="1410" y2="270" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="284" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">area</text>
+<line x1="1130" y1="292" x2="1410" y2="292" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="306" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">rooms</text>
+<line x1="1130" y1="314" x2="1410" y2="314" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="328" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">house_area</text>
+<line x1="1130" y1="336" x2="1410" y2="336" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="350" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">land_area</text>
+<line x1="1130" y1="358" x2="1410" y2="358" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="372" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">images[]</text>
+<rect x="1480" y="180" width="260" height="184" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="1480" y="180" width="260" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="1494" y="204" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">client_found_properties</text>
+<text x="1496" y="234" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="1490" y1="242" x2="1730" y2="242" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="256" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">client_id</text>
+<line x1="1490" y1="264" x2="1730" y2="264" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="278" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">property_id</text>
+<line x1="1490" y1="286" x2="1730" y2="286" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="300" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">match_score</text>
+<line x1="1490" y1="308" x2="1730" y2="308" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="322" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">match_reasons[]</text>
+<line x1="1490" y1="330" x2="1730" y2="330" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="344" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">mismatch_reasons[]</text>
+<rect x="1120" y="610" width="260" height="162" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="1120" y="610" width="260" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="1134" y="634" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">shortlist_items</text>
+<text x="1136" y="664" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="1130" y1="672" x2="1370" y2="672" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="686" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">client_id</text>
+<line x1="1130" y1="694" x2="1370" y2="694" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="708" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">property_id</text>
+<line x1="1130" y1="716" x2="1370" y2="716" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="730" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">note</text>
+<line x1="1130" y1="738" x2="1370" y2="738" stroke="#d1d5db" stroke-width="1"/>
+<text x="1136" y="752" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">created_at</text>
+<rect x="1480" y="610" width="260" height="184" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="1480" y="610" width="260" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="1494" y="634" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">share_messages</text>
+<text x="1496" y="664" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="1490" y1="672" x2="1730" y2="672" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="686" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">client_id</text>
+<line x1="1490" y1="694" x2="1730" y2="694" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="708" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">channel</text>
+<line x1="1490" y1="716" x2="1730" y2="716" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="730" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">contact</text>
+<line x1="1490" y1="738" x2="1730" y2="738" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="752" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">message_text</text>
+<line x1="1490" y1="760" x2="1730" y2="760" stroke="#d1d5db" stroke-width="1"/>
+<text x="1496" y="774" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">sent_marked_at</text>
+<rect x="760" y="720" width="280" height="206" rx="10" ry="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+<rect x="760" y="720" width="280" height="36" rx="10" ry="10" fill="#fff1e8" stroke="#374151" stroke-width="2"/>
+<text x="774" y="744" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#202124" text-anchor="start">search_runs</text>
+<text x="776" y="774" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">id</text>
+<line x1="770" y1="782" x2="1030" y2="782" stroke="#d1d5db" stroke-width="1"/>
+<text x="776" y="796" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">client_id</text>
+<line x1="770" y1="804" x2="1030" y2="804" stroke="#d1d5db" stroke-width="1"/>
+<text x="776" y="818" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">status</text>
+<line x1="770" y1="826" x2="1030" y2="826" stroke="#d1d5db" stroke-width="1"/>
+<text x="776" y="840" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">property_type</text>
+<line x1="770" y1="848" x2="1030" y2="848" stroke="#d1d5db" stroke-width="1"/>
+<text x="776" y="862" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">total_found</text>
+<line x1="770" y1="870" x2="1030" y2="870" stroke="#d1d5db" stroke-width="1"/>
+<text x="776" y="884" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">total_saved</text>
+<line x1="770" y1="892" x2="1030" y2="892" stroke="#d1d5db" stroke-width="1"/>
+<text x="776" y="906" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#202124" text-anchor="start">error_message</text>
+<line x1="320" y1="280" x2="380" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="345" y="262" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:M</text>
+<line x1="660" y1="250" x2="720" y2="250" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="688" y="232" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:1</text>
+<line x1="660" y1="330" x2="1480" y2="260" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1050" y="286" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:M</text>
+<line x1="1420" y1="280" x2="1480" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1450" y="262" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:M</text>
+<line x1="580" y1="360" x2="1180" y2="610" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="850" y="500" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:M</text>
+<line x1="560" y1="360" x2="820" y2="720" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="650" y="560" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:M</text>
+<line x1="560" y1="360" x2="1560" y2="610" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1080" y="520" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#fd6000" text-anchor="start">1:M</text>
+<line x1="40" y1="1158" x2="1760" y2="1158" stroke="#d1d5db" stroke-width="1"/>
+<text x="900" y="1186" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Справочно – Полная схема БД проекта «Тэона»</text>
+</svg>

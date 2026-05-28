@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="980" viewBox="0 0 1520 980">
+<rect x="0" y="0" width="1520" height="980" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="18" y="18" width="1484" height="894" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="18" y="18" width="1484" height="58" rx="18" ry="18" fill="#f8fafc" stroke="#d1d5db" stroke-width="2"/>
+<text x="48" y="54" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#202124" text-anchor="start">Главная страница со сводными показателями</text>
+<rect x="40" y="100" width="230" height="760" rx="18" ry="18" fill="#f8fafc" stroke="#d1d5db" stroke-width="2"/>
+<rect x="58" y="122" width="194" height="48" rx="12" ry="12" fill="#fff1e8" stroke="#d1d5db" stroke-width="2"/>
+<text x="80" y="150" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Dashboard</text>
+<rect x="58" y="196" width="194" height="48" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="80" y="224" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Клиенты</text>
+<rect x="58" y="270" width="194" height="48" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="80" y="298" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Новый клиент</text>
+<rect x="58" y="344" width="194" height="48" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="80" y="372" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Профиль</text>
+<rect x="58" y="418" width="194" height="48" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="80" y="446" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Настройки</text>
+<rect x="310" y="110" width="270" height="180" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="336" y="160" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700" fill="#202124" text-anchor="start">12</text>
+<text x="336" y="255" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="400" fill="#202124" text-anchor="start">Клиенты в работе</text>
+<rect x="600" y="110" width="270" height="180" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="626" y="160" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700" fill="#202124" text-anchor="start">107</text>
+<text x="626" y="255" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="400" fill="#202124" text-anchor="start">Найдено объектов</text>
+<rect x="890" y="110" width="270" height="180" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="916" y="160" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700" fill="#202124" text-anchor="start">7</text>
+<text x="916" y="255" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="400" fill="#202124" text-anchor="start">В подборках</text>
+<rect x="1180" y="110" width="270" height="180" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="1206" y="160" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700" fill="#202124" text-anchor="start">5</text>
+<text x="1206" y="255" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="400" fill="#202124" text-anchor="start">Готово к отправке</text>
+<rect x="310" y="330" width="1140" height="250" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="328" y="358" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Активность за 7 дней</text>
+<polyline points="350,520 450,470 560,490 680,430 800,460 920,380 1050,410 1180,360 1310,420" fill="none" stroke="#fd6000" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="310" y="610" width="1140" height="250" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="328" y="638" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Клиенты, требующие внимания</text>
+<line x1="340" y1="670" x2="1410" y2="670" stroke="#d1d5db" stroke-width="1"/>
+<text x="360" y="654" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Иван Иванов</text>
+<text x="620" y="654" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#6b7280" text-anchor="start">поиск завершен без результатов</text>
+<rect x="1260" y="630" width="130" height="40" rx="10" ry="10" fill="#ffffff" stroke="#fd6000" stroke-width="2"/>
+<text x="1325" y="656" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#fd6000" text-anchor="middle">Открыть</text>
+<line x1="340" y1="730" x2="1410" y2="730" stroke="#d1d5db" stroke-width="1"/>
+<text x="360" y="714" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Иван Иванов</text>
+<text x="620" y="714" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#6b7280" text-anchor="start">поиск завершен без результатов</text>
+<rect x="1260" y="690" width="130" height="40" rx="10" ry="10" fill="#ffffff" stroke="#fd6000" stroke-width="2"/>
+<text x="1325" y="716" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#fd6000" text-anchor="middle">Открыть</text>
+<line x1="340" y1="790" x2="1410" y2="790" stroke="#d1d5db" stroke-width="1"/>
+<text x="360" y="774" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="start">Иван Иванов</text>
+<text x="620" y="774" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#6b7280" text-anchor="start">поиск завершен без результатов</text>
+<rect x="1260" y="750" width="130" height="40" rx="10" ry="10" fill="#ffffff" stroke="#fd6000" stroke-width="2"/>
+<text x="1325" y="776" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#fd6000" text-anchor="middle">Открыть</text>
+<line x1="40" y1="938" x2="1480" y2="938" stroke="#d1d5db" stroke-width="1"/>
+<text x="760" y="966" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 17 – Экранная форма главной страницы со сводными показателями</text>
+</svg>

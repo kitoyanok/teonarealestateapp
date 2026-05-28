@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2708" viewBox="0 0 1600 2708">
+<rect x="0" y="0" width="1600" height="2708" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="24" y="28" width="1552" height="1102" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="28" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="56" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/api/src/routes/clients.ts</text>
+<text x="50" y="90" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/api/src/routes/clients.ts</text>
+<text x="50" y="110" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/api/src/routes/clients.ts:188-236 ---</text>
+<text x="50" y="130" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 188  clientsRouter.post(&quot;/:id/shortlist/:propertyId&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="150" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 189    try {</text>
+<text x="50" y="170" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 190      await assertClientAccess(req.params.id, req.userId!);</text>
+<text x="50" y="190" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 191      const found = await getFoundProperty(req.params.id, req.params.propertyId);</text>
+<text x="50" y="210" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 192      if (!found) {</text>
+<text x="50" y="230" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 193        return res.status(404).json({ message: &quot;Property was not found for this client&quot; });</text>
+<text x="50" y="250" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 194      }</text>
+<text x="50" y="270" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 195  </text>
+<text x="50" y="290" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 196      const item = await addToShortlist(req.params.id, req.params.propertyId);</text>
+<text x="50" y="310" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 197      res.status(201).json(serialize(item));</text>
+<text x="50" y="330" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 198    } catch (error) {</text>
+<text x="50" y="350" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 199      next(error);</text>
+<text x="50" y="370" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 200    }</text>
+<text x="50" y="390" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 201  });</text>
+<text x="50" y="410" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 202  </text>
+<text x="50" y="430" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 203  clientsRouter.delete(&quot;/:id/shortlist/:propertyId&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="450" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 204    try {</text>
+<text x="50" y="470" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 205      await assertClientAccess(req.params.id, req.userId!);</text>
+<text x="50" y="490" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 206      await removeFromShortlist(req.params.id, req.params.propertyId);</text>
+<text x="50" y="510" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 207      res.json({ ok: true });</text>
+<text x="50" y="530" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 208    } catch (error) {</text>
+<text x="50" y="550" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 209      next(error);</text>
+<text x="50" y="570" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 210    }</text>
+<text x="50" y="590" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 211  });</text>
+<text x="50" y="610" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 212  </text>
+<text x="50" y="630" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 213  clientsRouter.post(&quot;/:id/share-message&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="650" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 214    try {</text>
+<text x="50" y="670" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 215      await assertClientAccess(req.params.id, req.userId!);</text>
+<text x="50" y="690" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 216      const client = (await getClientDetails(req.params.id, req.userId!)) as ClientDetails | null;</text>
+<text x="50" y="710" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 217      if (!client) {</text>
+<text x="50" y="730" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 218        return res.status(404).json({ message: &quot;Client not found&quot; });</text>
+<text x="50" y="750" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 219      }</text>
+<text x="50" y="770" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 220      if (client.shortlistItems.length === 0) {</text>
+<text x="50" y="790" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 221        return res.status(400).json({ message: &quot;Подборка пока пустая&quot; });</text>
+<text x="50" y="810" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 222      }</text>
+<text x="50" y="830" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 223  </text>
+<text x="50" y="850" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 224      const messageText = buildShareMessage(client, client.shortlistItems);</text>
+<text x="50" y="870" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 225      const shareMessage = await createShareMessage(client.id, client.sendChannel, client.sendContact ?? null, messageText);</text>
+<text x="50" y="890" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 226      res.json(serialize({ messageText, shareMessage }));</text>
+<text x="50" y="910" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 227    } catch (error) {</text>
+<text x="50" y="930" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 228      next(error);</text>
+<text x="50" y="950" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 229    }</text>
+<text x="50" y="970" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 230  });</text>
+<text x="50" y="990" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 231  </text>
+<text x="50" y="1010" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 232  clientsRouter.post(&quot;/:id/mark-sent&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="1030" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 233    try {</text>
+<text x="50" y="1050" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 234      await assertClientAccess(req.params.id, req.userId!);</text>
+<text x="50" y="1070" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 235      const client = await markSent(req.params.id);</text>
+<text x="50" y="1090" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"> 236      res.json(serialize(client));</text>
+<text x="50" y="1110" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<rect x="24" y="1156" width="1552" height="842" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="1156" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="1184" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/api/src/services/messageService.ts</text>
+<text x="50" y="1218" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/api/src/services/messageService.ts</text>
+<text x="50" y="1238" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/api/src/services/messageService.ts:39-74 ---</text>
+<text x="50" y="1258" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  39  export function buildShareMessage(client: ShareClient, shortlist: ShortlistWithProperty[]) {</text>
+<text x="50" y="1278" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  40    const greetingName = firstName(client.name);</text>
+<text x="50" y="1298" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  41    const isHouse = client.propertyType === &quot;house&quot;;</text>
+<text x="50" y="1318" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  42    const intro = isHouse ? &quot;несколько домов&quot; : &quot;несколько вариантов&quot;;</text>
+<text x="50" y="1338" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  43  </text>
+<text x="50" y="1358" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  44    const lines = [</text>
+<text x="50" y="1378" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  45      `${greetingName}, добрый день!`,</text>
+<text x="50" y="1398" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  46      &quot;&quot;,</text>
+<text x="50" y="1418" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  47      `Подобрал для вас ${intro}:`,</text>
+<text x="50" y="1438" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  48      &quot;&quot;</text>
+<text x="50" y="1458" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  49    ];</text>
+<text x="50" y="1478" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  50  </text>
+<text x="50" y="1498" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  51    shortlist.forEach((item, index) =&gt; {</text>
+<text x="50" y="1518" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  52      const property = item.property;</text>
+<text x="50" y="1538" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  53      const title = property.title || property.complexName || property.settlementName || &quot;Объект недвижимости&quot;;</text>
+<text x="50" y="1558" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  54      const details = isHouse</text>
+<text x="50" y="1578" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  55        ? [</text>
+<text x="50" y="1598" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  56            property.houseArea ? `${Number(property.houseArea)} м²` : null,</text>
+<text x="50" y="1618" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  57            property.landArea ? `участок ${Number(property.landArea)} соток` : null,</text>
+<text x="50" y="1638" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  58            formatRub(property.price)</text>
+<text x="50" y="1658" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  59          ].filter(Boolean).join(&quot;, &quot;)</text>
+<text x="50" y="1678" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  60        : [</text>
+<text x="50" y="1698" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  61            property.rooms ? `${property.rooms}-комн.` : null,</text>
+<text x="50" y="1718" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  62            property.area ? `${Number(property.area)} м²` : null,</text>
+<text x="50" y="1738" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  63            formatRub(property.price)</text>
+<text x="50" y="1758" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  64          ].filter(Boolean).join(&quot;, &quot;);</text>
+<text x="50" y="1778" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  65  </text>
+<text x="50" y="1798" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  66      lines.push(`${index + 1}. ${title}`);</text>
+<text x="50" y="1818" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  67      lines.push(details);</text>
+<text x="50" y="1838" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  68      lines.push(`Ссылка: ${property.sourceUrl}`);</text>
+<text x="50" y="1858" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  69      lines.push(&quot;&quot;);</text>
+<text x="50" y="1878" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  70    });</text>
+<text x="50" y="1898" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  71  </text>
+<text x="50" y="1918" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  72    lines.push(&quot;Если какой-то вариант понравится, можем подробнее разобрать условия.&quot;);</text>
+<text x="50" y="1938" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  73    return lines.join(&quot;\n&quot;);</text>
+<text x="50" y="1958" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  74  }</text>
+<text x="50" y="1978" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<rect x="24" y="2024" width="1552" height="722" rx="18" ry="18" fill="#0b1020" stroke="#1f2937" stroke-width="2"/>
+<rect x="24" y="2024" width="1552" height="42" rx="18" ry="18" fill="#1f2937" stroke="#1f2937" stroke-width="2"/>
+<text x="44" y="2052" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="start">apps/api/src/routes/dashboard.ts</text>
+<text x="50" y="2086" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">apps/api/src/routes/dashboard.ts</text>
+<text x="50" y="2106" font-family="Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">--- apps/api/src/routes/dashboard.ts:13-42 ---</text>
+<text x="50" y="2126" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  13  dashboardRouter.get(&quot;/summary&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="2146" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  14    try {</text>
+<text x="50" y="2166" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  15      const summary = await dashboardSummary(req.userId!);</text>
+<text x="50" y="2186" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  16      res.json(summary);</text>
+<text x="50" y="2206" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  17    } catch (error) {</text>
+<text x="50" y="2226" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  18      next(error);</text>
+<text x="50" y="2246" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  19    }</text>
+<text x="50" y="2266" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  20  });</text>
+<text x="50" y="2286" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  21  </text>
+<text x="50" y="2306" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  22  dashboardRouter.get(&quot;/activity&quot;, async (req, res, next) =&gt; {</text>
+<text x="50" y="2326" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  23    try {</text>
+<text x="50" y="2346" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  24      const runs = await dashboardActivity(req.userId!);</text>
+<text x="50" y="2366" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  25      const days = runs.map((run) =&gt; {</text>
+<text x="50" y="2386" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  26        const date = new Date(String((run as { day: string }).day));</text>
+<text x="50" y="2406" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  27        return {</text>
+<text x="50" y="2426" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  28          key: date.toISOString().slice(0, 10),</text>
+<text x="50" y="2446" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  29          label: date.toLocaleDateString(&quot;ru-RU&quot;, { weekday: &quot;short&quot; }),</text>
+<text x="50" y="2466" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  30          clients: Number((run as { clients: number }).clients ?? 0),</text>
+<text x="50" y="2486" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  31          found: Number((run as { found: number }).found ?? 0),</text>
+<text x="50" y="2506" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  32          shortlisted: Number((run as { shortlisted: number }).shortlisted ?? 0),</text>
+<text x="50" y="2526" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  33          sent: Number((run as { sent: number }).sent ?? 0),</text>
+<text x="50" y="2546" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  34          ready: Number((run as { ready: number }).ready ?? 0)</text>
+<text x="50" y="2566" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  35        };</text>
+<text x="50" y="2586" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  36      });</text>
+<text x="50" y="2606" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  37  </text>
+<text x="50" y="2626" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  38      res.json(days);</text>
+<text x="50" y="2646" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  39    } catch (error) {</text>
+<text x="50" y="2666" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  40      next(error);</text>
+<text x="50" y="2686" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  41    }</text>
+<text x="50" y="2706" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">  42  });</text>
+<text x="50" y="2726" font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb"></text>
+<line x1="40" y1="2666" x2="1560" y2="2666" stroke="#d1d5db" stroke-width="1"/>
+<text x="800" y="2694" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок В.4 – Формирование подборки, сообщения и сводных показателей</text>
+</svg>

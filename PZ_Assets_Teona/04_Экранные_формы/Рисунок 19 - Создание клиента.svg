@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1040" viewBox="0 0 1520 1040">
+<rect x="0" y="0" width="1520" height="1040" fill="#ffffff"/>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#374151" />
+          </marker>
+          <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#fd6000" />
+          </marker>
+        </defs>
+        
+<rect x="18" y="18" width="1484" height="954" rx="18" ry="18" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="18" y="18" width="1484" height="58" rx="18" ry="18" fill="#f8fafc" stroke="#d1d5db" stroke-width="2"/>
+<text x="48" y="54" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#202124" text-anchor="start">Экранная форма создания нового клиента</text>
+<rect x="40" y="108" width="700" height="370" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="58" y="136" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Контактные данные</text>
+<text x="70" y="170" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">ФИО клиента</text>
+<rect x="260" y="144" width="440" height="42" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="70" y="228" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Телефон</text>
+<rect x="260" y="202" width="440" height="42" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="70" y="286" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Электронная почта</text>
+<rect x="260" y="260" width="440" height="42" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="70" y="344" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Канал связи</text>
+<rect x="260" y="318" width="440" height="42" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="70" y="402" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Комментарий</text>
+<rect x="260" y="376" width="440" height="42" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="780" y="108" width="700" height="370" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="798" y="136" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Тип недвижимости и параметры поиска</text>
+<rect x="810" y="150" width="220" height="44" rx="12" ry="12" fill="#fff1e8" stroke="#fd6000" stroke-width="2"/>
+<text x="920" y="178" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#fd6000" text-anchor="middle">Квартира</text>
+<rect x="1050" y="150" width="160" height="44" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="1130" y="178" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#202124" text-anchor="middle">Дом</text>
+<text x="810" y="240" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Бюджет от</text>
+<rect x="1030" y="216" width="410" height="40" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="810" y="296" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Бюджет до</text>
+<rect x="1030" y="272" width="410" height="40" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="810" y="352" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Комнатность</text>
+<rect x="1030" y="328" width="410" height="40" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="810" y="408" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Площадь</text>
+<rect x="1030" y="384" width="410" height="40" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="810" y="464" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#202124" text-anchor="start">Районы</text>
+<rect x="1030" y="440" width="410" height="40" rx="10" ry="10" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="40" y="520" width="1440" height="320" rx="16" ry="16" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<text x="58" y="548" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#202124" text-anchor="start">Дополнительные параметры</text>
+<rect x="70" y="600" width="400" height="56" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="70" y="690" width="400" height="56" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="530" y="600" width="400" height="56" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="530" y="690" width="400" height="56" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="990" y="600" width="400" height="56" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="990" y="690" width="400" height="56" rx="12" ry="12" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+<rect x="1080" y="882" width="360" height="64" rx="16" ry="16" fill="#fd6000" stroke="#fd6000" stroke-width="2"/>
+<text x="1260" y="922" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">Сохранить и запустить поиск</text>
+<line x1="40" y1="998" x2="1480" y2="998" stroke="#d1d5db" stroke-width="1"/>
+<text x="760" y="1026" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#202124" text-anchor="middle">Рисунок 19 – Экранная форма создания нового клиента</text>
+</svg>
