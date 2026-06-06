@@ -3,9 +3,9 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { requireAuth, signSession } from "../middleware/auth.js";
-import { findUserById, findUserByLogin } from "../repositories/sql.js";
+import { findUserById, findUserByLogin, updateUserById } from "../repositories/sql.js";
 import { serialize } from "../services/serializers.js";
-import { loginSchema } from "../services/validation.js";
+import { loginSchema, updateUserSchema } from "../services/validation.js";
 import { config } from "../config.js";
 
 export const authRouter = Router();
@@ -65,6 +65,33 @@ authRouter.get("/me", requireAuth, async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    res.json({
+      user: serialize({
+        id: user.id,
+        login: user.login,
+        name: user.name,
+        email: user.email,
+        phone: user.phone
+      })
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.put("/me", requireAuth, async (req, res, next) => {
+  try {
+    const input = updateUserSchema.parse(req.body);
+    const user = (await updateUserById(req.userId!, {
+      name: input.name,
+      email: input.email || null,
+      phone: input.phone
+    })) as AuthUser | null;
+
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+
     res.json({
       user: serialize({
         id: user.id,

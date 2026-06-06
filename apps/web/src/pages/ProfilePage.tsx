@@ -2,8 +2,10 @@
 // Проще говоря: здесь собраны базовые данные сотрудника, который вошел в систему.
 
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import type { User } from "../entities/types";
 import { api } from "../shared/api";
+import { formatPhoneInput } from "../shared/phone";
 
 export function ProfilePage() {
   const me = useQuery({
@@ -28,15 +30,15 @@ export function ProfilePage() {
         <div className="form-grid">
           <label>
             <span>Имя</span>
-            <input defaultValue={me.data?.user.name ?? ""} />
+            <input defaultValue={me.data?.user.name ?? ""} disabled readOnly />
           </label>
           <label>
             <span>Телефон</span>
-            <input defaultValue={me.data?.user.phone ?? ""} />
+            <input defaultValue={me.data?.user.phone ? formatPhoneInput(me.data.user.phone) : ""} disabled readOnly />
           </label>
           <label className="span-2">
             <span>Email</span>
-            <input defaultValue={me.data?.user.email ?? ""} />
+            <input defaultValue={me.data?.user.email ?? ""} disabled readOnly />
           </label>
           <label className="span-2">
             <span>Фото профиля</span>
@@ -44,7 +46,7 @@ export function ProfilePage() {
           </label>
         </div>
         <div className="form-actions">
-          <button className="button button--primary" type="button">Сохранить</button>
+          <Link className="button button--primary" to="/settings">Изменить в настройках</Link>
         </div>
       </section>
     </div>

@@ -8,6 +8,7 @@ import { Link, useParams } from "react-router-dom";
 import type { Client, FoundProperty, Property, ShortlistItem } from "../entities/types";
 import { api } from "../shared/api";
 import {
+  formatRoomRange,
   formatCompactMoney,
   formatMoney,
   hasRealPropertyImage,
@@ -186,18 +187,19 @@ function ShareModal({
   client,
   text,
   onClose,
-  onCopied
+  onMarkSent,
+  isMarkingSent
 }: {
   client: Client;
   text: string;
   onClose: () => void;
-  onCopied: () => void;
+  onMarkSent: () => void;
+  isMarkingSent: boolean;
 }) {
   const phone = client.phone || client.sendContact || "";
 
   const copyText = async () => {
     await navigator.clipboard.writeText(text);
-    onCopied();
   };
 
   const copyPhone = async () => {
@@ -231,6 +233,10 @@ function ShareModal({
           <button className="button button--primary" type="button" onClick={copyText}>
             <Copy size={16} />
             Скопировать текст
+          </button>
+          <button className="button button--success" disabled={isMarkingSent} type="button" onClick={onMarkSent}>
+            {isMarkingSent ? <Loader2 className="spin" size={16} /> : <Send size={16} />}
+            Отправлено клиенту
           </button>
         </div>
 
@@ -278,7 +284,10 @@ export function ClientPage() {
   });
   const markSent = useMutation({
     mutationFn: () => api.post(`/api/clients/${id}/mark-sent`),
-    onSuccess: invalidate
+    onSuccess: async () => {
+      await invalidate();
+      setShareText("");
+    }
   });
 
   const client = clientQuery.data;
@@ -328,7 +337,7 @@ export function ClientPage() {
             <span>Бюджет <strong>{formatMoney(client.searchProfile?.budgetMin)} — {formatMoney(client.searchProfile?.budgetMax)}</strong></span>
             {client.propertyType === "apartment" ? (
               <>
-                <span>Комнаты <strong>{client.searchProfile?.roomsMin ?? "Студия"}-{client.searchProfile?.roomsMax ?? "4+"}</strong></span>
+                <span>Комнаты <strong>{formatRoomRange(client.searchProfile?.roomsMin, client.searchProfile?.roomsMax).replace(" комн.", "")}</strong></span>
                 <span>Площадь <strong>от {client.searchProfile?.areaMin ?? "не указано"} м²</strong></span>
                 <span>Локация <strong>{client.searchProfile?.districts?.join(", ") || "Любая"}</strong></span>
               </>
@@ -361,7 +370,7 @@ export function ClientPage() {
             </div>
             <button className="button button--light button--small" disabled={!shortlist.length} type="button" onClick={() => share.mutate()}>
               <Send size={14} />
-              Отправить
+              Подготовить сообщение
             </button>
           </div>
           <div className="shortlist-list">
@@ -459,7 +468,8 @@ export function ClientPage() {
           client={client}
           text={shareText}
           onClose={() => setShareText("")}
-          onCopied={() => markSent.mutate()}
+          onMarkSent={() => markSent.mutate()}
+          isMarkingSent={markSent.isPending}
         />
       ) : null}
     </div>

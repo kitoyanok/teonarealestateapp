@@ -51,7 +51,7 @@ function camelize<T>(value: T): T {
   if (value && typeof value === "object") {
     return Object.fromEntries(
       Object.entries(value as Record<string, unknown>).map(([key, item]) => [
-        key.replace(/_([a-z])/g, (_, char: string) => char.toUpperCase()),
+        (key.startsWith("_") ? `${key[0]}${key.slice(1).replace(/_([a-z])/g, (_, char: string) => char.toUpperCase())}` : key.replace(/_([a-z])/g, (_, char: string) => char.toUpperCase())),
         camelize(item)
       ])
     ) as T;
@@ -109,6 +109,22 @@ export async function findUserById(id: string) {
      WHERE id = $1
      LIMIT 1`,
     [id]
+  );
+  return camelize(result.rows[0] ?? null);
+}
+
+export async function updateUserById(
+  id: string,
+  payload: { name: string; email?: string | null; phone?: string | null }
+) {
+  const result = await query(
+    `UPDATE users
+     SET name = $2,
+         email = $3,
+         phone = $4
+     WHERE id = $1
+     RETURNING id, login, password_hash, name, email, phone`,
+    [id, payload.name, payload.email ?? null, payload.phone ?? null]
   );
   return camelize(result.rows[0] ?? null);
 }
@@ -395,7 +411,7 @@ export async function markSent(clientId: string) {
       await client.query(`UPDATE clients SET status = 'sent', updated_at = NOW() WHERE id = $1`, [clientId]);
       await client.query(
         `UPDATE share_messages
-         SET copied_at = COALESCE(copied_at, NOW()), sent_marked_at = NOW()
+         SET sent_marked_at = NOW()
          WHERE client_id = $1 AND sent_marked_at IS NULL`,
         [clientId]
       );

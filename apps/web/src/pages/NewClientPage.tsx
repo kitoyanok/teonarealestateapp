@@ -12,30 +12,37 @@ import type { Client, PropertyType } from "../entities/types";
 import { api } from "../shared/api";
 import { formatPhoneInput, isValidPhone, normalizePhone, phoneErrorText } from "../shared/phone";
 
+const nonNegativeNumberText = "Введите неотрицательное число";
+
+const nonNegativeNumericString = z
+  .string()
+  .optional()
+  .refine((value) => !value || (Number.isFinite(Number(value)) && Number(value) >= 0), nonNegativeNumberText);
+
 const formSchema = z.object({
   name: z.string().min(2, "Укажите имя клиента"),
   phone: z.string().min(1, phoneErrorText()).refine((value) => isValidPhone(value), phoneErrorText()),
   propertyType: z.enum(["apartment", "house"]),
-  budgetMin: z.string().optional(),
-  budgetMax: z.string().optional(),
+  budgetMin: nonNegativeNumericString,
+  budgetMax: nonNegativeNumericString,
   roomsMin: z.string().optional(),
   roomsMax: z.string().optional(),
-  areaMin: z.string().optional(),
-  areaMax: z.string().optional(),
+  areaMin: nonNegativeNumericString,
+  areaMax: nonNegativeNumericString,
   districts: z.string().optional(),
   completionYearMax: z.string().optional(),
   finishing: z.string().optional(),
   floorMin: z.string().optional(),
   floorMax: z.string().optional(),
-  houseAreaMin: z.string().optional(),
-  houseAreaMax: z.string().optional(),
-  landAreaMin: z.string().optional(),
-  landAreaMax: z.string().optional(),
+  houseAreaMin: nonNegativeNumericString,
+  houseAreaMax: nonNegativeNumericString,
+  landAreaMin: nonNegativeNumericString,
+  landAreaMax: nonNegativeNumericString,
   settlementNames: z.string().optional(),
-  floorsCountMin: z.string().optional(),
-  floorsCountMax: z.string().optional(),
-  bedroomsMin: z.string().optional(),
-  bedroomsMax: z.string().optional(),
+  floorsCountMin: nonNegativeNumericString,
+  floorsCountMax: nonNegativeNumericString,
+  bedroomsMin: nonNegativeNumericString,
+  bedroomsMax: nonNegativeNumericString,
   houseMaterial: z.string().optional(),
   communications: z.array(z.string()).default([]),
   comment: z.string().optional()
@@ -49,6 +56,15 @@ const numberOrUndefined = (value?: string) => {
   }
   const number = Number(value);
   return Number.isFinite(number) ? number : undefined;
+};
+
+const sanitizeNumericInput = (value: string, allowDecimal = false) => {
+  const cleaned = value.replace(/[^\d.,]/g, "").replace(",", ".");
+  if (!allowDecimal) {
+    return cleaned.replace(/\./g, "");
+  }
+  const [whole, ...rest] = cleaned.split(".");
+  return `${whole}${rest.length ? `.${rest.join("")}` : ""}`;
 };
 
 const toList = (value?: string) => value?.split(",").map((item) => item.trim()).filter(Boolean) ?? [];
@@ -178,11 +194,25 @@ export function NewClientPage() {
           <div className="form-grid">
             <label>
               <span>Бюджет от</span>
-              <input {...form.register("budgetMin")} inputMode="numeric" placeholder="5000000" />
+              <input
+                {...form.register("budgetMin")}
+                inputMode="numeric"
+                min="0"
+                placeholder="5000000"
+                onChange={(event) => form.setValue("budgetMin", sanitizeNumericInput(event.target.value), { shouldValidate: true })}
+              />
+              {form.formState.errors.budgetMin ? <small>{form.formState.errors.budgetMin.message}</small> : null}
             </label>
             <label>
               <span>Бюджет до</span>
-              <input {...form.register("budgetMax")} inputMode="numeric" placeholder="7000000" />
+              <input
+                {...form.register("budgetMax")}
+                inputMode="numeric"
+                min="0"
+                placeholder="7000000"
+                onChange={(event) => form.setValue("budgetMax", sanitizeNumericInput(event.target.value), { shouldValidate: true })}
+              />
+              {form.formState.errors.budgetMax ? <small>{form.formState.errors.budgetMax.message}</small> : null}
             </label>
 
             {!isHouse ? (
@@ -202,6 +232,7 @@ export function NewClientPage() {
                   <span>Комнатность до</span>
                   <select {...form.register("roomsMax")}>
                     <option value="">Не важно</option>
+                    <option value="0">Студия</option>
                     <option value="1">1 комната</option>
                     <option value="2">2 комнаты</option>
                     <option value="3">3 комнаты</option>
@@ -210,11 +241,25 @@ export function NewClientPage() {
                 </label>
                 <label>
                   <span>Площадь от</span>
-                  <input {...form.register("areaMin")} inputMode="decimal" placeholder="38" />
+                  <input
+                    {...form.register("areaMin")}
+                    inputMode="decimal"
+                    min="0"
+                    placeholder="38"
+                    onChange={(event) => form.setValue("areaMin", sanitizeNumericInput(event.target.value, true), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.areaMin ? <small>{form.formState.errors.areaMin.message}</small> : null}
                 </label>
                 <label>
                   <span>Площадь до</span>
-                  <input {...form.register("areaMax")} inputMode="decimal" placeholder="70" />
+                  <input
+                    {...form.register("areaMax")}
+                    inputMode="decimal"
+                    min="0"
+                    placeholder="70"
+                    onChange={(event) => form.setValue("areaMax", sanitizeNumericInput(event.target.value, true), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.areaMax ? <small>{form.formState.errors.areaMax.message}</small> : null}
                 </label>
                 <label>
                   <span>Районы</span>
@@ -270,19 +315,47 @@ export function NewClientPage() {
               <>
                 <label>
                   <span>Площадь дома от</span>
-                  <input {...form.register("houseAreaMin")} inputMode="decimal" placeholder="100" />
+                  <input
+                    {...form.register("houseAreaMin")}
+                    inputMode="decimal"
+                    min="0"
+                    placeholder="100"
+                    onChange={(event) => form.setValue("houseAreaMin", sanitizeNumericInput(event.target.value, true), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.houseAreaMin ? <small>{form.formState.errors.houseAreaMin.message}</small> : null}
                 </label>
                 <label>
                   <span>Площадь дома до</span>
-                  <input {...form.register("houseAreaMax")} inputMode="decimal" placeholder="160" />
+                  <input
+                    {...form.register("houseAreaMax")}
+                    inputMode="decimal"
+                    min="0"
+                    placeholder="160"
+                    onChange={(event) => form.setValue("houseAreaMax", sanitizeNumericInput(event.target.value, true), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.houseAreaMax ? <small>{form.formState.errors.houseAreaMax.message}</small> : null}
                 </label>
                 <label>
                   <span>Площадь участка от</span>
-                  <input {...form.register("landAreaMin")} inputMode="decimal" placeholder="5" />
+                  <input
+                    {...form.register("landAreaMin")}
+                    inputMode="decimal"
+                    min="0"
+                    placeholder="5"
+                    onChange={(event) => form.setValue("landAreaMin", sanitizeNumericInput(event.target.value, true), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.landAreaMin ? <small>{form.formState.errors.landAreaMin.message}</small> : null}
                 </label>
                 <label>
                   <span>Площадь участка до</span>
-                  <input {...form.register("landAreaMax")} inputMode="decimal" placeholder="8" />
+                  <input
+                    {...form.register("landAreaMax")}
+                    inputMode="decimal"
+                    min="0"
+                    placeholder="8"
+                    onChange={(event) => form.setValue("landAreaMax", sanitizeNumericInput(event.target.value, true), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.landAreaMax ? <small>{form.formState.errors.landAreaMax.message}</small> : null}
                 </label>
                 <label className="span-2">
                   <span>Локация / район / поселок</span>
@@ -296,15 +369,47 @@ export function NewClientPage() {
                 </label>
                 <label>
                   <span>Количество этажей от</span>
-                  <input {...form.register("floorsCountMin")} inputMode="numeric" placeholder="1" />
+                  <input
+                    {...form.register("floorsCountMin")}
+                    inputMode="numeric"
+                    min="0"
+                    placeholder="1"
+                    onChange={(event) => form.setValue("floorsCountMin", sanitizeNumericInput(event.target.value), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.floorsCountMin ? <small>{form.formState.errors.floorsCountMin.message}</small> : null}
                 </label>
                 <label>
                   <span>Количество этажей до</span>
-                  <input {...form.register("floorsCountMax")} inputMode="numeric" placeholder="2" />
+                  <input
+                    {...form.register("floorsCountMax")}
+                    inputMode="numeric"
+                    min="0"
+                    placeholder="2"
+                    onChange={(event) => form.setValue("floorsCountMax", sanitizeNumericInput(event.target.value), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.floorsCountMax ? <small>{form.formState.errors.floorsCountMax.message}</small> : null}
                 </label>
                 <label>
                   <span>Спален от</span>
-                  <input {...form.register("bedroomsMin")} inputMode="numeric" placeholder="3" />
+                  <input
+                    {...form.register("bedroomsMin")}
+                    inputMode="numeric"
+                    min="0"
+                    placeholder="3"
+                    onChange={(event) => form.setValue("bedroomsMin", sanitizeNumericInput(event.target.value), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.bedroomsMin ? <small>{form.formState.errors.bedroomsMin.message}</small> : null}
+                </label>
+                <label>
+                  <span>Спален до</span>
+                  <input
+                    {...form.register("bedroomsMax")}
+                    inputMode="numeric"
+                    min="0"
+                    placeholder="5"
+                    onChange={(event) => form.setValue("bedroomsMax", sanitizeNumericInput(event.target.value), { shouldValidate: true })}
+                  />
+                  {form.formState.errors.bedroomsMax ? <small>{form.formState.errors.bedroomsMax.message}</small> : null}
                 </label>
                 <label>
                   <span>Материал дома</span>

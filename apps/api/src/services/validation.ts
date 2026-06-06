@@ -22,12 +22,12 @@ function normalizePhone(value: string) {
 
 const nullableNumber = z.preprocess(
   (value) => (value === "" || value === null || value === undefined ? undefined : Number(value)),
-  z.number().finite().optional()
+  z.number().finite().min(0, "Значение не может быть отрицательным").optional()
 );
 
 const nullableInt = z.preprocess(
   (value) => (value === "" || value === null || value === undefined ? undefined : Number(value)),
-  z.number().int().optional()
+  z.number().int().min(0, "Значение не может быть отрицательным").optional()
 );
 
 const list = z.preprocess((value) => {
@@ -43,6 +43,19 @@ const list = z.preprocess((value) => {
 export const loginSchema = z.object({
   login: z.string().min(1),
   password: z.string().min(1)
+});
+
+export const updateUserSchema = z.object({
+  name: z.string().trim().min(2, "Укажите имя риелтора"),
+  email: z.string().trim().email("Укажите корректный email").optional().or(z.literal("")).nullable(),
+  phone: z.string().min(1, phoneError).transform((value, ctx) => {
+    const normalized = normalizePhone(value);
+    if (!normalized) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: phoneError });
+      return z.NEVER;
+    }
+    return normalized;
+  })
 });
 
 export const clientSchema = z.object({

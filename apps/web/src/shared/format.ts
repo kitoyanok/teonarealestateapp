@@ -55,7 +55,7 @@ export const statusLabel: Record<string, string> = {
   searching: "В работе",
   found: "В работе",
   shortlist_ready: "Готово",
-  sent: "Отправлено",
+  sent: "Отправлено клиенту",
   no_results: "Нет объектов",
   error: "Нет объектов",
   closed: "Нет объектов"
@@ -128,6 +128,24 @@ function formatArea(value?: number | null) {
 
 function formatLand(value?: number | null) {
   return value ? `${value} сот.` : null;
+}
+
+function roomBoundaryLabel(value: number | null | undefined, fallback: string) {
+  if (value === null || value === undefined) {
+    return fallback;
+  }
+  return value === 0 ? "студия" : String(value);
+}
+
+export function formatRoomRange(min?: number | null, max?: number | null) {
+  if (min === null || min === undefined) {
+    if (max === null || max === undefined) {
+      return "комнатность не указана";
+    }
+    return `${roomBoundaryLabel(undefined, "студия")}-${roomBoundaryLabel(max, "4+")} комн.`;
+  }
+
+  return `${roomBoundaryLabel(min, "студия")}-${roomBoundaryLabel(max, "4+")} комн.`;
 }
 
 function wrapProjectName(prefix: string, value?: string | null) {
@@ -306,8 +324,8 @@ export function profileSummary(client: Pick<Client, "propertyType"> & { searchPr
     return [budget, area, land].filter(Boolean).join(" · ");
   }
 
-  const rooms = profile.roomsMin || profile.roomsMax
-    ? `${profile.roomsMin ?? "студия"}-${profile.roomsMax ?? "4+"} комн.`
+  const rooms = profile.roomsMin !== null && profile.roomsMin !== undefined || profile.roomsMax !== null && profile.roomsMax !== undefined
+    ? formatRoomRange(profile.roomsMin, profile.roomsMax)
     : "комнатность не указана";
   return [budget, rooms].join(" · ");
 }

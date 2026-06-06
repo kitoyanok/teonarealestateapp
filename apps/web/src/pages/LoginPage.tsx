@@ -1,20 +1,12 @@
 // Это экран входа для риелтора.
 // Простыми словами: человек вводит свой логин и пароль, а страница отправляет их на backend и открывает рабочую часть приложения.
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, Building2, CopyCheck, Radar, Send } from "lucide-react";
+import { ArrowRight, CopyCheck, Radar, Send } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, ApiError } from "../shared/api";
 import { loginPhoto, logoImage } from "../shared/assets";
 import type { User } from "../entities/types";
-
-const availableAccounts = [
-  "ivan.nikitin",
-  "kirill.nabiev",
-  "ilya.berezin",
-  "marina.nikiforova",
-  "nikita.zubach"
-];
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -64,17 +56,7 @@ export function LoginPage() {
         <form className="auth-card login-card" onSubmit={onSubmit}>
           <div>
             <h2>Вход в аккаунт</h2>
-            <p>Доступ открыт для преднастроенных сотрудников агентства.</p>
-          </div>
-
-          <div className="login-hint">
-            <strong>Рабочие логины</strong>
-            <ul>
-              {availableAccounts.map((account) => (
-                <li key={account}>{account}</li>
-              ))}
-            </ul>
-            <p>Общий пароль для этих учетных записей: <strong>Teona2026!</strong></p>
+            <p>Введите логин и пароль сотрудника агентства.</p>
           </div>
 
           <label>
